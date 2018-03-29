@@ -20,6 +20,7 @@ namespace YMCAWebService
     [ScriptService]
     public class YMCAWebService : System.Web.Services.WebService
     {
+
         protected string DatabaseConnection {
             get
             {
@@ -42,7 +43,7 @@ namespace YMCAWebService
             try
             {
                 // Connect to the database and add the new member.
-                using (SqlConnection connect = new SqlConnection(ConfigurationManager.ConnectionStrings["database"].ToString()))                {
+                using (SqlConnection connect = new SqlConnection(DatabaseConnection))                {
                     connect.Open();
                     using (SqlCommand command = new SqlCommand("p_member_insert", connect) { CommandType = System.Data.CommandType.StoredProcedure })
                     {
@@ -92,7 +93,7 @@ namespace YMCAWebService
             }
             else
             {
-                SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["database"].ToString());
+                SqlConnection connection = new SqlConnection(DatabaseConnection);
 
                 SqlCommand validateCommand = new SqlCommand("p_validate_login", connection)
                 {
@@ -173,7 +174,7 @@ namespace YMCAWebService
 
             return response;
         }
-
+        /*
         [WebMethod]
         public YMCAServiceResponse SignIn(Member member, IEnumerable<Assignment> locations)
         {
@@ -181,7 +182,7 @@ namespace YMCAWebService
 
             return response;
         }
-
+        */
         [WebMethod]
         public YMCAServiceResponse SignOut(int band)
         {
@@ -273,10 +274,47 @@ namespace YMCAWebService
         }
 
         [WebMethod]
-        public YMCAServiceResponse AssignMember(string member_id, string child_id)
+        public YMCAServiceResponse AssignMember(string member_id, int child_id)
         {
-            YMCAServiceResponse response = new YMCAServiceResponse();
+            YMCAServiceResponse response = new YMCAServiceResponse()
+            {
+                Error = true,
+                Message = "Unable to attach child to member"
+            };
+            
 
+            using (SqlConnection db = new SqlConnection(DatabaseConnection))
+            using(SqlCommand command = new SqlCommand("p_member_attachChild", db) { CommandType = CommandType.StoredProcedure })
+            {
+                try
+                {
+                    db.Open();
+                    command.Parameters.AddRange(new SqlParameter[]
+                    {
+                        new SqlParameter("member_id", member_id),
+                        new SqlParameter("child_id", child_id)
+                    });
+
+                    int rows = command.ExecuteNonQuery();
+
+                    if (rows <= 0)
+                        throw new Exception("Unable to attach child to member");
+
+                    response.Error = false;
+                    response.Message = "Successfully added child to member";
+                }
+                catch(Exception ex)
+                {
+                    Log(LogType.Error, "Assign Member: " + ex.Message);
+                    response.Message = "Assign Member: " + ex.Message;
+                }
+                finally
+                {
+                    if (db.State == ConnectionState.Open)
+                        db.Close();
+                }
+            }
+            
             return response;
         }
 
@@ -289,9 +327,10 @@ namespace YMCAWebService
             Critical = 5,
             Ending = 6
         }
+        [WebMethod]
         public void Log(LogType type, string message)
         {
-            using(SqlConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["database"].ToString()))
+            using(SqlConnection db = new SqlConnection(DatabaseConnection))
             {
                 using (SqlCommand command = new SqlCommand("p_log_insert", db) { CommandType = CommandType.StoredProcedure })
                 {

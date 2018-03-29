@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChildWatchApi
 {
@@ -16,6 +12,11 @@ namespace ChildWatchApi
         public Child()
         {
             
+        }
+
+        public override string ToString()
+        {
+            return "Child# " + Id.ToString() + "/n" + FirstName + " " + LastName + "/nDOB:" + BirthDate.ToShortDateString();
         }
     }
 }

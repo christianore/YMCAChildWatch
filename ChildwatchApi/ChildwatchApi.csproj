@@ -7,7 +7,7 @@
     <ProjectGuid>{79EC0675-C4A2-44A0-AC89-C234E86D63B5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChildwatchApi</RootNamespace>
+    <RootNamespace>ChildWatchApi</RootNamespace>
     <AssemblyName>ChildwatchApi</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -54,12 +54,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assignment.cs" />
     <Compile Include="Child.cs" />
+    <Compile Include="DatabaseLog.cs" />
+    <Compile Include="Exceptions.cs" />
+    <Compile Include="Family.cs" />
+    <Compile Include="IDatabaseManager.cs" />
+    <Compile Include="IntervalUsageReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Location.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="MembershipManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Response.cs" />
+    <Compile Include="SignInDetail.cs" />
+    <Compile Include="SignInManager.cs" />
+    <Compile Include="SignInRecord.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
