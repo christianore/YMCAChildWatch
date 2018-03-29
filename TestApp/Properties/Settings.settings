@@ -1,9 +1,0 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TestApp.Properties" GeneratedClassName="Settings">
-  <Profiles />
-  <Settings>
-    <Setting Name="TestApp_localhost_YMCAWebService" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://localhost:61566/YMCAWebService.asmx</Value>
-    </Setting>
-  </Settings>
-</SettingsFile>
