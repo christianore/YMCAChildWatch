@@ -54,25 +54,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Child.cs" />
-    <Compile Include="DatabaseLog.cs" />
+    <Compile Include="Data\DailyReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Data\MemberReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Entity\Child.cs" />
+    <Compile Include="Data\DatabaseLog.cs" />
+    <Compile Include="Data\OrganizationManager.cs" />
+    <Compile Include="Data\ReportManager.cs" />
     <Compile Include="Exceptions.cs" />
-    <Compile Include="Family.cs" />
-    <Compile Include="IDatabaseManager.cs" />
-    <Compile Include="IntervalUsageReport.cs">
+    <Compile Include="Entity\Family.cs" />
+    <Compile Include="Data\IDatabaseManager.cs" />
+    <Compile Include="Data\IntervalReport.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Location.cs" />
-    <Compile Include="Member.cs" />
-    <Compile Include="MembershipManager.cs" />
+    <Compile Include="Entity\Location.cs" />
+    <Compile Include="Entity\Member.cs" />
+    <Compile Include="Data\MembershipManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Report.cs">
+    <Compile Include="Data\Report.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Response.cs" />
-    <Compile Include="SignInDetail.cs" />
-    <Compile Include="SignInManager.cs" />
-    <Compile Include="SignInRecord.cs" />
+    <Compile Include="Data\SignInDetail.cs" />
+    <Compile Include="Data\SignInManager.cs" />
+    <Compile Include="Data\SignInRecord.cs" />
+    <Compile Include="Web\SigninToken.cs" />
+    <Compile Include="Web\ValidationResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -4,7 +4,7 @@ using ChildWatchApi.Web;
 using System.Configuration;
 using System.Data.SqlClient;
 using ChildWatchApi.Data;
-using ChildWatchApi;
+using ChildWatchApi.Web;
 using Newtonsoft.Json;
 
 namespace ChildWatch
