@@ -1,0 +1,14 @@
+﻿body {
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #F47920;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
