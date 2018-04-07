@@ -64,7 +64,6 @@
     <Compile Include="Data\DatabaseLog.cs" />
     <Compile Include="Data\OrganizationManager.cs" />
     <Compile Include="Data\ReportManager.cs" />
-    <Compile Include="Exceptions.cs" />
     <Compile Include="Entity\Family.cs" />
     <Compile Include="Data\IDatabaseManager.cs" />
     <Compile Include="Data\IntervalReport.cs">

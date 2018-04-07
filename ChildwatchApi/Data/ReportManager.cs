@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
 
-
 namespace ChildWatchApi.Data
 {
     public class ReportManager : IDatabaseManager

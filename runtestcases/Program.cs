@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using ChildWatchApi;
 using System.Configuration;
+using ChildWatchApi.Data;
 
 namespace RunTestCases
 {
@@ -62,7 +63,8 @@ namespace RunTestCases
                                     }
                                     else
                                         Console.WriteLine("Unable to find member information");
-                                    break;                               
+                                    break;
+                                
                             }
                             break;
                             // Options on children
@@ -112,6 +114,10 @@ namespace RunTestCases
 
                                     break;
                             }                
+                            break;
+                        case "RANDOMIZE":
+                            YMCADataGenerator gen = new YMCADataGenerator();
+                            
                             break;
                         case "CLEAR":
                             Console.Clear();

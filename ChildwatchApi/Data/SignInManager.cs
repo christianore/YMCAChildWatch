@@ -14,7 +14,7 @@ namespace ChildWatchApi.Data
         {           
             if (barcode.Length != 6 && pin.Length != 4)
             {
-                throw new InvalidLoginException(barcode, pin);
+                //throw new InvalidLoginException(barcode, pin);
             }
             else
             {
