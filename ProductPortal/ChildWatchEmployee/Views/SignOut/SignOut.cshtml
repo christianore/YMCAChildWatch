@@ -1,0 +1,31 @@
+﻿@model ChildWatchEmployee.Models.SignOut
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <div>
+        @using (Html.BeginForm())
+        {
+            <fieldset>
+                <legend>Sign Out</legend>
+                <div class="row form-group">
+                    @Html.LabelFor(m => m.BandNum, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.BandNum, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div>
+                    <label>&nbsp;</label>
+                    <input type="submit" value="Register" id="submit" class="btn btn-primary btn-block" />
+                </div>
+            </fieldset>
+        }
+        @Html.ValidationSummary("The following errors were found:",
+                       new { @class = "Alert alert-danger" })
+    </div>
+</body>
+</html>
