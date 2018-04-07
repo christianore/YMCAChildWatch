@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace ChildWatchApi.Data
+namespace ChildWatchApi.Data.Report
 {
     public class Report : DataTable
     {

@@ -12,7 +12,7 @@ namespace ChildWatchApi.Data
         /// <summary>
         /// Reference to the SqlConnection of this manager.
         /// </summary>
-        protected  SqlConnection Database
+        public  SqlConnection Database
         {
             get { return command.Connection; }
         }

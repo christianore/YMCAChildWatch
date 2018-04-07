@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ChildWatchApi.Data
+namespace ChildWatchApi.Data.Report
 {
     public class DailyReport : Report
     {
@@ -31,6 +27,27 @@ namespace ChildWatchApi.Data
     {
         public DailyRecord(DataRowBuilder builder) : base(builder) { }
 
+        public DateTime Date
+        {
+            get { return (DateTime)this["date"]; }
+            set { this["date"] = value; }
+        }
+        
+        public int Count
+        {
+            get { return (int)this["count"]; }
+            set { this["count"] = value; }
+        }
+        public string LocationName
+        {
+            get { return (string)this["location_name"]; }
+            set { this["location_name"] = value; }
+        }
+        public int LocationId
+        {
+            get { return (int)this["location_id"]; }
+            set { this["location_id"] = value; }
+        }
 
     }
 }

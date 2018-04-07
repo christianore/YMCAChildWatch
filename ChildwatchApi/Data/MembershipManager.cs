@@ -87,7 +87,23 @@ namespace ChildWatchApi.Data
 
             return command.ExecuteNonQuery() > 0;
         }
+        public bool RegisterFamily(Family family)
+        {
+            bool complete = true;
+            SaveMember(family.Guardian);
 
+            foreach(Child c in family.Children)
+            {
+                int id = InsertChild(c, family.Guardian);
+                if (id > 0)
+                    c.Id = id;
+                else
+                    complete = false;
+            }
+
+
+            return complete;
+        }
         public Child GetChild(int id)
         {
             OpenConnection("p_child_get");
@@ -117,6 +133,10 @@ namespace ChildWatchApi.Data
                 new SqlParameter("birth_date", c.BirthDate)
             });
             return command.ExecuteNonQuery() > 0;
+        }
+        public int InsertChild(Child c, Member m)
+        {
+            return InsertChild(c, m.MemberId);
         }
         public int InsertChild(Child c, string memberId)
         {
@@ -184,7 +204,6 @@ namespace ChildWatchApi.Data
         {
             return DetachChild(m.MemberId, c.Id);
         }
-
         protected Child ExtractChild(SqlDataReader reader)
         {
             if(reader.Read())
@@ -202,5 +221,20 @@ namespace ChildWatchApi.Data
             }
             return null;
         }
+        public Family GetFamily(string id)
+        {
+            Member m = GetMember(id);
+            Family family = new Family()
+            {
+                Guardian = m,
+                Children = GetChildren(m)
+            };
+            return family;
+        }
+        public Family GetFamily(Member m)
+        {
+            return GetFamily(m.MemberId);
+        }
+   
     }
 }

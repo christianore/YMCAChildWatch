@@ -15,9 +15,10 @@ namespace RunTestCases
             Console.Title = "YMCA Child Watch Manager";
             
             bool end = false;
-           
+            YMCADataGenerator gen = new YMCADataGenerator();
             SqlConnection connection = new SqlConnection(connection_string);
             MembershipManager membership = new MembershipManager(connection);
+            SignInManager signIn = new SignInManager(connection);
 
             while (!end)
             {
@@ -111,13 +112,69 @@ namespace RunTestCases
                                         Console.WriteLine("Child not found");
                                     else
                                         Console.WriteLine("Child Information:\n" + c.ToString());
-
                                     break;
                             }                
                             break;
-                        case "RANDOMIZE":
-                            YMCADataGenerator gen = new YMCADataGenerator();
+                        case "CREATEMEMBERS":
                             
+                            Console.WriteLine("Member Count: ");
+                            int x = int.Parse(Console.ReadLine());
+                            Console.WriteLine("Child Count: ");
+                            int y = int.Parse(Console.ReadLine());
+                            Random r = new Random();
+                            int registered = 0;
+                            while (x != 0)
+                            {
+                                try
+                                {
+                                    Child[] child = new Child[0];
+                                    Member m = gen.RandomMember();
+                                    x--;
+
+                                    if (y > 0)
+                                    {
+                                        int count = Math.Min(r.Next(6), y);
+                                        child = new Child[count];
+                                        for (int i = 0; i < count; i++)
+                                            child[i] = gen.RandomChild(m.LastName);
+
+                                        y = y - count;
+                                    }
+
+                                    Family family = new Family()
+                                    {
+                                        Guardian = m,
+                                        Children = child
+                                    };
+
+                                    if (membership.RegisterFamily(family)) registered++;
+                                }
+                                catch
+                                {
+
+                                }
+                                
+                            }
+                            Console.WriteLine("Registered " + registered + " members and their children");
+                            break;
+                        case "CREATESIGNIN":
+                            Random random = new Random();
+                            DateTime start = new DateTime(2018, 4, 6, 9, 0, 0);
+                            DateTime stop = new DateTime(2018, 4, 6, 21, 0, 0);
+                            TimeSpan interval = stop - start;
+                            int timefromstart = random.Next((int)interval.TotalMinutes);
+
+                            DateTime signinTime = start.AddMinutes(timefromstart);
+                            interval = stop - signinTime;
+
+                            DateTime signoutTime = signinTime.AddMinutes(random.Next((int)interval.TotalMinutes));
+
+                            Console.WriteLine(signinTime);
+                            Console.WriteLine(signoutTime);
+
+                            Family fam = gen.RandomFamily();
+                            Console.WriteLine(fam.Guardian);
+
                             break;
                         case "CLEAR":
                             Console.Clear();

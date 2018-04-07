@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using ChildWatchApi;
 using ChildWatchApi.Data;
+using ChildWatchApi.Data.Report;
 
 namespace RunTestCases
 {
@@ -27,14 +25,25 @@ namespace RunTestCases
             {
                 FirstName = RandomFirstName(),
                 LastName = RandomLastName(),
-                IsActive = random.NextDouble() < .5,
+                IsActive = random.NextDouble() < .75,
                 Barcode = RandomNumberOfSize(6),
                 Pin = RandomNumberOfSize(4),
                 MemberId = RandomNumberOfSize(11),
                 PhoneNumber = RandomNumberOfSize(10)
             };
         }
-
+        public Family RandomFamily(ReportManager manager)
+        {
+            Member member = RandomMemberFromData(manager);
+            MembershipManager membership = new MembershipManager(manager.Database);
+            return membership.GetFamily(member);
+        }
+        public Member RandomMemberFromData(ReportManager manager)
+        {
+            MemberReport report = manager.GetMemberReport();
+            MemberRecord selected = (MemberRecord)report.Rows[random.Next(report.Rows.Count)];
+            return selected.ToMemberObject();
+        }
         public Family RandomFamily()
         {
             Member m = RandomMember();
@@ -63,10 +72,22 @@ namespace RunTestCases
 
         public DateTime RandomBirthDate()
         {
-            long seconds = 788936400000;
-            int diff = (int)(1483246800000 - seconds);
-            random.Next(diff);
-            return new DateTime(seconds + diff);
+            DateTime bday = DateTime.Now;
+            bool found = false;
+            while(!found)
+            {
+                try
+                {
+                    bday = new DateTime(random.Next(2000, 2018), random.Next(1, 12), random.Next(1, 31));
+                    found = true;
+                }
+                catch
+                {
+
+                }
+            }
+
+            return bday;
         }
 
         public string RandomNumberOfSize(int size)
@@ -79,9 +100,9 @@ namespace RunTestCases
             return s;
         }
 
-        public char RandomDigit(int i = 0)
+        public string RandomDigit(int i = 0)
         {
-            return (char)random.Next(i == 0 ? 10 : i);
+            return random.Next(i == 0 ? 10 : i).ToString();
         }
 
         public String RandomFirstName()
@@ -102,40 +123,20 @@ namespace RunTestCases
         }
 
         private void LoadNames()
-        {
-            Thread[] work = new Thread[3];
-            work[0] = new Thread(Load);
-            work[1] = new Thread(Load);
-            work[2] = new Thread(Load);
-
-            work[0].Start(new LoadObject("Male.txt", ref MaleFirst));
-            work[1].Start(new LoadObject("Female.txt",ref FemaleFirst));
-            work[2].Start(new LoadObject("Last.txt", ref Last));
-
-            foreach (Thread t in work)
-                t.Join();
+        {          
+            MaleFirst = Load("Male.txt");
+            FemaleFirst = Load("Female.txt");
+            Last = Load("Last.txt");
         }
 
-        private void Load(object obj)
-        {
-            LoadObject o = (LoadObject)obj;
-            string[] lines = File.ReadAllLines(o.file);
+        private string[] Load(string file)
+        {          
+            string[] lines = File.ReadAllLines(file);
             for(int i = 0; i < lines.Length; i++)
             {
                 lines[i] = lines[i].Split(' ')[0];
             }
-            o.list = lines;
-        }
-        private class LoadObject
-        {
-            public string file;
-            public string[] list;
-
-            public LoadObject(string file, ref string[] list)
-            {
-                this.file = file;
-                this.list = list;
-            }
+            return lines;
         }
     }
 }

@@ -75,6 +75,7 @@ public partial class Reporting : System.Web.UI.Page
     //take the selected arguments and request for selected report
     protected void btnRunReport_Click(object sender, EventArgs e)
     {
+
         switch (lbxReports.SelectedIndex)
         {
             case 0:

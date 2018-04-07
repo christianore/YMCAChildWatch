@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 
-namespace ChildWatchApi.Data
+namespace ChildWatchApi.Data.Report
 {
     public class ReportManager : IDatabaseManager
     {
@@ -48,6 +48,5 @@ namespace ChildWatchApi.Data
 
             return new DailyReport(command.ExecuteReader());
         }  
-
     }
 }

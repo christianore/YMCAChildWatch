@@ -54,26 +54,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\DailyReport.cs">
+    <Compile Include="Data\Report\DailyReport.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Data\MemberReport.cs">
+    <Compile Include="Data\Report\MemberReport.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Entity\Child.cs" />
     <Compile Include="Data\DatabaseLog.cs" />
     <Compile Include="Data\OrganizationManager.cs" />
-    <Compile Include="Data\ReportManager.cs" />
+    <Compile Include="Data\Report\ReportManager.cs" />
     <Compile Include="Entity\Family.cs" />
     <Compile Include="Data\IDatabaseManager.cs" />
-    <Compile Include="Data\IntervalReport.cs">
+    <Compile Include="Data\Report\IntervalReport.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Entity\Location.cs" />
     <Compile Include="Entity\Member.cs" />
     <Compile Include="Data\MembershipManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Data\Report.cs">
+    <Compile Include="Data\Report\Report.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Data\SignInDetail.cs" />

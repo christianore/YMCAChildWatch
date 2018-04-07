@@ -7,6 +7,6 @@ namespace ChildWatchApi.Data
     public class Family
     {
         public Member Guardian { get; set; }
-        public IEnumerable<Child> Children { get; set; } 
+        public List<Child> Children { get; set; } 
     }
 }

@@ -10,11 +10,29 @@ namespace ChildWatchApi.Data
     {
         public SignInManager(SqlConnection connector) : base(connector) { }
 
+        public List<Location> GetLocations(int branch)
+        {
+            OpenConnection("p_location_get");
+            AddParameters(new SqlParameter("branch_id", branch));
+            SqlDataReader reader = command.ExecuteReader();
+            List<Location> locations = new List<Location>();
+            while (reader.Read())
+            {
+                locations.Add(new Location()
+                {
+                    BranchId = branch,
+                    Id = (int)reader["location_id"],
+                    Name = (string)reader["location_name"]
+                });
+            }
+            return locations;
+        }
+
         public Family Validate(string barcode, string pin)
         {           
             if (barcode.Length != 6 && pin.Length != 4)
             {
-                //throw new InvalidLoginException(barcode, pin);
+                throw new Exception("One or more arguments invalid.");
             }
             else
             {
