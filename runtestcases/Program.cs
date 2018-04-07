@@ -3,6 +3,9 @@ using System.Data.SqlClient;
 using ChildWatchApi;
 using System.Configuration;
 using ChildWatchApi.Data;
+using ChildWatchApi.Data.Report;
+using System.Collections.Generic;
+using ChildWatchApi.Web;
 
 namespace RunTestCases
 {
@@ -19,7 +22,7 @@ namespace RunTestCases
             SqlConnection connection = new SqlConnection(connection_string);
             MembershipManager membership = new MembershipManager(connection);
             SignInManager signIn = new SignInManager(connection);
-
+            ReportManager reports = new ReportManager(connection);
             while (!end)
             {
                 Console.Write("YMCA> ");
@@ -127,18 +130,18 @@ namespace RunTestCases
                             {
                                 try
                                 {
-                                    Child[] child = new Child[0];
+                                    List<Child> child = new List<Child>();
                                     Member m = gen.RandomMember();
                                     x--;
 
                                     if (y > 0)
                                     {
-                                        int count = Math.Min(r.Next(6), y);
-                                        child = new Child[count];
-                                        for (int i = 0; i < count; i++)
+                                        int childs = Math.Min(r.Next(6), y);
+                                        
+                                        for (int i = 0; i < childs; i++)
                                             child[i] = gen.RandomChild(m.LastName);
 
-                                        y = y - count;
+                                        y = y - childs;
                                     }
 
                                     Family family = new Family()
@@ -157,6 +160,9 @@ namespace RunTestCases
                             }
                             Console.WriteLine("Registered " + registered + " members and their children");
                             break;
+                        case "MEMBERREPORT":
+                            reports.GetMemberReport(true);
+                            break;
                         case "CREATESIGNIN":
                             Random random = new Random();
                             DateTime start = new DateTime(2018, 4, 6, 9, 0, 0);
@@ -172,8 +178,26 @@ namespace RunTestCases
                             Console.WriteLine(signinTime);
                             Console.WriteLine(signoutTime);
 
-                            Family fam = gen.RandomFamily();
+                            Family fam = gen.RandomFamily(reports);
+                           
                             Console.WriteLine(fam.Guardian);
+                            List<Location> list = signIn.GetLocations(1);
+                            int count = random.Next(1,fam.Children.Count-1);
+                            List<Assignment> assignments = new List<Assignment>();
+                            for(int i = 0; i < count; i++)
+                            {
+                                Child c = fam.Children[random.Next(list.Count)];
+                                Assignment assignment = new Assignment()
+                                {
+                                    Child = c.Id,
+                                    Location = list[random.Next(list.Count)].Id
+                                };
+                                assignments.Add(assignment);
+                            }
+                            int band = signIn.SignIn(fam.Guardian.MemberId, assignments.ToArray());
+
+                            if(band > 0)
+                                signIn.SignOut(band, signoutTime);
 
                             break;
                         case "CLEAR":

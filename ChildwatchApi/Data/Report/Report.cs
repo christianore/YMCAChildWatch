@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace ChildWatchApi.Data.Report
 {
-    public class Report : DataTable
+    public abstract class Report : DataTable
     {
         public DateTime DateRan { get; set; }
         public string Description { get; set; }

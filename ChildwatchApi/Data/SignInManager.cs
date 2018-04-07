@@ -24,7 +24,9 @@ namespace ChildWatchApi.Data
                     Id = (int)reader["location_id"],
                     Name = (string)reader["location_name"]
                 });
+                
             }
+            reader.Close();
             return locations;
         }
 
@@ -42,7 +44,7 @@ namespace ChildWatchApi.Data
                   
                 if (member !=  null)
                 {
-                    IEnumerable<Child> children = membership.GetChildren(member);
+                    List<Child> children = membership.GetChildren(member);
                         
                     if (children.Count() > 0)
                     {
@@ -61,9 +63,20 @@ namespace ChildWatchApi.Data
             return null;
         }
         
-        public bool SignOut(int code)
+        public bool SignOut(int code, DateTime time)
         {
             OpenConnection("p_signout");
+            AddParameters(new SqlParameter[]
+                {
+                    new SqlParameter("band", code),
+                    new SqlParameter("time", time)
+                });
+            return command.ExecuteNonQuery() > 0;
+        }
+        public bool SignOut(int code)
+        {
+
+            OpenConnection("p_signout");           
             AddParameters(new SqlParameter("band", code));
             return command.ExecuteNonQuery() > 0;
         }
@@ -119,9 +132,9 @@ namespace ChildWatchApi.Data
                 }
 
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-                
+                var s = ex.Message;
             }
 
             return band;

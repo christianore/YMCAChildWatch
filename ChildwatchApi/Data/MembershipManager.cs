@@ -150,11 +150,11 @@ namespace ChildWatchApi.Data
             });
             return (int)command.ExecuteScalar();
         }
-        public IEnumerable<Child> GetChildren(Member m)
+        public List<Child> GetChildren(Member m)
         {
             List<Child> children = new List<Child>();
 
-            OpenConnection("p_member_getChildren");
+            OpenConnection("p_member_child_get");
 
           
             AddParameters(new SqlParameter[]
@@ -211,9 +211,9 @@ namespace ChildWatchApi.Data
                 Child c = new Child()
                 {
                     Id = (int)reader["child_id"],
-                    FirstName = (string)reader["FirstName"],
-                    LastName = (string)reader["LastName"],
-                    BirthDate = (DateTime)reader["BirthDate"]
+                    FirstName = (string)reader["child_fName"],
+                    LastName = (string)reader["child_lName"],
+                    BirthDate = (DateTime)reader["birthdate"]
                 };
                 
                 return c;

@@ -25,16 +25,17 @@ namespace ChildWatchApi.Data.Report
             return typeof(MemberRecord);
         }
 
-        public new MemberRecord NewRow()
+        protected override DataRow NewRowFromBuilder(DataRowBuilder builder)
         {
-            return (MemberRecord)base.NewRow();
+            return new MemberRecord(builder);
         }
+
     }
 
     public class MemberRecord : DataRow
     {
         public MemberRecord(DataRowBuilder builder) : base(builder) { }
-
+     
         public string MemberId
         {
             get { return (string)this["member_id"];}
@@ -79,7 +80,8 @@ namespace ChildWatchApi.Data.Report
                 Barcode = this.Barcode,
                 Pin = this.Pin,
                 PhoneNumber = this.Phone,
-                IsActive = this.Active
+                IsActive = this.Active,
+                MemberId = this.MemberId 
             };
         }
     }
