@@ -35,12 +35,12 @@ namespace RunTestCases
         public Family RandomFamily(ReportManager manager)
         {
             Member member = RandomMemberFromData(manager);
-            MembershipManager membership = new MembershipManager(manager.Database);
+            MembershipManager membership = new MembershipManager(manager.ConnectionString);
             return membership.GetFamily(member);
         }
         public Member RandomMemberFromData(ReportManager manager)
         {
-            MemberReport report = manager.GetMemberReport();
+            MemberReport report = manager.GetMemberReport(true);
             MemberRecord selected = (MemberRecord)report.Rows[random.Next(report.Rows.Count)];
             return selected.ToMemberObject();
         }

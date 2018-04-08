@@ -9,44 +9,36 @@ namespace ChildWatchApi.Data.Report
 
         public IntervalReport GetIntervalReport(int partition, DateTime startTime, DateTime endTime)
         {
-            OpenConnection("r_interval");
-            AddParameters(new SqlParameter[]
+            var report = new IntervalReport(RunData("r_interval", new SqlParameter[]
             {
                 new SqlParameter("partition", partition),
                 new SqlParameter("startTime", startTime),
                 new SqlParameter("endtime", endTime)
-            });
-
-            IntervalReport report = new IntervalReport();
-            report.Load(command.ExecuteReader());
-
+            }));
+            CloseConnection();
             return report;
         }
 
         public MemberReport GetMemberReport(Boolean? areActive = null)
-        {
-            OpenConnection("r_members");
-
-            AddParameters(new SqlParameter[]
+        {            
+            var report = new MemberReport(RunData("r_members", new SqlParameter[]
             {
                 new SqlParameter("active",areActive)
-            });
-
-            return new MemberReport(command.ExecuteReader());
-
+            }));
+            CloseConnection();
+            return report;
         }
 
         public DailyReport GetDailyReport(int days, DateTime dateFrom)
         {
-            OpenConnection("r_daily");
 
-            AddParameters(new SqlParameter[]
+            var report = new DailyReport(RunData("r_daily", new SqlParameter[]
             {
                 new SqlParameter("days", days),
                 new SqlParameter("dateFrom", dateFrom)
-            });
-
-            return new DailyReport(command.ExecuteReader());
+            }));
+            CloseConnection();
+            return report;
         }  
     }
 }

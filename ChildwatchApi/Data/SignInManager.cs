@@ -10,26 +10,6 @@ namespace ChildWatchApi.Data
     {
         public SignInManager(SqlConnection connector) : base(connector) { }
 
-        public List<Location> GetLocations(int branch)
-        {
-            OpenConnection("p_location_get");
-            AddParameters(new SqlParameter("branch_id", branch));
-            SqlDataReader reader = command.ExecuteReader();
-            List<Location> locations = new List<Location>();
-            while (reader.Read())
-            {
-                locations.Add(new Location()
-                {
-                    BranchId = branch,
-                    Id = (int)reader["location_id"],
-                    Name = (string)reader["location_name"]
-                });
-                
-            }
-            reader.Close();
-            return locations;
-        }
-
         public Family Validate(string barcode, string pin)
         {           
             if (barcode.Length != 6 && pin.Length != 4)
@@ -38,7 +18,7 @@ namespace ChildWatchApi.Data
             }
             else
             {
-                MembershipManager membership = new MembershipManager(Database);
+                MembershipManager membership = new MembershipManager(ConnectionString);
                 
                 Member member = membership.GetMember(barcode, pin);
                   
@@ -62,73 +42,57 @@ namespace ChildWatchApi.Data
            
             return null;
         }
-        
-        public bool SignOut(int code, DateTime time)
-        {
-            OpenConnection("p_signout");
-            AddParameters(new SqlParameter[]
-                {
-                    new SqlParameter("band", code),
-                    new SqlParameter("time", time)
-                });
-            return command.ExecuteNonQuery() > 0;
-        }
+  
+
         public bool SignOut(int code)
         {
-
-            OpenConnection("p_signout");           
-            AddParameters(new SqlParameter("band", code));
-            return command.ExecuteNonQuery() > 0;
+            return Run("p_signin_out", new SqlParameter[] { new SqlParameter("band", code) });
         }
 
-        public int SignIn(string member_id, Assignment[] arr)
+        public Signin SignIn(string member_id, Assignment[] arr)
         {
-            int band = -1;
-            int id = -1;
-
-            OpenConnection("p_signin_in");
-
+            Signin signin = new Signin(-1, -1);
+                        
             SqlParameter band_num = new SqlParameter()
             {
                 Direction = System.Data.ParameterDirection.Output,
                 ParameterName = "band_number",
-                Size = int.MaxValue
+                Size = int.MaxValue,
+                SqlDbType = System.Data.SqlDbType.Int
             };
             SqlParameter signin_id = new SqlParameter()
             {
                 Direction = System.Data.ParameterDirection.Output,
                 ParameterName = "signin_id",
-                Size = int.MaxValue
+                Size = int.MaxValue,
+                SqlDbType = System.Data.SqlDbType.Int
             };
 
-            AddParameters(new SqlParameter[]
+            SqlParameter[] parms = new SqlParameter[]
             {
                 new SqlParameter("member_id", member_id),
                 band_num,
                 signin_id
-            });
+            };
 
             try
             {
-                command.ExecuteNonQuery();
+                bool val = Run("p_signin_in", parms);
 
-                band = (int)band_num.Value;
-                id = (int)signin_id.Value;
+                signin.Band = (int)band_num.Value;
+                signin.Id = (int)signin_id.Value;
 
-                if (!(id > 0 && band > 0)) throw new Exception();
-
-                    
-                OpenConnection("p_signin_detail_add");
+                if (!(signin.Id > 0 && signin.Band > 0)) throw new Exception();
 
                 foreach (Assignment a in arr)
                 {
-                    AddParameters(new SqlParameter[]{
+                    SqlParameter[] assignments = new SqlParameter[]{
                         new SqlParameter("child_id", a.Child),
                         new SqlParameter("location_id", a.Location),
-                        new SqlParameter("signin_id", id)
-                    });
+                        new SqlParameter("signin_id", signin.Id)
+                    };
 
-                    if (command.ExecuteNonQuery() <= 0) throw new Exception();
+                    if (!Run("p_signin_detail_add", assignments)) throw new Exception();
                 }
 
             }
@@ -137,7 +101,18 @@ namespace ChildWatchApi.Data
                 var s = ex.Message;
             }
 
-            return band;
+            return signin;
+        }
+    }
+    public class Signin
+    {
+        public int Band { get; set; }
+        public int Id { get; set; }
+
+        public Signin(int band, int id)
+        {
+            Band = band;
+            Id = id;
         }
     }
 }

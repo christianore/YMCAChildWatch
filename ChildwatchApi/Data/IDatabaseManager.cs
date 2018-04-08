@@ -12,10 +12,9 @@ namespace ChildWatchApi.Data
         /// <summary>
         /// Reference to the SqlConnection of this manager.
         /// </summary>
-        public  SqlConnection Database
-        {
-            get { return command.Connection; }
-        }
+        public  String ConnectionString { get; set; }
+        public SqlConnection CurrentConnection { get; internal set; }
+        
         /// <summary>
         /// Command that will work on the database.
         /// </summary>
@@ -28,6 +27,18 @@ namespace ChildWatchApi.Data
                 CommandType = CommandType.StoredProcedure,
                 Connection = connector
             };
+
+            ConnectionString = connector.ConnectionString;
+            CurrentConnection = connector;
+        }
+        public IDatabaseManager(string s)
+        {
+            command = new SqlCommand
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            ConnectionString = s;
         }
 
         ~IDatabaseManager()
@@ -39,8 +50,8 @@ namespace ChildWatchApi.Data
         /// </summary>
         public void Dispose()
         {
-            if (Database.State == ConnectionState.Open)
-                Database.Close();
+            if (CurrentConnection != null)
+                CurrentConnection.Dispose();
         }
         /// <summary>
         /// Clears and adds the new SqlParameters to the SqlCommand
@@ -68,11 +79,48 @@ namespace ChildWatchApi.Data
         /// <param name="s">Name of the procedure to execute.</param>
         protected void OpenConnection(string s = "")
         {
-            if (Database.State == ConnectionState.Closed)
-                Database.Open();
-
+            CurrentConnection = new SqlConnection(ConnectionString);
+            command.Connection = CurrentConnection;
+            
             if(!string.IsNullOrEmpty(s))
                 command.CommandText = s;
+
+            CurrentConnection.Open();
         }
+        protected void CloseConnection()
+        {
+            if (CurrentConnection != null)
+                CurrentConnection.Dispose();
+        }
+        protected SqlDataReader RunData(string s, SqlParameter[] list)
+        {
+            OpenConnection(s);
+            AddParameters(list);
+            SqlDataReader reader = command.ExecuteReader();
+            
+            return reader;
+        }
+        protected object RunValue(string s, SqlParameter[] list)
+        {
+            OpenConnection(s);
+            AddParameters(list);
+            object done = command.ExecuteScalar();
+            CloseConnection();
+            return done;
+        }
+        protected bool Run(string s, SqlParameter[] list)
+        {
+            OpenConnection(s);
+            AddParameters(list);
+            bool done = command.ExecuteNonQuery() > 0;
+            CloseConnection();
+            return done;
+        }
+        protected void CloseReader(SqlDataReader reader)
+        {
+            if (!reader.IsClosed)
+                reader.Close();
+        }
+
     }
 }

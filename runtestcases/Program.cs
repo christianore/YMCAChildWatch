@@ -6,6 +6,7 @@ using ChildWatchApi.Data;
 using ChildWatchApi.Data.Report;
 using System.Collections.Generic;
 using ChildWatchApi.Web;
+using System.IO;
 
 namespace RunTestCases
 {
@@ -23,6 +24,7 @@ namespace RunTestCases
             MembershipManager membership = new MembershipManager(connection);
             SignInManager signIn = new SignInManager(connection);
             ReportManager reports = new ReportManager(connection);
+            OrganizationManager organization = new OrganizationManager(connection);
             while (!end)
             {
                 Console.Write("YMCA> ");
@@ -161,44 +163,90 @@ namespace RunTestCases
                             Console.WriteLine("Registered " + registered + " members and their children");
                             break;
                         case "MEMBERREPORT":
-                            reports.GetMemberReport(true);
+                            var member_report = reports.GetMemberReport(true);
+                            Console.WriteLine(member_report.Rows.Count);
                             break;
                         case "CREATESIGNIN":
-                            Random random = new Random();
-                            DateTime start = new DateTime(2018, 4, 6, 9, 0, 0);
-                            DateTime stop = new DateTime(2018, 4, 6, 21, 0, 0);
-                            TimeSpan interval = stop - start;
-                            int timefromstart = random.Next((int)interval.TotalMinutes);
+                            Console.WriteLine("Enter number of families");
+                            int families = int.Parse(Console.ReadLine());
+                            int written = 0;
+                            Signin[] signins = new Signin[families];
 
-                            DateTime signinTime = start.AddMinutes(timefromstart);
-                            interval = stop - signinTime;
-
-                            DateTime signoutTime = signinTime.AddMinutes(random.Next((int)interval.TotalMinutes));
-
-                            Console.WriteLine(signinTime);
-                            Console.WriteLine(signoutTime);
-
-                            Family fam = gen.RandomFamily(reports);
-                           
-                            Console.WriteLine(fam.Guardian);
-                            List<Location> list = signIn.GetLocations(1);
-                            int count = random.Next(1,fam.Children.Count-1);
-                            List<Assignment> assignments = new List<Assignment>();
-                            for(int i = 0; i < count; i++)
+                            for (int z = 0; z < families; z++)
                             {
-                                Child c = fam.Children[random.Next(list.Count)];
-                                Assignment assignment = new Assignment()
+                                try
                                 {
-                                    Child = c.Id,
-                                    Location = list[random.Next(list.Count)].Id
-                                };
-                                assignments.Add(assignment);
+                                    Random random = new Random();
+
+                                    Family fam = gen.RandomFamily(reports);
+
+                                    Location[] list = organization.GetLocations(1);
+                                    int count = 0;
+                                    try
+                                    {
+                                        count = random.Next(1, fam.Children.Count - 1);
+                                    }
+                                    catch { count = 1; };
+
+                                    List<Assignment> assignments = new List<Assignment>();
+                                    for (int i = 0; i < count; i++)
+                                    {
+                                        Child c = fam.Children[random.Next(fam.Children.Count)];
+                                        Assignment assignment = new Assignment()
+                                        {
+                                            Child = c.Id,
+                                            Location = list[random.Next(list.Length)].Id
+                                        };
+                                        assignments.Add(assignment);
+                                    }
+                                    Signin current = signIn.SignIn(fam.Guardian.MemberId, assignments.ToArray());
+                                    signins[written] = current;
+                                    if (current.Band > 0 && !signIn.SignOut(current.Band))
+                                        throw new Exception("Failed sign out or sign in for member " + fam.Guardian.MemberId);
+                                    written++;
+
+                                    Console.WriteLine(written + ")" + fam.Guardian.MemberId);
+                                }
+                                catch(Exception ex)
+                                {                                    
+                                    File.AppendAllText("ErrorReport.txt",  ex.ToString());
+                                }
+
                             }
-                            int band = signIn.SignIn(fam.Guardian.MemberId, assignments.ToArray());
+                            Console.WriteLine("Families written: " + written);
 
-                            if(band > 0)
-                                signIn.SignOut(band, signoutTime);
 
+                            using (SqlConnection connect = new SqlConnection(connection_string))
+                            {
+                                connect.Open();
+                                Random rnd = new Random();
+                                int failed = 0;
+                                for (int i = 0; i < signins.Length; i++)
+                                {
+                                    try
+                                    {
+                                        if (signins[i] != null)
+                                        {
+                                            DateTime start = DateTime.Now;
+                                            DateTime complete = start.AddMinutes(rnd.Next(((int)(new DateTime(2018, 4, 7, 22, 0, 0) - start).TotalMinutes)));
+                                            using (SqlCommand command = new SqlCommand("p_signin_modify",connect))
+                                            {
+                                                command.CommandType = System.Data.CommandType.StoredProcedure;
+                                                command.Parameters.AddWithValue("@out", complete);
+                                                command.Parameters.AddWithValue("@id", signins[i].Id);
+                                                command.ExecuteNonQuery();
+                                            }
+
+                                        }
+                                    }
+                                    catch(Exception ex)
+                                    {
+                                        failed++;
+                                    }
+                                }
+                                Console.WriteLine("Failed Update Count" + failed);
+                                connect.Close();
+                            }    
                             break;
                         case "CLEAR":
                             Console.Clear();

@@ -53,7 +53,7 @@
             );
 
             $.ajax({
-                url: "http://localhost:50920/Default.aspx/ValidateMember",
+                url: "http://localhost:50920/Login/Login.aspx/ValidateMember",
                 data: json,
                 type: "POST",
                 dataType: "json",

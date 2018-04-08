@@ -35,13 +35,22 @@ namespace ChildWatchApi.Data
             return "Member# " + MemberId + "\n" + FirstName + " " + LastName + "\nBarcode: " + Barcode + "\nPin: " + Pin + "\nStatus: " + (IsActive ? "Active" : "InActive");
         }
 
-        public static bool operator== (Member a, Member b)
+        public static bool operator == (Member a, Member b)
         {
             return a.MemberId.ToLower() == b.MemberId.ToLower();
         }
-        public static bool operator!=(Member a, Member b)
+        public static bool operator !=(Member a, Member b)
         {
             return a.MemberId.ToLower() != b.MemberId.ToLower();
+        }
+        public override bool Equals(object obj)
+        {
+            Member member = (Member)obj;
+            return MemberId.Equals(member.MemberId);
+        }
+        public override int GetHashCode()
+        {
+            return MemberId.GetHashCode();
         }
     }
 }

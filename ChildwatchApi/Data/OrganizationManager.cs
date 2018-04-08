@@ -14,18 +14,27 @@ namespace ChildWatchApi.Data
         public Location[] GetLocations(int i)
         {
             List<Location> locations = new List<Location>();
-            OpenConnection("p_location_get");
-            AddParameters(new SqlParameter("branch_id", i));
-            SqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            SqlDataReader reader = RunData("p_location_get", new SqlParameter[]{
+                new SqlParameter("branch_id", i)
+            });
+            try
             {
-                locations.Add(new Location()
+                while (reader.Read())
                 {
-                    BranchId = i,
-                    Name = (string)reader["location_name"],
-                    Id = (int)reader["location_id"]
-                });
+                    locations.Add(new Location()
+                    {
+                        BranchId = i,
+                        Name = (string)reader["location_name"],
+                        Id = (int)reader["location_id"]
+                    });
+                }
             }
+            finally
+            {
+                CloseReader(reader);
+                CloseConnection();
+            }
+
             return locations.ToArray();
         }
     }

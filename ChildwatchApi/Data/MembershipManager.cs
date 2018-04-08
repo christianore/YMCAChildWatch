@@ -8,73 +8,75 @@ namespace ChildWatchApi.Data
     public class MembershipManager : IDatabaseManager
     {
         public MembershipManager(SqlConnection connector) : base(connector) { }
-
+        public MembershipManager(String s) : base(s) { }
         public Member GetMember(string id)
-        {
-            OpenConnection("p_member_get");
-            
-
-            AddParameters(new SqlParameter[]
+        {                 
+            SqlParameter[] arr = new SqlParameter[]
             {
                 new SqlParameter("member_id", id)
-            });
+            };
 
-            SqlDataReader data = command.ExecuteReader();
-
-            if (data.HasRows)
+            SqlDataReader data = RunData("p_member_get", arr);
+            Member member = null;
+            try
             {
-                data.Read();
-                Member m = new Member()
+                if (data.Read())
                 {
-                    FirstName = (string)data["member_fName"],
-                    LastName = (string)data["member_lName"],
-                    MemberId = (string)data["member_id"],
-                    Barcode = (string)data["barcode"],
-                    PhoneNumber = (string)data["phone"],
-                    Pin = (string)data["pin"]
-                };
-                data.Close();
-                return m;
+                    member = new Member()
+                    {
+                        FirstName = (string)data["member_fName"],
+                        LastName = (string)data["member_lName"],
+                        MemberId = (string)data["member_id"],
+                        Barcode = (string)data["barcode"],
+                        PhoneNumber = (string)data["phone"],
+                        Pin = (string)data["pin"]
+                    };
+                }
             }
-
-            return null;
+            finally
+            {
+                CloseReader(data);
+                CloseConnection();
+            }
+            return member;
         }
         public Member GetMember(string barcode, string pin)
         {
-            OpenConnection("p_member_get");
-          
-
-            AddParameters(new SqlParameter[]
+            SqlParameter[] arr = new SqlParameter[]
             {
                 new SqlParameter("barcode", barcode),
                 new SqlParameter("pin", pin)
-            });
+            };
 
-            SqlDataReader data = command.ExecuteReader();
-
-            if (data.HasRows)
+            SqlDataReader data = RunData("p_member_get", arr);
+            Member m = null;
+            try
             {
-                data.Read();
-                Member m = new Member()
+                if (data.Read())
                 {
-                    FirstName = (string)data["member_fName"],
-                    LastName = (string)data["member_lName"],
-                    MemberId = (string)data["member_id"],
-                    Barcode = (string)data["barcode"],
-                    PhoneNumber = (string)data["phone"],
-                    Pin = (string)data["pin"]
-                };
-                data.Close();
-                return m;
+                    m = new Member()
+                    {
+                        FirstName = (string)data["member_fName"],
+                        LastName = (string)data["member_lName"],
+                        MemberId = (string)data["member_id"],
+                        Barcode = (string)data["barcode"],
+                        PhoneNumber = (string)data["phone"],
+                        Pin = (string)data["pin"]
+                    };
+
+                }
+            }
+            finally
+            {
+                CloseReader(data);
+                CloseConnection();
             }
 
             return null;
         }
         public bool SaveMember(Member m)
         {
-            OpenConnection("p_member_save");
-            
-            AddParameters(new SqlParameter[]
+            SqlParameter[] arr = new SqlParameter[]
             {
                 new SqlParameter("member_id", m.MemberId),
                 new SqlParameter("barcode", m.Barcode),
@@ -83,9 +85,9 @@ namespace ChildWatchApi.Data
                 new SqlParameter("last_name", m.LastName),
                 new SqlParameter("phone", m.PhoneNumber),
                 new SqlParameter("active", m.IsActive)
-            });
+            };
 
-            return command.ExecuteNonQuery() > 0;
+            return Run("p_member_save", arr);
         }
         public bool RegisterFamily(Family family)
         {
@@ -106,33 +108,37 @@ namespace ChildWatchApi.Data
         }
         public Child GetChild(int id)
         {
-            OpenConnection("p_child_get");
-            
-            AddParameters(new SqlParameter[]
+            Child c = null;
+            SqlParameter[] arr = new SqlParameter[]
             {
                 new SqlParameter("child_id", id)
-            });
-            SqlDataReader reader = command.ExecuteReader();
-            if (reader.HasRows)
+            };
+            
+            SqlDataReader reader = RunData("p_child_get", arr);
+            try
             {
-                reader.Close();
-                return ExtractChild(reader);             
+                c = ExtractChild(reader);
+            }
+            finally
+            {
+                
+                CloseReader(reader);
+                CloseConnection();
             }
 
-            return null;
+            return c;
         }
         public bool UpdateChild(Child c)
         {
             OpenConnection("p_child_update");
-            
-            AddParameters(new SqlParameter[]
+
+            return Run("p_child_update", new SqlParameter[]
             {
                 new SqlParameter("child_id", c.Id),
                 new SqlParameter("first_name", c.FirstName),
                 new SqlParameter("last_name", c.LastName),
                 new SqlParameter("birth_date", c.BirthDate)
             });
-            return command.ExecuteNonQuery() > 0;
         }
         public int InsertChild(Child c, Member m)
         {
@@ -140,51 +146,48 @@ namespace ChildWatchApi.Data
         }
         public int InsertChild(Child c, string memberId)
         {
-            OpenConnection("p_child_insert");
-            AddParameters(new SqlParameter[]
+            return (int)RunValue("p_child_insert",new SqlParameter[]
             {
                 new SqlParameter("fname", c.FirstName),
                 new SqlParameter("lname", c.LastName),
                 new SqlParameter("birth_dt", c.BirthDate),
                 new SqlParameter("member_id", memberId)
             });
-            return (int)command.ExecuteScalar();
         }
         public List<Child> GetChildren(Member m)
         {
             List<Child> children = new List<Child>();
-
-            OpenConnection("p_member_child_get");
-
-          
-            AddParameters(new SqlParameter[]
+            bool read = true;
+            SqlDataReader reader = RunData("p_member_child_get", new SqlParameter[]
             {
                 new SqlParameter("member_id", m.MemberId)
             });
 
-            SqlDataReader reader = command.ExecuteReader();
-
-            bool read = true;
-            do
+            try
             {
-                Child c = ExtractChild(reader);
-                if (c != null)
-                    children.Add(c);
-                else
-                    read = false;
-            } while (read);
-            reader.Close();
+                do
+                {
+                    Child c = ExtractChild(reader);
+                    if (c != null)
+                        children.Add(c);
+                    else
+                        read = false;
+                } while (read);
+            }
+            finally
+            {
+                CloseReader(reader);
+                CloseConnection();
+            }
+        
             return children;
         }
         public bool AttachChild(string memberId, int childId)
         {
-            OpenConnection("p_member_child_attach");
-            
-            AddParameters(new SqlParameter[]{
+            return Run("p_member_child_attach", new SqlParameter[]{
                 new SqlParameter("member_id", memberId),
                 new SqlParameter("child_id", childId)
             });
-            return command.ExecuteNonQuery() > 0;
         }
         public bool AttachChild(Member m, Child c)
         {
@@ -192,13 +195,10 @@ namespace ChildWatchApi.Data
         }
         public bool DetachChild(string memberId, int childId)
         {
-            OpenConnection("p_member_child_detach");
-           
-            AddParameters(new SqlParameter[]{
+            return Run("p_member_child_detach", new SqlParameter[]{
                 new SqlParameter("member_id", memberId),
                 new SqlParameter("child_id", childId)
             });
-            return command.ExecuteNonQuery() > 0;
         }
         public bool DetachChild(Member m, Child c)
         {
@@ -216,8 +216,7 @@ namespace ChildWatchApi.Data
                     BirthDate = (DateTime)reader["birthdate"]
                 };
                 
-                return c;
-                
+                return c;               
             }
             return null;
         }

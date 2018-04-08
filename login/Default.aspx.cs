@@ -4,7 +4,6 @@ using ChildWatchApi.Web;
 using System.Configuration;
 using System.Data.SqlClient;
 using ChildWatchApi.Data;
-using ChildWatchApi.Web;
 using Newtonsoft.Json;
 
 namespace ChildWatch
@@ -36,7 +35,7 @@ namespace ChildWatch
             SignInManager manager = 
                 new SignInManager(new SqlConnection(ConfigurationManager.ConnectionStrings["database"].ToString()));
 
-            int band = manager.SignIn(token.MemberId, token.Assignments);
+            int band = manager.SignIn(token.MemberId, token.Assignments).Band;
 
             return band;
         }

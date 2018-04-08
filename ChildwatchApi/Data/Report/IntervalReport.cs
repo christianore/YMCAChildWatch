@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ namespace ChildWatchApi.Data.Report
         {
             return (Interval)base.NewRow();
         }
+        public IntervalReport() { }
+        public IntervalReport(SqlDataReader reader) : base(reader) { }
     }
     public class Interval : DataRow
     {

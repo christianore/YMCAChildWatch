@@ -76,9 +76,9 @@
     <Compile Include="Data\Report\Report.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Data\SignInDetail.cs" />
+    <Compile Include="Data\Report\SignInDetail.cs" />
     <Compile Include="Data\SignInManager.cs" />
-    <Compile Include="Data\SignInRecord.cs" />
+    <Compile Include="Data\Report\SignInRecord.cs" />
     <Compile Include="Web\SigninToken.cs" />
     <Compile Include="Web\ValidationResponse.cs" />
   </ItemGroup>
