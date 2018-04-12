@@ -10,17 +10,21 @@ namespace ChildWatchApi.Data.Report
 {
     public class IntervalReport : Report
     {
-        public new Type GetRowType()
+        public int Interval { get; set; }
+        protected override Type GetRowType()
         {
             return typeof(Interval);
         }
-        public new Interval NewRow()
+
+        protected override DataRow NewRowFromBuilder(DataRowBuilder builder)
         {
-            return (Interval)base.NewRow();
+            return new Interval(builder);
         }
+
         public IntervalReport() { }
         public IntervalReport(SqlDataReader reader) : base(reader) { }
     }
+
     public class Interval : DataRow
     {
         public Interval(DataRowBuilder builder) : base(builder) { }
@@ -31,17 +35,17 @@ namespace ChildWatchApi.Data.Report
             {
                 return (DateTime)this["time"];
             }
-            set { this["Time"] = value; }
+            set { this["time"] = value; }
         }
         public int ChildCount
         {
             get
             {
-                return (int)this["child_count"];
+                return (int)this["amount"];
             }
             set
             {
-                this["child_count"] = value;
+                this["amount"] = value;
             }
         }
     }

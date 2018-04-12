@@ -121,7 +121,15 @@ namespace RunTestCases
         {
             return Last[random.Next(Last.Length)];
         }
+        public DateTime RandomTimeBetween(DateTime start, DateTime end)
+        {
+            TimeSpan difference = end - start;
 
+            int offset = random.Next((int)difference.TotalMinutes);
+
+            return start.AddMinutes(offset);
+
+        }
         private void LoadNames()
         {          
             MaleFirst = Load("Male.txt");

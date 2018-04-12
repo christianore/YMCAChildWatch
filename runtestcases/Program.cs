@@ -17,7 +17,10 @@ namespace RunTestCases
         public static void Main(string[] args)
         {
             Console.Title = "YMCA Child Watch Manager";
-            
+            DateTime now = DateTime.Now;
+            DateTime start = new DateTime(now.Year, now.Month, now.Day, 9, 0, 0);
+            DateTime stop = new DateTime(now.Year, now.Month, now.Day, 22, 0, 0);
+
             bool end = false;
             YMCADataGenerator gen = new YMCADataGenerator();
             SqlConnection connection = new SqlConnection(connection_string);
@@ -162,9 +165,24 @@ namespace RunTestCases
                             }
                             Console.WriteLine("Registered " + registered + " members and their children");
                             break;
-                        case "MEMBERREPORT":
-                            var member_report = reports.GetMemberReport(true);
-                            Console.WriteLine(member_report.Rows.Count);
+                        case "REPORT":
+                             switch(options[1])
+                             {
+                                case "/m":
+                                    var member_report = reports.GetMemberReport(true);
+                                    Console.WriteLine(member_report.Rows.Count);
+                                    break;
+                                case "/i":
+                                    var interval_report = reports.GetIntervalReport(60, start, stop, 1);
+                                    if (interval_report.Rows.Count > 0) Console.WriteLine("REPORT DATA\n=================================================");
+                                    foreach (Interval i in interval_report.Rows)
+                                    {
+                                        Console.WriteLine(i.Time.ToShortTimeString() + "   " + i.Time.AddMinutes(interval_report.Interval).ToShortTimeString() + "    " +i.ChildCount.ToString());
+                                    }
+                                    if (interval_report.Rows.Count > 0) Console.WriteLine("============================================================\nEND DATA");
+                                    break;
+                             }
+                            
                             break;
                         case "CREATESIGNIN":
                             Console.WriteLine("Enter number of families");
@@ -219,6 +237,7 @@ namespace RunTestCases
                             using (SqlConnection connect = new SqlConnection(connection_string))
                             {
                                 connect.Open();
+
                                 Random rnd = new Random();
                                 int failed = 0;
                                 for (int i = 0; i < signins.Length; i++)
@@ -227,12 +246,15 @@ namespace RunTestCases
                                     {
                                         if (signins[i] != null)
                                         {
-                                            DateTime start = DateTime.Now;
-                                            DateTime complete = start.AddMinutes(rnd.Next(((int)(new DateTime(2018, 4, 7, 22, 0, 0) - start).TotalMinutes)));
+                                            DateTime signinTime = gen.RandomTimeBetween(start, stop);
+                                            DateTime signoutTime = gen.RandomTimeBetween(signinTime, stop);
+
+                                            
                                             using (SqlCommand command = new SqlCommand("p_signin_modify",connect))
                                             {
                                                 command.CommandType = System.Data.CommandType.StoredProcedure;
-                                                command.Parameters.AddWithValue("@out", complete);
+                                                command.Parameters.AddWithValue("@out", signoutTime);
+                                                command.Parameters.AddWithValue("@in", signinTime);
                                                 command.Parameters.AddWithValue("@id", signins[i].Id);
                                                 command.ExecuteNonQuery();
                                             }
@@ -244,7 +266,7 @@ namespace RunTestCases
                                         failed++;
                                     }
                                 }
-                                Console.WriteLine("Failed Update Count" + failed);
+                                Console.WriteLine("Failed Update Count: " + failed);
                                 connect.Close();
                             }    
                             break;

@@ -6,3 +6,5 @@
 *.ide-shm
 *.ide
 *.ide-wal
+db.lock
+

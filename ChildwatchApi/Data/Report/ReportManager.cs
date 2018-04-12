@@ -7,14 +7,16 @@ namespace ChildWatchApi.Data.Report
     {
         public ReportManager(SqlConnection sqlconnector) : base(sqlconnector) { }
 
-        public IntervalReport GetIntervalReport(int partition, DateTime startTime, DateTime endTime)
+        public IntervalReport GetIntervalReport(int interval, DateTime startTime, DateTime endTime, int locationID)
         {
             var report = new IntervalReport(RunData("r_interval", new SqlParameter[]
             {
-                new SqlParameter("partition", partition),
-                new SqlParameter("startTime", startTime),
-                new SqlParameter("endtime", endTime)
+                new SqlParameter("interval", interval),
+                new SqlParameter("start", startTime),
+                new SqlParameter("end", endTime),
+                new SqlParameter("location", locationID)
             }));
+            report.Interval = interval;
             CloseConnection();
             return report;
         }
