@@ -20,7 +20,13 @@ namespace ChildWatchApi.Data.Report
             CloseConnection();
             return report;
         }
-
+        public SigninReport GetChildrenSignedIn()
+        {
+            SqlDataReader reader = RunData("r_children_signedin", new SqlParameter[] { });
+            var report = new SigninReport(reader);
+            CloseConnection();
+            return report;
+        }
         public MemberReport GetMemberReport(Boolean? areActive = null)
         {            
             var report = new MemberReport(RunData("r_members", new SqlParameter[]

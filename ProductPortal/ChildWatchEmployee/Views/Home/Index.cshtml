@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<ChildWatchEmployee.SignIn>
+@{
     Layout = "../Shared/_Layout.cshtml";
 }
 
@@ -6,8 +7,47 @@
 
 <html>
 <body>
+    <script>
+        var proxy = $.connection.childWatchHub;
+        proxy.client.updateChildTable = function () {
+            location.reload();
+        }
+        $.connection.hub.start();
+    </script>
     <div>
-        <p>Information about the system goes here</p>
+        <div class="jumbotron">
+            <h1>Current Children In ChildWatch</h1>
+        </div>
+        @if(Model.Count > 0)
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Child #</th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Birthdate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (SignIn record in Model)
+                    {
+                    <tr>
+                        <td>@record.ChildID.ToString()</td>
+                        <td>@(record.FirstName + " " + @record.LastName)</td>
+                        <td>@record.LocationName</td>
+                        <td>@record.BirthDate.ToShortDateString()</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <p> There are no children currently signed in to the program.</p>
+            </div>
+        }
     </div>
 </body>
 </html>

@@ -1,0 +1,54 @@
+// Member Signin process
+
+	let barcode = member's barcode
+	let pin = member's pin number
+
+	IF barcode EXISTS	
+	BEGIN
+		let saved_pin = pin for barcode;
+		
+		IF saved_pin = pin
+		BEGIN
+			
+			let children = member's children
+			let locations = member's location options
+			let assignments = list of (child, location) where {child in children, location in locations};
+		
+			WHILE Member is selecting options
+			BEGIN
+				add new assignment into assignments
+				IF member is done
+					BREAK;
+			END
+					
+			CREATE signin_batch for family;
+			
+			FOR EACH assignment in assignment
+			BEGIN
+				CREATE signin_detail from assignment;
+				attach to signin_batch ;
+			END 
+			
+			IF ALL assignments success
+			BEGIN
+				get next allowable write band number;
+				show band number to user;
+				WAIT 30 seconds;
+				CLEAR ALL DATA;
+			END
+			ELSE
+			BEGIN
+				// ROLLBACK Signin 
+				FOR EACH assignment 
+					DELETE signin_detail;
+					
+				DELETE signin_batch;
+			END		
+			
+		END
+		ELSE
+			ALERT => "Invalid Login;
+	END
+	ELSE
+		ALERT => "Barcode not found";
+		

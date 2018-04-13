@@ -1,5 +1,3 @@
-C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\obj\Debug\ChildwatchApi.csprojResolveAssemblyReference.cache
-C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\obj\Debug\ChildwatchApi.csproj.CoreCompileInputs.cache
 C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\bin\Debug\ChildwatchApi.dll
 C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\bin\Debug\ChildwatchApi.pdb
 C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\bin\Debug\Microsoft.IdentityModel.Logging.dll
@@ -10,5 +8,7 @@ C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\bin\Debug\Microsoft
 C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\bin\Debug\Microsoft.IdentityModel.Tokens.xml
 C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\bin\Debug\System.IdentityModel.Tokens.Jwt.xml
+C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\obj\Debug\ChildWatchApi.csproj.CoreCompileInputs.cache
 C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\obj\Debug\ChildwatchApi.dll
 C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\obj\Debug\ChildwatchApi.pdb
+C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\obj\Debug\ChildWatchApi.csprojResolveAssemblyReference.cache

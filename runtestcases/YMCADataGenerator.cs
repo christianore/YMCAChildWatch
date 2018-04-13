@@ -4,7 +4,7 @@ using System.IO;
 using ChildWatchApi.Data;
 using ChildWatchApi.Data.Report;
 
-namespace RunTestCases
+namespace ChildWatch
 {
     public class YMCADataGenerator
     {

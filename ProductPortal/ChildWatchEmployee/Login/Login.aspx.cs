@@ -35,9 +35,9 @@ namespace ChildWatchEmployee
             SignInManager manager = 
                 new SignInManager(new SqlConnection(ConfigurationManager.ConnectionStrings["database"].ToString()));
 
-            int band = manager.SignIn(token.MemberId, token.Assignments);
+            Signin value = manager.SignIn(token.MemberId, token.Assignments);
 
-            return band;
+            return value.Band;
         }
     }
 }

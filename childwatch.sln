@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChildWatchApi", "childwatchapi\ChildWatchApi.csproj", "{79EC0675-C4A2-44A0-AC89-C234E86D63B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login", "login\Login.csproj", "{DE040ACA-5CF1-4F4A-879F-87641F189943}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YMCAUtility", "runtestcases\YMCAUtility.csproj", "{0BF6C526-DD10-4560-BC3E-7DA4B36ED099}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunTestCases", "runtestcases\RunTestCases.csproj", "{0BF6C526-DD10-4560-BC3E-7DA4B36ED099}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChildWatchEmployee", "ProductPortal\ChildWatchEmployee\ChildWatchEmployee.csproj", "{94933F8C-9677-410A-9638-DFBA2BE2AAE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{79EC0675-C4A2-44A0-AC89-C234E86D63B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79EC0675-C4A2-44A0-AC89-C234E86D63B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79EC0675-C4A2-44A0-AC89-C234E86D63B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DE040ACA-5CF1-4F4A-879F-87641F189943}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE040ACA-5CF1-4F4A-879F-87641F189943}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE040ACA-5CF1-4F4A-879F-87641F189943}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE040ACA-5CF1-4F4A-879F-87641F189943}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0BF6C526-DD10-4560-BC3E-7DA4B36ED099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0BF6C526-DD10-4560-BC3E-7DA4B36ED099}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BF6C526-DD10-4560-BC3E-7DA4B36ED099}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BF6C526-DD10-4560-BC3E-7DA4B36ED099}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94933F8C-9677-410A-9638-DFBA2BE2AAE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94933F8C-9677-410A-9638-DFBA2BE2AAE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94933F8C-9677-410A-9638-DFBA2BE2AAE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94933F8C-9677-410A-9638-DFBA2BE2AAE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

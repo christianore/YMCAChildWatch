@@ -42,6 +42,9 @@
     <script>
         var curr_member_id = 0;
 
+        var proxy = $.connection.childWatchHub;
+        $.connection.hub.start();
+
         function validate() {
             var json = JSON.stringify(
                 {
@@ -134,6 +137,7 @@
                     $('#children').empty();
                     $('#band').text("Band#");
                 }, 30000);
+                proxy.server.sendRefreshNotification();
             }
         }
         function signinFamily() {
@@ -164,7 +168,7 @@
             );
 
             $.ajax({
-                url: "http://localhost:50920/Default.aspx/SigninMembers",
+                url: "http://localhost:50920/Login/Login.aspx/SigninMembers",
                 data: JSON.stringify({ data: json })  ,
                 type: "POST",
                 dataType: "json",

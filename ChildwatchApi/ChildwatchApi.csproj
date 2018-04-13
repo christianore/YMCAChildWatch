@@ -60,6 +60,9 @@
     <Compile Include="Data\Report\MemberReport.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Data\Report\SigninReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Entity\Child.cs" />
     <Compile Include="Data\DatabaseLog.cs" />
     <Compile Include="Data\OrganizationManager.cs" />

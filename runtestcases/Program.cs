@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.SqlClient;
-using ChildWatchApi;
 using System.Configuration;
 using ChildWatchApi.Data;
 using ChildWatchApi.Data.Report;
@@ -8,7 +7,7 @@ using System.Collections.Generic;
 using ChildWatchApi.Web;
 using System.IO;
 
-namespace RunTestCases
+namespace ChildWatch
 {
     public class Program
     {
@@ -264,6 +263,7 @@ namespace RunTestCases
                                     catch(Exception ex)
                                     {
                                         failed++;
+                                        Console.WriteLine("Exception: " + ex.Message);
                                     }
                                 }
                                 Console.WriteLine("Failed Update Count: " + failed);

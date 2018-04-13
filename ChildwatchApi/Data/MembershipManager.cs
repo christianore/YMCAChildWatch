@@ -72,7 +72,7 @@ namespace ChildWatchApi.Data
                 CloseConnection();
             }
 
-            return null;
+            return m;
         }
         public bool SaveMember(Member m)
         {
