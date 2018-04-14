@@ -217,7 +217,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
-    <Content Include="Images\ymcalogo.png" />
     <Content Include="Login\Login.aspx" />
     <Content Include="Login\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="bin\ChildWatchEmployee.dll.config" />
@@ -303,7 +302,7 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="ViewSwitcher.ascx" />
-    <Content Include="Views\ChildAdd\AddChild.cshtml" />
+    <Content Include="Views\Registration\AddChild.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -311,7 +310,6 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="ChildWatchHub.cs" />
-    <Compile Include="Controllers\ChildAddController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\ReportingController.cs" />
@@ -388,6 +386,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
     <Folder Include="Views\Reporting\" />
   </ItemGroup>
   <ItemGroup>

@@ -25,5 +25,10 @@ namespace ChildWatchEmployee.Models
         [Display(Name = "Guardian ID")]
         public int Guardian { get; set; }
 
+        public override string ToString()
+        {
+            return "{\"firstName\":\"" + FirstName + "\",\"lastName\":\"" + LastName +
+                    "\",\"BirthDate\":\"" + Birthday + "\"}";
+        }
     }
 }

@@ -1,0 +1,63 @@
+﻿@model ChildWatchEmployee.Models.ChildLocal
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <div>
+        @using (Html.BeginForm())
+    {
+        <fieldset>
+            <legend>Add Child</legend>
+            <div class="row form-group">
+                @Html.LabelFor(m => m.FirstName, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row form-group">
+                @Html.LabelFor(m => m.LastName, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row form-group">
+                @Html.LabelFor(m => m.Birthday, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row form-group">
+                @Html.LabelFor(m => m.Guardian, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @{ 
+                        var member = TempData["member"];
+
+                        if(member != null)
+                        {
+                            TempData["member"] = member;
+                            @Html.TextBoxFor(m => m.Guardian, new { @class = "form-control", @Value = member.ToString() })
+                        }
+                        else
+                        {
+                             @Html.TextBoxFor(m => m.Guardian, new { @class = "form-control"})
+                        }
+                    }
+
+                </div>
+            </div>
+            <div>
+                <label>&nbsp;</label>
+                <input type="submit" name ="AddChild" value="Add Another Child" class="btn btn-primary btn-block" />
+                <input type="submit" name ="AddChild" value="Finish Registration" class="btn btn-primary btn-block" />
+            </div>
+        </fieldset>
+}
+        @Html.ValidationSummary("The following errors were found:",
+                   new { @class = "Alert alert-danger" })
+    </div>
+</body>
+</html>

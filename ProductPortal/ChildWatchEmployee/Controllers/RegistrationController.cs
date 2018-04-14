@@ -9,8 +9,7 @@ namespace ChildWatchEmployee.Controllers
     public class RegistrationController : Controller
     {
         MembershipManager membership = new MembershipManager(new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["database"].ToString()));
-        // YMCAWebService ymcaService = new YMCAWebService();
-        // GET: Registration
+
         public ActionResult Register()
         {
             ViewBag.Title = "Employee - Register New Child";
@@ -32,19 +31,48 @@ namespace ChildWatchEmployee.Controllers
                 bool register = membership.SaveMember(member.toServer());
                 if (register)
                 {
-                    return Redirect("~/ChildAdd/AddChild");
+                    return RedirectToAction("AddChild");
                 }
-                /** 
-                YMCAServiceResponse ymcaserverResponse = ymcaService.RegisterMember(member.toServer());
-                if (ymcaserverResponse.Error)
+                else
                 {
-                    ModelState.AddModelError("ServerError", ymcaserverResponse.Message);
                     return View(member);
                 }
-                return Redirect("~/Home/Index"); 
-                **/
             }
             return View(member);
+        }
+
+        public ActionResult AddChild()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult RegisterChild(Models.ChildLocal child, string AddChild)
+        {
+            if (ModelState.ContainsKey("{ServerError}"))
+            {
+                ModelState.Remove("{ServerError}");
+            }
+            if (ModelState.IsValid)
+            {
+                Child newChild = new Child();
+                newChild.FirstName = child.FirstName;
+                newChild.LastName = child.LastName;
+                newChild.BirthDate = child.Birthday;
+                string guardianID = child.Guardian.ToString();
+                if (membership.InsertChild(newChild, guardianID) > 0)
+                {
+                    if (AddChild.Equals("Add Another Child"))
+                    {
+                        return View();
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+            }
+            return View(child);
         }
     }
 }
