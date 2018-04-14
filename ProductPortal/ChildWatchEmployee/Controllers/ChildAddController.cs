@@ -12,6 +12,7 @@ namespace ChildWatchEmployee.Controllers
         public ActionResult AddChild()
         {
             return View();
+            
         }
 
         [HttpPost]
@@ -24,21 +25,6 @@ namespace ChildWatchEmployee.Controllers
             if (ModelState.IsValid)
             {
 
-                /** bool success = membership.AttachChild();
-                if (success)
-                {
-                    return Redirect("~/Home/Index");
-                }
-                **/
-                /** 
-                YMCAServiceResponse ymcaserverResponse = ymcaService.RegisterMember(member.toServer());
-                if (ymcaserverResponse.Error)
-                {
-                    ModelState.AddModelError("ServerError", ymcaserverResponse.Message);
-                    return View(member);
-                }
-                return Redirect("~/Home/Index"); 
-                **/
             }
             return View(member);
         }

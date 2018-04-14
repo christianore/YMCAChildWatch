@@ -28,11 +28,11 @@ namespace ChildWatchEmployee.Controllers
             }
             if (ModelState.IsValid)
             {
-
+                TempData["member"] = member.MemberID;
                 bool register = membership.SaveMember(member.toServer());
                 if (register)
                 {
-                    return Redirect("~/Home/Index");
+                    return Redirect("~/ChildAdd/AddChild");
                 }
                 /** 
                 YMCAServiceResponse ymcaserverResponse = ymcaService.RegisterMember(member.toServer());
