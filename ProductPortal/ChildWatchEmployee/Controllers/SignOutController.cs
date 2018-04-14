@@ -17,21 +17,24 @@ namespace ChildWatchEmployee.Controllers
         public ActionResult SignOut()
         {
             ViewBag.Title = "Employee - Sign Out Child";
-            return View();
+
+            return View(new SignOut());
 
         }
 
         [HttpPost]
-        public ActionResult SignOut(Models.SignOut signOut)
+        public ActionResult SignOut(SignOut signOut)
         {
             if (ModelState.IsValid)
             {
                 if (signin.SignOut(int.Parse(signOut.BandNum)))
                 {
-                    return View(signOut);
+                    signOut.State = SignOutState.SignedOut;
                 }
-
+                else
+                    signOut.State = SignOutState.Failed;                
             }
+
             return View(signOut);
         }
     }

@@ -14,5 +14,19 @@ namespace ChildWatchEmployee.Models
         [RegularExpression("\\d{4}")]
         [Display(Name = "Band #")]
         public string BandNum { get; set; }
+
+        public SignOutState State { get; set; }
+
+        public SignOut()
+        {
+            State = SignOutState.SignedIn;
+            BandNum = null;
+        }
+    }
+    public enum SignOutState
+    {
+        SignedIn,
+        Failed,
+        SignedOut
     }
 }
