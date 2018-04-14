@@ -13,6 +13,7 @@
     <link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="../Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../Content/Site.css" rel="stylesheet" type="text/css" />
+
     <asp:ContentPlaceHolder ID="HEAD" runat="server"></asp:ContentPlaceHolder>
 </head>
 <body>
@@ -48,11 +49,10 @@
             </asp:ContentPlaceHolder>
         </div>
     </div>
-            <hr />
-            <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
-            </footer>
-        </div>
+        <hr />
+        <footer>
+            <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
+        </footer>
 
     </form>
 </body>
