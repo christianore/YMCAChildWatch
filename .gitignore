@@ -14,3 +14,5 @@ db.lock
 ProductPortal/ChildWatchEmployee/bin/
 
 ProductPortal/ChildWatchEmployee/obj/
+
+*.sln
