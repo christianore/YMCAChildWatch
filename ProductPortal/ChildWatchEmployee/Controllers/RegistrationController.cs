@@ -47,7 +47,8 @@ namespace ChildWatchEmployee.Controllers
         }
 
         [HttpPost]
-        public ActionResult RegisterChild(Models.ChildLocal child, string AddChild)
+        [MultiButton(MatchFormKey = "AddChild", MatchFormValue = "Add Another Child")]
+        public ActionResult RegisterChild(Models.ChildLocal child)
         {
             if (ModelState.ContainsKey("{ServerError}"))
             {
@@ -55,21 +56,29 @@ namespace ChildWatchEmployee.Controllers
             }
             if (ModelState.IsValid)
             {
-                Child newChild = new Child();
-                newChild.FirstName = child.FirstName;
-                newChild.LastName = child.LastName;
-                newChild.BirthDate = child.Birthday;
                 string guardianID = child.Guardian.ToString();
-                if (membership.InsertChild(newChild, guardianID) > 0)
+                if (membership.InsertChild(child.ToServer(), guardianID) > 0)
                 {
-                    if (AddChild.Equals("Add Another Child"))
-                    {
-                        return View();
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    TempData["member"] = guardianID;
+                    return View();
+                }
+            }
+            return View(child);
+        }
+        [HttpPost]
+        [MultiButton(MatchFormKey = "AddChild", MatchFormValue = "Finish Registration")]
+        public ActionResult FinishRegistration(Models.ChildLocal child)
+        {
+            if (ModelState.ContainsKey("{ServerError}"))
+            {
+                ModelState.Remove("{ServerError}");
+            }
+            if (ModelState.IsValid)
+            {
+                string guardianID = child.Guardian.ToString();
+                if (membership.InsertChild(child.ToServer(), guardianID) > 0)
+                {
+                    return RedirectToAction("Index", "Home");
                 }
             }
             return View(child);

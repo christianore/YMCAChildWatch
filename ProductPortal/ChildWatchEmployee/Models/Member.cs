@@ -54,6 +54,7 @@ namespace ChildWatchEmployee.Models
             newMember.Pin = this.Pin;
             newMember.PhoneNumber = this.PhoneNumber;
             newMember.Barcode = this.BarCode;
+            newMember.IsActive = true;
             return newMember;
            //return new ChildwatchApi.Member(this.FirstName, this.LastName, this.MemberID,
            //     this.BarCode, this.PhoneNumber, this.Pin);
