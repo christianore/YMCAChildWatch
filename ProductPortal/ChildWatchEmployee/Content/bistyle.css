@@ -1,0 +1,60 @@
+﻿body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1em; 
+    min-width: 700px;       
+}
+.aside{
+	float: left;
+	margin:0;
+	padding:0 1em 1em 1em;
+	min-width:154px;   
+    vertical-align:top;
+}
+.aside p{
+    margin-top: 0;
+}
+.centerBtnDiv{
+    margin:auto;
+    text-align:center;
+}
+.btn-lg{
+    margin:auto;
+}
+/*----- Accordion -----*/
+.accordion, .accordion * {
+-webkit-box-sizing:border-box; 
+-moz-box-sizing:border-box; 
+box-sizing:border-box;
+}
+.accordion {
+overflow:hidden;
+box-shadow:0px 1px 3px rgba(0,0,0,0.25);
+border-radius:3px;
+background:white;
+max-width: 45em;
+}
+/*----- Section Titles -----*/
+.accordion-section-title {
+width:100%;
+padding:15px;
+display:inline-block;
+border-bottom:1px solid #1a1a1a;
+background:#ffa31a;
+transition:all linear 0.15s;
+font-size:1.200em;
+text-shadow:0px 1px 0px #1a1a1a;
+color:#fff;
+}
+.accordion-section-title.active, .accordion-section-title:hover {
+background:#ffa31a;
+text-decoration:none;
+}
+.accordion-section:last-child .accordion-section-title {
+border-bottom:none;
+color:#fff;
+}
+
+.accordion-section-content {
+padding:2px;
+display:none;
+}
