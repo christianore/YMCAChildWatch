@@ -1,0 +1,12 @@
+SQL Server Requirements
+
+Install SQL Server 2017 Express
+
+Configure TCP/IP to listen on PORT 1433
+
+Turn on SQL browser
+
+Set properties for the server to allow both windows and SQL user connections
+
+create a sql user capstone with a password
+

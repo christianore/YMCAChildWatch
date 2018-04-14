@@ -11,6 +11,7 @@ C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\bin\Debug\System.Id
 C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\obj\Debug\ChildWatchApi.csproj.CoreCompileInputs.cache
 C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\obj\Debug\ChildwatchApi.dll
 C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\obj\Debug\ChildwatchApi.pdb
+<<<<<<< Updated upstream
 C:\Users\Christian\source\repos\YMCAChildWatch\childwatchapi\obj\Debug\ChildWatchApi.csprojResolveAssemblyReference.cache
 C:\Users\malic\Source\Repos\YMCAChildWatch\childwatchapi\bin\Debug\ChildwatchApi.dll
 C:\Users\malic\Source\Repos\YMCAChildWatch\childwatchapi\bin\Debug\ChildwatchApi.pdb
@@ -27,3 +28,5 @@ C:\Users\malic\Source\Repos\YMCAChildWatch\childwatchapi\obj\Debug\ChildWatchApi
 C:\Users\malic\Source\Repos\YMCAChildWatch\childwatchapi\obj\Debug\ChildWatchApi.csproj.CopyComplete
 C:\Users\malic\Source\Repos\YMCAChildWatch\childwatchapi\obj\Debug\ChildwatchApi.dll
 C:\Users\malic\Source\Repos\YMCAChildWatch\childwatchapi\obj\Debug\ChildwatchApi.pdb
+=======
+>>>>>>> Stashed changes

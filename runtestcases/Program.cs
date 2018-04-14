@@ -143,7 +143,7 @@ namespace ChildWatch
                                         int childs = Math.Min(r.Next(6), y);
                                         
                                         for (int i = 0; i < childs; i++)
-                                            child[i] = gen.RandomChild(m.LastName);
+                                            child.Add(gen.RandomChild(m.LastName));
 
                                         y = y - childs;
                                     }
@@ -156,9 +156,9 @@ namespace ChildWatch
 
                                     if (membership.RegisterFamily(family)) registered++;
                                 }
-                                catch
+                                catch(Exception ex)
                                 {
-
+                                    Console.WriteLine(ex.Message);
                                 }
                                 
                             }
