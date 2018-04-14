@@ -15,7 +15,7 @@ function validate() {
     );
 
     $.ajax({
-        url: "http://localhost:50920/Login/Login.aspx/ValidateMember",
+        url: url.validate,//"/SignIn/ValidateMember",
         data: json,
         type: "POST",
         dataType: "json",
@@ -172,7 +172,7 @@ function signinFamily() {
     );
 
     $.ajax({
-        url: "http://localhost:50920/Login/Login.aspx/SigninMembers",
+        url: url.signin,//"/SignIn/SigninMembers",
         data: JSON.stringify({ data: json }),
         type: "POST",
         dataType: "json",
