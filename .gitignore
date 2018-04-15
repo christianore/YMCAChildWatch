@@ -1,18 +1,11 @@
 ﻿################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
-
-/.vs/*
 *.lock
 *.ide-shm
 *.ide
 *.ide-wal
 db.lock
-
 \.vs/
 
-ProductPortal/ChildWatchEmployee/bin/
 
-ProductPortal/ChildWatchEmployee/obj/
-
-*.sln
