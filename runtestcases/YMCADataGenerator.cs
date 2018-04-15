@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using ChildWatchApi.Data;
-using ChildWatchApi.Data.Report;
+
 
 namespace ChildWatch
 {
@@ -40,9 +41,15 @@ namespace ChildWatch
         }
         public Member RandomMemberFromData(ReportManager manager)
         {
-            MemberReport report = manager.GetMemberReport(true);
-            MemberRecord selected = (MemberRecord)report.Rows[random.Next(report.Rows.Count)];
-            return selected.ToMemberObject();
+            var report = manager.GetMemberReport(true);
+            DataRow selected = report.Rows[random.Next(report.Rows.Count)];
+            return new Member()
+            {
+                MemberId = (string)selected["member_id"],
+                FirstName = (string)selected["member_fName"],
+                LastName = (string)selected["member_lName"],
+                PhoneNumber = (string)selected["phone"]
+            };
         }
         public Family RandomFamily()
         {

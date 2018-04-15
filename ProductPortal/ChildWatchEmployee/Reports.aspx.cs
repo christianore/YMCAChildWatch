@@ -1,5 +1,4 @@
 ﻿using ChildWatchApi.Data;
-using ChildWatchApi.Data.Report;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

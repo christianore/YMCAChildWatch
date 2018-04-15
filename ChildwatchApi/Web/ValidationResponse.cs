@@ -20,10 +20,10 @@ namespace ChildWatchApi.Web
             Locations = locations;
         }
     }
+
     public class ValidationToken
     {
         public string Barcode { get; set; }
         public string Pin { get; set; }
-
     }
 }

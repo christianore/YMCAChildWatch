@@ -1,0 +1,21 @@
+﻿@model ChildWatchEmployee.Models.UserLogin
+
+@{
+    ViewBag.Title = "Login";
+
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm())
+{
+
+    <div>
+        <label>Username: </label><br/>
+        @Html.TextBoxFor(m => Model.Username)
+        <label>Password: </label><br/>
+        @Html.TextBoxFor(m => Model.Password)
+    </div>
+
+    <input type="submit" value="Submit"/>
+}
