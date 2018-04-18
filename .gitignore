@@ -8,6 +8,7 @@
 db.lock
 \.vs/
 
+<<<<<<< HEAD
 
 /ChildwatchApi/obj/Release
 /runtestcases/obj/Release
@@ -23,3 +24,8 @@ ChildwatchApi/bin/
 ChildwatchApi/obj/
 
 Help_Guide/Help_Guide\.sln
+=======
+
+/ChildwatchApi/obj/Release
+/runtestcases/obj/Release
+>>>>>>> 6468a7d1c707181aed58ef295e22113e7fb7ecd3
