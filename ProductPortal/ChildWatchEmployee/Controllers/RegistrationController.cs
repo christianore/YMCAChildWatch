@@ -5,7 +5,7 @@ using System.Configuration;
 
 namespace ChildWatchEmployee.Controllers
 {
-    
+    [Authorize]
     public class RegistrationController : Controller
     {
         MembershipManager membership = new MembershipManager(new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["database"].ToString()));

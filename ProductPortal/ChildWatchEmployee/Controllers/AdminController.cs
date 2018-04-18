@@ -13,6 +13,7 @@ using System.Web.Security;
 
 namespace ChildWatchEmployee.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         OrganizationManager manager = new OrganizationManager(new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["database"].ToString()));

@@ -13,11 +13,13 @@ using Newtonsoft.Json;
 
 namespace ChildWatchEmployee.Controllers
 {
+    [AllowAnonymous]
     [WebService]
     public class SignInController : Controller
     {
 
         SignInManager signin = new SignInManager(new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["database"].ToString()));
+        [Authorize]
         // GET: SignOut
         public ActionResult SignOut()
         {
@@ -26,7 +28,7 @@ namespace ChildWatchEmployee.Controllers
             return View(new SignOut());
 
         }
-
+        [Authorize]
         [HttpPost]
         public ActionResult SignOut(SignOut signOut)
         {

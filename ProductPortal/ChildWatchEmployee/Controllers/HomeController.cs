@@ -11,6 +11,7 @@ using System.Web.Security;
 using System.Data;
 using ChildWatchApi.Utility.Logging;
 using ChildWatchApi.Web;
+using System.Security.Cryptography;
 
 namespace ChildWatchEmployee.Controllers
 {
@@ -61,6 +62,7 @@ namespace ChildWatchEmployee.Controllers
                 }
                 else
                 {
+                    
                     SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["database"].ToString());
                     ChildwatchAuthentication auth = ChildwatchAuthentication.Authenticate(model.Username, model.Password, connection);
                     switch(auth.Authentication)

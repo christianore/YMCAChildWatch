@@ -1,32 +1,45 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .portalLink{
+        
+    }
+    .portalLink:hover{
+        color: black;
+      
+    }
+</style>
+
 <h2>Administrator Portal</h2>
-<a href="~/Admin/Register">
-    <div>
+
+<div>
+    <a class="portalLink w3-btn" href="~/Admin/Register">
         <h3>Register Employee</h3>
-        <p>Create a new employee to use the ChildWatch application.</p>
-        <p>You will need the following information to complete this: </p>
-        <ul>
-            <li>Unique username</li>
-            <li>Temporary password</li>
-            <li>Employee information</li>
-        </ul>
-    </div>
-</a>
-<a href="~/Admin/Unlock">
-    <div>
+    </a>
+    <p>Create a new employee to use the ChildWatch application.</p>
+    <p>You will need the following information to complete this: </p>
+    <ul>
+        <li>Unique username</li>
+        <li>Temporary password</li>
+        <li>Employee information</li>
+    </ul>
+</div>
+<div>
+    <a class="portalLink" href="~/Admin/Unlock">
         <h3>Unlock Employee</h3>
+    </a>
         <p>When ever an employee needs a password reset, go here to create a new temporary one for them to change.</p>
-    </div>
-</a>
-<a href="~/Admin/Update">
-    <div>
+</div>
+
+
+<div>
+    <a class="portalLink" href="~/Admin/Update">
         <h3>Update Information</h3>
+    </a>
         <p>Use this section to update any information already in the database for an employee.</p>
-    </div>
-</a>
+</div>
+
 
