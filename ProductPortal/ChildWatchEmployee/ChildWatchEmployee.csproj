@@ -216,7 +216,6 @@
     <Content Include="Scripts\WebForms\WebForms.js" />
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
-
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -226,30 +225,16 @@
     <Compile Include="ChildWatchHub.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
-    <Compile Include="Controllers\ReportingController.cs" />
     <Compile Include="Controllers\SignInController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Login\Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Login\Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Login\Site.Master.cs">
-      <DependentUpon>Site.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Login\Site.Master.designer.cs">
-      <DependentUpon>Site.Master</DependentUpon>
     </Compile>
     <Compile Include="Models\ChildLocal.cs" />
     <Compile Include="Models\DBConnection.cs" />
     <Compile Include="Models\Member.cs" />
     <Compile Include="Models\SignIn.cs" />
     <Compile Include="Models\SignOut.cs" />
+    <Compile Include="MultiButtonAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -302,9 +287,9 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\childwatchapi\ChildWatchApi.csproj">
+    <ProjectReference Include="..\..\ChildwatchApi\ChildwatchApi.csproj">
       <Project>{79ec0675-c4a2-44a0-ac89-c234e86d63b5}</Project>
-      <Name>ChildWatchApi</Name>
+      <Name>ChildwatchApi</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
