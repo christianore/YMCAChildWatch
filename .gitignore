@@ -1,20 +1,37 @@
 ﻿################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
-
-/.vs/*
 *.lock
 *.ide-shm
 *.ide
 *.ide-wal
 db.lock
-
 \.vs/
+
+<<<<<<< HEAD
+
+/ChildwatchApi/obj/Release
+/runtestcases/obj/Release
 
 ProductPortal/ChildWatchEmployee/bin/
 
-ProductPortal/ChildWatchEmployee/obj/
+webservice/
 
+Childwatch\.sln
+
+ChildwatchApi/bin/
+
+ChildwatchApi/obj/
+
+Help_Guide/Help_Guide\.sln
+=======
+
+<<<<<<< HEAD
 *.sln
 
 ChildwatchApi/bin/
+=======
+/ChildwatchApi/obj/Release
+/runtestcases/obj/Release
+>>>>>>> 6468a7d1c707181aed58ef295e22113e7fb7ecd3
+>>>>>>> master

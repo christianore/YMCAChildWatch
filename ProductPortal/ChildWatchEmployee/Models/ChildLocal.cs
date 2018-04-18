@@ -22,13 +22,24 @@ namespace ChildWatchEmployee.Models
         public DateTime Birthday { get; set; }
 
         [Required]
+        [MaxLength(11, ErrorMessage = "Member ID cannot be longer than 11 Digits")]
+        [RegularExpression("\\d{11}")]
         [Display(Name = "Guardian ID")]
-        public int Guardian { get; set; }
+        public string Guardian { get; set; }
 
         public override string ToString()
         {
             return "{\"firstName\":\"" + FirstName + "\",\"lastName\":\"" + LastName +
                     "\",\"BirthDate\":\"" + Birthday + "\"}";
+        }
+
+        public ChildWatchApi.Data.Child ToServer()
+        {
+            ChildWatchApi.Data.Child newChild = new ChildWatchApi.Data.Child();
+            newChild.BirthDate = Birthday;
+            newChild.FirstName = FirstName;
+            newChild.LastName = LastName;
+            return newChild;
         }
     }
 }

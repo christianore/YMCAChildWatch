@@ -31,10 +31,12 @@ namespace ChildWatchEmployee.Controllers
                 bool register = membership.SaveMember(member.toServer());
                 if (register)
                 {
+                    TempData["Message"] = "Member registered";
                     return RedirectToAction("AddChild");
                 }
                 else
                 {
+                    TempData["Failure"] = "Failed to add member";
                     return View(member);
                 }
             }
@@ -47,7 +49,8 @@ namespace ChildWatchEmployee.Controllers
         }
 
         [HttpPost]
-        public ActionResult RegisterChild(Models.ChildLocal child, string AddChild)
+        [MultiButton(MatchFormKey = "AddChild", MatchFormValue = "Add Another Child")]
+        public ActionResult RegisterChild(Models.ChildLocal child)
         {
             if (ModelState.ContainsKey("{ServerError}"))
             {
@@ -55,21 +58,39 @@ namespace ChildWatchEmployee.Controllers
             }
             if (ModelState.IsValid)
             {
-                Child newChild = new Child();
-                newChild.FirstName = child.FirstName;
-                newChild.LastName = child.LastName;
-                newChild.BirthDate = child.Birthday;
                 string guardianID = child.Guardian.ToString();
-                if (membership.InsertChild(newChild, guardianID) > 0)
+                if (membership.InsertChild(child.ToServer(), guardianID) > 0)
                 {
-                    if (AddChild.Equals("Add Another Child"))
-                    {
-                        return View();
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    TempData["member"] = guardianID;
+                    TempData["Message"] = "Child registered";
+                    return View();
+                }
+                else
+                {
+                    TempData["Failure"] = "Failed to register";
+                }
+            }
+            return View(child);
+        }
+        [HttpPost]
+        [MultiButton(MatchFormKey = "AddChild", MatchFormValue = "Finish Registration")]
+        public ActionResult FinishRegistration(Models.ChildLocal child)
+        {
+            if (ModelState.ContainsKey("{ServerError}"))
+            {
+                ModelState.Remove("{ServerError}");
+            }
+            if (ModelState.IsValid)
+            {
+                string guardianID = child.Guardian.ToString();
+                if (membership.InsertChild(child.ToServer(), guardianID) > 0)
+                {
+                    TempData["Message"] = "Child registered";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["Failure"] = "Failed to register";
                 }
             }
             return View(child);
