@@ -31,10 +31,12 @@ namespace ChildWatchEmployee.Controllers
                 bool register = membership.SaveMember(member.toServer());
                 if (register)
                 {
+                    TempData["Message"] = "Member registered";
                     return RedirectToAction("AddChild");
                 }
                 else
                 {
+                    TempData["Failure"] = "Failed to add member";
                     return View(member);
                 }
             }
@@ -60,7 +62,12 @@ namespace ChildWatchEmployee.Controllers
                 if (membership.InsertChild(child.ToServer(), guardianID) > 0)
                 {
                     TempData["member"] = guardianID;
+                    TempData["Message"] = "Child registered";
                     return View();
+                }
+                else
+                {
+                    TempData["Failure"] = "Failed to register";
                 }
             }
             return View(child);
@@ -78,7 +85,12 @@ namespace ChildWatchEmployee.Controllers
                 string guardianID = child.Guardian.ToString();
                 if (membership.InsertChild(child.ToServer(), guardianID) > 0)
                 {
+                    TempData["Message"] = "Child registered";
                     return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["Failure"] = "Failed to register";
                 }
             }
             return View(child);

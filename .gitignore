@@ -9,3 +9,5 @@ db.lock
 \.vs/
 
 
+/ChildwatchApi/obj/Release
+/runtestcases/obj/Release

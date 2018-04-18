@@ -41,6 +41,26 @@
     </nav>
     <div class="row justify-content-center">
         <div class="col-md-6">
+            @{
+                var message = TempData["Message"];
+                if (message != null)
+                {
+        @:<div class="alert alert-success" role="alert">
+                    message.ToString()
+        @:
+        </div>
+                }
+            }
+            @{
+                var message = TempData["Failure"];
+                if (message != null)
+                {
+        @:<div class="alert alert-danger" role="alert">
+                    message.ToString()
+        @:
+        </div>
+                }
+            }
             @RenderBody()
         </div>
     </div>
