@@ -6,11 +6,28 @@
     <title>@ViewBag.Title</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.2.3.js"></script>
     <script src="~/signalr/hubs"></script>
 </head>
 <body>
+    @{ 
+        bool isAdmin = false;
+        HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+        FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
+        if(!string.IsNullOrEmpty(ticket.UserData))
+        {
+            string[] data = ticket.UserData.Split('=');
+            if(data.Length >= 2)
+            {
+                if (data[0] == "Admin" && data[1] == "1")
+                {
+                    isAdmin = true;
+                }
+            }
+        }
+    }
     <nav class="navbar navbar-expand-sm bg-light navbar-light">
         <a class="navbar-brand" href="#">
             <img src="~/Images/logo.png" alt="YMCA Logo" style="width:80px; height:80px;">
@@ -29,7 +46,7 @@
                 <a class="nav-link" href="~/SignIn/SignOut">Sign Out</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="~/SignIn/SignIn" target="_blank">Login</a>
+                <a class="nav-link" href="~/SignIn/SignIn" target="_blank">Member Signin</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="~/Reports.aspx">Reports</a>
@@ -37,6 +54,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="">Help</a>
             </li>
+            @if (isAdmin)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="~/Admin/Index">Admin</a>
+                </li>
+            }
         </ul>
     </nav>
     <div class="row justify-content-center">

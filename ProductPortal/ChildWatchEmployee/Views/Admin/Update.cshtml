@@ -1,0 +1,118 @@
+﻿@model ChildWatchEmployee.Models.UpdateEmployee
+@using ChildWatchEmployee.Models;
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Update Employee Information</h2>
+
+@using (Html.BeginForm())
+{
+    if (TempData["Message"] != null)
+    {
+        ResponseMessage m = (ResponseMessage)TempData["Message"];
+        string classes = m.Error ? "alert alert-danger" : "alert alert-success";
+        <div id="messagebox" class="@classes">
+            @m.Message
+        </div>
+        if (!m.Error)
+        {
+            <script>
+                $(function () {
+                    $('input[type=text]').val("");
+                });
+            </script>
+        }
+    }
+    else
+    {
+        <div id="messagebox" class="alert alert-warning" style="display:none;">
+
+        </div>
+    }
+
+   
+    int select = -1;
+    object data = TempData["EmployeeID"];
+    if(data != null)
+    {
+        select = (int)data;
+    }
+    
+    <div class="form-group">
+        @Html.DropDownListFor(m => Model.Employee.ID, Model.CurrentEmployees(), new { id = "list", onchange = "changeEmployee()", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>First Name:</label>
+        @Html.TextBoxFor(m => Model.Employee.FirstName, new {id = "firstname",  @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Last Name:</label>
+        @Html.TextBoxFor(m => Model.Employee.LastName, new { id="lastname", @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>User Name:</label>
+        @Html.TextBoxFor(m => Model.Employee.Username, new { id="username", @class = "form-control" })
+    </div>
+    
+    <table class="table" style="max-width: 500px;">
+        <tr>
+            <th>Make Administrator</th>
+            <th>Locked Out</th>
+            <th>Remove Access</th>
+        </tr>
+        <tr>
+            <td>@Html.CheckBoxFor(m => Model.Employee.Administrator, new { id = "admin" })</td>
+            <td>@Html.CheckBoxFor(m => Model.Employee.NeedsReset, new { id = "reset" })</td>
+            <td>@Html.CheckBoxFor(m => Model.Employee.Blocked, new { id = "blocked" })</td>
+        </tr>
+    </table>
+
+    
+
+    <br /><br />
+    <input value="Submit" type="submit" class="btn btn-primary btn-block"/>
+}
+    <script>
+        $(function () {
+            var id = '@TempData["EmployeeID"]';
+            if (id != '') {
+
+            }
+            changeEmployee();
+        });
+    function changeEmployee() {
+        var eList = document.getElementById('list');
+        for (var i = 0; i < eList.children.length; i++) {
+            var child = eList.children[i];
+            if (child.selected) {
+
+                var json = JSON.stringify({ id: child.value });
+                $.ajax({
+                    url: '@Url.Action("GetEmployeeInfo", "Admin")',
+                    data: json,
+                    type: "POST",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    success: function (employee) {
+                        if (employee.error === undefined) {
+                            document.getElementById("firstname").value = employee.FirstName;
+                            document.getElementById("lastname").value = employee.LastName;
+                            document.getElementById("username").value = employee.UserName;
+                            document.getElementById("admin").checked = employee.Administrator;
+                            document.getElementById("reset").checked = employee.NeedsReset;
+                            document.getElementById("blocked").checked = employee.Blocked;
+                        }
+                        else {
+                            alert("An unexpected error occured retrieving employee data.");
+                        }
+                        
+                        
+                    },
+                    error: function (x, status, error) { alert(error) }
+                });
+            }
+        }
+    }
+    </script>

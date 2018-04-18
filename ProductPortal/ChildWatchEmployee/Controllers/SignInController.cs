@@ -57,7 +57,8 @@ namespace ChildWatchEmployee.Controllers
 
             Family f = manager.Validate(data.Barcode, data.Pin);
             OrganizationManager organization = new OrganizationManager(sql);
-            Object o = new ValidationResponse(f != null, f, organization.GetLocations(1));
+            Location[] locationList = organization.GetLocations();
+            Object o = new ValidationResponse(f != null, f, locationList);
 
             return Json(o, JsonRequestBehavior.AllowGet);
         }

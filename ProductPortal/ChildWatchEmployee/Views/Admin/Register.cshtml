@@ -1,0 +1,77 @@
+﻿@model ChildWatchEmployee.Models.RegisterEmployee
+@using ChildWatchEmployee.Models;
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Register Employee</h2>
+
+<div>
+    @using (Html.BeginForm())
+    {
+        if (TempData["Message"] != null)
+        {
+            ResponseMessage m = (ResponseMessage)TempData["Message"];
+            string classes = m.Error ? "alert alert-danger" : "alert alert-success";
+            <div id="messagebox" class="@classes">
+                @m.Message
+            </div>
+            if(!m.Error)
+            {
+                <script>
+                    $(function () {
+                        $('input[type=text]').val("");
+                    });
+                </script>
+            }
+        }
+        else
+        {
+            <div id="messagebox" class="alert alert-warning" style="display:none;">
+
+            </div>
+        }
+
+        
+        <div class="form-group">
+            <label>First Name:</label>
+            @Html.TextBoxFor(m => Model.FirstName, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Last Name:</label>
+            @Html.TextBoxFor(m => Model.LastName, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>User Name:</label>
+            @Html.TextBoxFor(m => Model.Username, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            <label>Password:</label>
+            @Html.TextBoxFor(m => Model.Password, new { id = "password", @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Confirm Password:</label>
+            <input type="text" id="confirm" class="form-control" />
+        </div>
+
+        @Html.CheckBoxFor(m => Model.Administrator)
+        <label>Check this box to make an admin of the system.</label>
+
+        <br /><br />
+        <button type="button" class="btn btn-primary btn-block" onclick="check()">Submit</button>
+    }
+</div>
+<script>
+    function check() {
+        if ($('#password').val() == $('#confirm').val()) {
+            document.getElementsByTagName("form")[0].submit();
+        }
+        else {
+            $('#messagebox').show();
+            $('#messagebox').text("Unable to submit form.  Passwords do not match.");
+        }
+    }
+</script>

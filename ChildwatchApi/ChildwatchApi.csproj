@@ -57,6 +57,7 @@
     <Compile Include="Entity\Child.cs" />
     <Compile Include="Data\OrganizationManager.cs" />
     <Compile Include="Data\ReportManager.cs" />
+    <Compile Include="Entity\Employee.cs" />
     <Compile Include="Entity\Family.cs" />
     <Compile Include="Data\IDatabaseManager.cs" />
     <Compile Include="Entity\Location.cs" />
