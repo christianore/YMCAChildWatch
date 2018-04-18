@@ -1,9 +1,0 @@
-C:\Users\Christian\source\repos\YMCAChildWatch\RunTestCases\bin\Debug\RunTestCases.exe.config
-C:\Users\Christian\source\repos\YMCAChildWatch\RunTestCases\bin\Debug\RunTestCases.exe
-C:\Users\Christian\source\repos\YMCAChildWatch\RunTestCases\bin\Debug\RunTestCases.pdb
-C:\Users\Christian\source\repos\YMCAChildWatch\RunTestCases\obj\Debug\RunTestCases.csproj.CoreCompileInputs.cache
-C:\Users\Christian\source\repos\YMCAChildWatch\RunTestCases\obj\Debug\RunTestCases.exe
-C:\Users\Christian\source\repos\YMCAChildWatch\RunTestCases\obj\Debug\RunTestCases.pdb
-C:\Users\Christian\source\repos\YMCAChildWatch\RunTestCases\bin\Debug\ChildwatchApi.dll
-C:\Users\Christian\source\repos\YMCAChildWatch\RunTestCases\bin\Debug\ChildwatchApi.pdb
-C:\Users\Christian\source\repos\YMCAChildWatch\RunTestCases\obj\Debug\RunTestCases.csprojResolveAssemblyReference.cache
