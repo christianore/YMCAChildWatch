@@ -65,23 +65,24 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             @{
-                var message = TempData["Message"];
-                if (message != null)
+                var success = TempData["Success"];
+                if (success != null)
                 {
-        @:<div class="alert alert-success" role="alert">
-                    message.ToString()
-        @:
-        </div>
+                    <div id="successDiv" class="alert alert-success" role="alert">
+                        @success.ToString()
+
+                    </div>
+       
                 }
             }
             @{
-                var message = TempData["Failure"];
-                if (message != null)
+                var fail = TempData["Failure"];
+                if (fail != null)
                 {
-        @:<div class="alert alert-danger" role="alert">
-                    message.ToString()
-        @:
-        </div>
+                    <div id="failDiv" class="alert alert-danger" role="alert">
+                    @fail.ToString()
+   
+                    </div>
                 }
             }
             @RenderBody()

@@ -4,19 +4,20 @@
 }
 
 <style>
-    .portalLink{
-        
+    .card{
+        margin: 2em;
+        padding: 1em;
     }
-    .portalLink:hover{
-        color: black;
-      
+    .card .btn{
+        margin: 25px;
     }
 </style>
 
-<h2>Administrator Portal</h2>
+<h2 class="jumbotron">Administrator Portal</h2>
 
-<div>
-    <a class="portalLink w3-btn" href="~/Admin/Register">
+
+<div class="card">
+    <a class="btn btn-primary" href="~/Admin/Register">
         <h3>Register Employee</h3>
     </a>
     <p>Create a new employee to use the ChildWatch application.</p>
@@ -27,16 +28,16 @@
         <li>Employee information</li>
     </ul>
 </div>
-<div>
-    <a class="portalLink" href="~/Admin/Unlock">
+<div class="card">
+    <a class="btn btn-primary" href="~/Admin/Unlock">
         <h3>Unlock Employee</h3>
     </a>
         <p>When ever an employee needs a password reset, go here to create a new temporary one for them to change.</p>
 </div>
 
 
-<div>
-    <a class="portalLink" href="~/Admin/Update">
+<div class="card">
+    <a class="btn btn-primary" href="~/Admin/Update">
         <h3>Update Information</h3>
     </a>
         <p>Use this section to update any information already in the database for an employee.</p>

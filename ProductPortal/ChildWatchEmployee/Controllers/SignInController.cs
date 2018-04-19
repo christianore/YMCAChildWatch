@@ -37,7 +37,7 @@ namespace ChildWatchEmployee.Controllers
                 if (signin.SignOut(int.Parse(signOut.BandNum)))
                 {
                     signOut.State = SignOutState.SignedOut;
-                    TempData["Message"] = "Sign out Successful";
+                    TempData["Success"] = "Sign out Successful";
                     return View(new SignOut());
                 }
                 else

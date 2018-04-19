@@ -7,31 +7,18 @@
 *.ide-wal
 db.lock
 \.vs/
-
-<<<<<<< HEAD
-
 /ChildwatchApi/obj/Release
 /runtestcases/obj/Release
-
 ProductPortal/ChildWatchEmployee/bin/
-
 webservice/
-
 Childwatch\.sln
-
 ChildwatchApi/bin/
-
 ChildwatchApi/obj/
-
 Help_Guide/Help_Guide\.sln
-=======
-
-<<<<<<< HEAD
-*.sln
-
+\.sln/
 ChildwatchApi/bin/
-=======
+ProductPortal/ChildWatchEmployee/obj/
 /ChildwatchApi/obj/Release
 /runtestcases/obj/Release
->>>>>>> 6468a7d1c707181aed58ef295e22113e7fb7ecd3
->>>>>>> master
+
+

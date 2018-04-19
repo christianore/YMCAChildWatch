@@ -12,3 +12,8 @@
 .form-group {
     margin-bottom: 15px;
 }
+.jumbotron {
+    color: white;
+    background-color: rgba(0, 157, 137, 1);
+    text-align: center;
+}

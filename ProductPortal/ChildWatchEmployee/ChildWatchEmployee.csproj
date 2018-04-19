@@ -230,10 +230,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="Models\ChangePassword.cs" />
-=======
->>>>>>> master
     <Compile Include="Models\ChildLocal.cs" />
     <Compile Include="Models\DBConnection.cs" />
     <Compile Include="Models\Member.cs" />
@@ -241,12 +238,9 @@
     <Compile Include="Models\ResponseMessage.cs" />
     <Compile Include="Models\SignIn.cs" />
     <Compile Include="Models\SignOut.cs" />
-<<<<<<< HEAD
     <Compile Include="Models\UpdateEmployee.cs" />
     <Compile Include="Models\UserLogin.cs" />
-=======
     <Compile Include="MultiButtonAttribute.cs" />
->>>>>>> master
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
