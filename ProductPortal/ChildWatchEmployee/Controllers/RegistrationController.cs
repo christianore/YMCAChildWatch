@@ -10,10 +10,16 @@ namespace ChildWatchEmployee.Controllers
     {
         MembershipManager membership = new MembershipManager(new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["database"].ToString()));
 
-        public ActionResult Register()
-        {
-            ViewBag.Title = "Employee - Register New Child";
 
+
+        public ActionResult Register(string name)
+        {
+            var member = new Models.Member();
+            return View();
+        }
+
+        public ActionResult Update(string name)
+        {
             var member = new Models.Member();
             return View();
         }
@@ -31,6 +37,7 @@ namespace ChildWatchEmployee.Controllers
                 bool register = membership.SaveMember(member.toServer());
                 if (register)
                 {
+                    TempData.Remove("page");
                     TempData["Success"] = "Member registered";
                     return RedirectToAction("AddChild");
                 }
@@ -43,8 +50,35 @@ namespace ChildWatchEmployee.Controllers
             return View(member);
         }
 
+        [HttpPost]
+        public ActionResult Update(Models.Member member)
+        {
+            if (ModelState.ContainsKey("{ServerError}"))
+            {
+                ModelState.Remove("{ServerError}");
+            }
+            if (ModelState.IsValid)
+            {
+                TempData["member"] = member.MemberID;
+                bool register = membership.SaveMember(member.toServer());
+                if (register)
+                {
+                    TempData.Remove("page");
+                    TempData["Success"] = "Member updated";
+                    return Redirect("~/Home/Index");
+                }
+                else
+                {
+                    TempData["Failure"] = "Failed to update member";
+                    return View(member);
+                }
+            }
+            return View(member);
+        }
+
         public ActionResult AddChild()
         {
+            ViewBag.Title = "Add New Child";
             return View();
         }
 
@@ -86,6 +120,7 @@ namespace ChildWatchEmployee.Controllers
                 if (membership.InsertChild(child.ToServer(), guardianID) > 0)
                 {
                     TempData["Success"] = "Child registered";
+                    TempData["member"] = null;
                     return RedirectToAction("Index", "Home");
                 }
                 else

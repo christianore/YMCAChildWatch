@@ -308,6 +308,7 @@
     <Content Include="Views\Shared\ExternalFooter.cshtml" />
     <Content Include="Views\Help\HelpFile.cshtml" />
     <Content Include="Views\Registration\AddChild.cshtml" />
+    <Content Include="Views\Registration\Update.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -317,7 +318,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Help\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
