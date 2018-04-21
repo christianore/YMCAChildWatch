@@ -10,6 +10,7 @@
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.2.3.js"></script>
     <script src="~/signalr/hubs"></script>
+    <link href="~/Content/Site.css" rel="stylesheet"/>
     <style>
         .w3-card {
             max-width: 750px;
@@ -30,7 +31,7 @@
         }
     </style>
 </head>
-<body>
+<body class="body">
     @Html.Partial("ExternalHeader")
 
     @using (Html.BeginForm())

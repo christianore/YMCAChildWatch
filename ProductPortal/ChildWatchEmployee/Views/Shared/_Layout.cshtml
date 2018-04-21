@@ -5,19 +5,23 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.2.3.js"></script>
     <script src="~/signalr/hubs"></script>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+    @Html.Partial("ExternalHeader")
+
     @{ 
         bool isAdmin = false;
         HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
         FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
         if(!string.IsNullOrEmpty(ticket.UserData))
         {
+            
             string[] data = ticket.UserData.Split('=');
             if(data.Length >= 2)
             {
@@ -28,40 +32,48 @@
             }
         }
     }
-    <nav class="navbar navbar-expand-sm bg-light navbar-light">
-        <a class="navbar-brand" href="#">
-            <img src="~/Images/logo.png" alt="YMCA Logo" style="width:80px; height:80px;">
-        </a>
-        <ul class="navbar-nav">
+    
+        <nav class=" navbar navbar-expand-sm bg-light navbar-light">
+            <div class="container">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/Home/Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/Registration/Register">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/Registration/AddChild">Add Child</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/SignIn/SignOut">Sign Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/SignIn/SignIn" target="_blank">Member Signin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/Reports.aspx" target="_blank">Reports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Help</a>
+                    </li>
+                    @if (isAdmin)
+        {
             <li class="nav-item">
-                <a class="nav-link" href="~/Home/Index">Home</a>
+                <a class="nav-link" href="~/Admin/Index">Admin</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="~/Registration/Register">Register</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="~/Registration/AddChild">Add Child</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="~/SignIn/SignOut">Sign Out</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="~/SignIn/SignIn" target="_blank">Member Signin</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="~/Reports.aspx" target="_blank">Reports</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="">Help</a>
-            </li>
-            @if (isAdmin)
-            {
-                <li class="nav-item">
-                    <a class="nav-link" href="~/Admin/Index">Admin</a>
-                </li>
-            }
-        </ul>
-    </nav>
+}
+
+
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link nav">Logged in: @ticket.Name</a>
+                    </li>
+                </ul>
+            </div>
+</nav>
+   
     <div class="row justify-content-center">
         <div class="col-md-6">
             @{
@@ -85,8 +97,11 @@
                     </div>
                 }
             }
-            @RenderBody()
+                    <div class="body">
+                        @RenderBody()
+                    </div>
         </div>
     </div>
+    @Html.Partial("ExternalFooter")
 </body>
 </html>

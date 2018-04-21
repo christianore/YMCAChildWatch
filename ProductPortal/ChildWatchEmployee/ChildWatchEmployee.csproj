@@ -149,6 +149,7 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -284,6 +285,7 @@
     <Content Include="Views\Admin\EmployeeBasicInfo.cshtml" />
     <Content Include="Views\Shared\ExternalHeader.cshtml" />
     <Content Include="Views\Shared\ExternalFooter.cshtml" />
+    <Content Include="Views\Registration\AddChild.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,6 +1,5 @@
 ﻿body {
 }
-
 .validation-summary-valid {
     display: none;
 }
@@ -16,4 +15,111 @@
     color: white;
     background-color: rgba(0, 157, 137, 1);
     text-align: center;
+    padding: 20px !important;
+    margin: 8px !important;
+}
+.nav-link:hover {
+    color: #F47920 !important;
+}
+footer {
+    background-color: #FCAF17;
+    padding: 20px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+.footerContent p {
+    color: white;
+    text-shadow: 1px 3px 5px black;
+    text-align: center;
+}
+
+.donators {
+    margin: auto;
+    width: 500px;
+}
+.body{
+    padding-bottom: 200px;
+}
+fieldset{
+    padding: 50px;
+    margin: 45px;
+}
+    fieldset input[type=submit], fieldset button, fieldset a {
+        margin: 20px;
+        max-width: 300px;
+        margin: auto;
+        background-color: inherit #F47920 !important;
+        transition-duration: 1s;
+    }
+        fieldset input[type=submit]:hover, fieldset button:hover, fieldset a:hover {
+            background-color: rgba(0, 157, 137, 1) !important;
+           transition-duration: 1s;
+        }
+input[type=text]{
+    font:large;
+    
+}
+input[type=text]:focus {
+    border: solid rgba(0, 157, 137, 1) 3px;
+    outline: none;
+    box-shadow: 0px 0px 0px 0.2rem rgba(0, 157, 137, 1);
+}
+.content {
+    max-width: 90%;
+    margin: 2em auto;
+}
+
+.userinfo {
+    max-width: 100px;
+}
+
+.loginForm {
+    width: 90%;
+    margin: auto;
+}
+
+#children tr td {
+    min-width: 150px;
+    padding-right: 30px;
+    border-bottom: 2px solid black;
+}
+
+#login, #divBand {
+    width: 45%;
+    margin: auto;
+}
+
+#children tr th {
+    padding: 1em;
+    padding-left: 0;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#childList {
+    padding: 2em;
+    max-height: 750px;
+    max-width: 855px;
+    margin: auto;
+    overflow-y: auto;
+}
+
+.buttonFooter {
+    padding: 2em;
+}
+@media only screen and (max-width: 1200px)
+{
+    .col-md-6{
+        width: 80% !important;
+        flex: 0 0 90% !important;
+        max-width: 90% !important;
+    }
+    .nav-link{
+        font-size:10px;
+    }
+    #login, #divBand {
+        width: 90%;
+        margin: auto;
+    }
 }

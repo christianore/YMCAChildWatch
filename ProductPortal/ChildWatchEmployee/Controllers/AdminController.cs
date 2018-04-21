@@ -52,7 +52,7 @@ namespace ChildWatchEmployee.Controllers
                 
             }
             
-            return View(new RegisterEmployee());
+            return View(model);
         }
 
         public ActionResult Unlock()

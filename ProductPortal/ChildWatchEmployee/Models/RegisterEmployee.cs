@@ -1,6 +1,7 @@
 ﻿using ChildWatchApi.Entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -8,13 +9,19 @@ namespace ChildWatchEmployee.Models
 {
     public class RegisterEmployee 
     {
+        [Required]
         public int ID { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
+        
         public bool Administrator { get; set; }
         public bool Blocked { get; set; }
         public bool NeedsReset { get; set; }
+        [Required]
         public string Username { get; set; }
+        [Required]
         public string Password { get; set; }
 
         public RegisterEmployee()
@@ -22,7 +29,6 @@ namespace ChildWatchEmployee.Models
             FirstName = "";
             LastName = "";
             Administrator = false;
-
             Password = "";
         }
 

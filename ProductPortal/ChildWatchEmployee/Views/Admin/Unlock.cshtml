@@ -2,7 +2,7 @@
 @using ChildWatchEmployee.Models;
 
 @{
-    ViewBag.Title = "Unlock";
+    ViewBag.Title = "Change Password";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -12,6 +12,7 @@
 
 @using (Html.BeginForm())
 {
+   
     if (TempData["Message"] != null)
     {
         ResponseMessage m = (ResponseMessage)TempData["Message"];
@@ -41,18 +42,18 @@
 
     <div class="form-control">
         <label>New Password:</label>
-        @Html.TextBoxFor(m => Model.Employee.Password, new { id = "password", @class = "form-control" })
+        @Html.TextBoxFor(m => Model.Employee.Password, new { id = "password", @class = "form-control", type="password" })
     </div>
 
     <div class="form-control">
 
         <label>Confirm Password:</label>
-        <input class="form-control" type="text" id="confirm" />
+        <input class="form-control" type="password" id="confirm" />
     </div>
 
     <div class="form-control">
         <label>Your Administrator Password:</label>
-        @Html.TextBoxFor(m => Model.AdminPassword, new { @class = "form-control" })
+        @Html.TextBoxFor(m => Model.AdminPassword, new { @class = "form-control", type = "password" })
     </div>
 
 
