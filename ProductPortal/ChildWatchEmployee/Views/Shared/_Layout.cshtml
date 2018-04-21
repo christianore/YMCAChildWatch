@@ -38,45 +38,55 @@
             <img src="~/Images/logo.png" alt="YMCA Logo" style="width:80px; height:80px;">
         </a>*@
         <div class="container">
-
-
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="~/Home/Index">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="~/Registration/Register">Register Member</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="memberDrop" data-toggle="dropdown">Membership</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="~/Registration/Register">Register New Member</a>
+                        <a class="dropdown-item" href="~/Registration/Update">Update Existing Member</a>
+                        <a class="dropdown-item" href="~/Registration/AddChild">Attach Child To Member</a>
+                    </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="~/Registration/Update">Update Member</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="~/Registration/AddChild">Add Child</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="~/SignIn/SignOut">Sign Out</a>
+                    <a class="nav-link" href="~/SignIn/SignOut">Family Sign Out</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="~/SignIn/SignIn" target="_blank">Member Signin</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="~/Reports.aspx" target="_blank">Reports</a>
+
+
+            </ul>
+            @if (isAdmin)
+            {
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Logged in: @ticket.Name</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="~/Admin/Index">Administration Portal</a>
+                        <a class="dropdown-item" href="~/Reports.aspx" target="_blank">Business Intelligence</a>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="~/Help/HelpFile">Help</a>
                 </li>
-                @if (isAdmin)
-        {
-            <li class="nav-item">
-                <a class="nav-link" href="~/Admin/Index">Admin</a>
-            </li>
-}
             </ul>
-            <ul class="navbar-nav ml-auto">
-                <li>
-                    <a class="nav-link">Logged in: @ticket.Name</a>
-                </li>
-            </ul>
+            }
+            else
+            {
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link">Logged in: @ticket.Name</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/Help/HelpFile">Help</a>
+                    </li>
+                </ul>
+            }
+
+
         </div>
     </nav>
     <div class="row justify-content-center">

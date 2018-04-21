@@ -1,5 +1,4 @@
-﻿body {
-}
+﻿
 .validation-summary-valid {
     display: none;
 }
@@ -122,4 +121,7 @@ input[type=text]:focus {
         width: 90%;
         margin: auto;
     }
+}
+* {
+    font-size: 100% !important;
 }
