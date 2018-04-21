@@ -18,8 +18,12 @@ namespace ChildWatchEmployee
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
-           
 
+            routes.MapRoute(
+                name: "Register",
+                url: "{controller}/{action}/{name}",
+                defaults: new { controller = "Registration", action = "Register", name = "Register" }
+            );
         }
     }
 }
