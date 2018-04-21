@@ -179,6 +179,7 @@
     <Content Include="Images\helpImages\updateEmpInfo.PNG" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\Ymca.ico" />
+    <Content Include="Images\ymca_orng_rgb_r.png" />
     <Content Include="Reports.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
