@@ -224,6 +224,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="ChildWatchHub.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\SignInController.cs" />
@@ -293,6 +294,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Help\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
