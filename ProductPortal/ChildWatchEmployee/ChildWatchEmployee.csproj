@@ -312,6 +312,7 @@
     <Content Include="Views\Registration\AddChild.cshtml" />
     <Content Include="Views\Registration\Update.cshtml" />
     <Content Include="Views\Registration\AddChild.cshtml" />
+    <Content Include="Views\Admin\Report.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

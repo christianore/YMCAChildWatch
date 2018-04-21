@@ -33,7 +33,7 @@
             }
         }
     }
-    <nav class="navbar navbar-expand-sm bg-light navbar-light">
+    <nav id="navigator" class="navbar navbar-expand-sm bg-light navbar-light">
         @*<a class="navbar-brand" href="#">
             <img src="~/Images/logo.png" alt="YMCA Logo" style="width:80px; height:80px;">
         </a>*@
@@ -66,7 +66,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Logged in: @ticket.Name</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="~/Admin/Index">Administration Portal</a>
-                        <a class="dropdown-item" href="~/Reports.aspx" target="_blank">Business Intelligence</a>
+                        <a class="dropdown-item" href="~/Admin/Report">Business Intelligence</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -90,7 +90,7 @@
         </div>
     </nav>
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-9">
             @{
                 var success = TempData["Success"];
                 if (success != null)

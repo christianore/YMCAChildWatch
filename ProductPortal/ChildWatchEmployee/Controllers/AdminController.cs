@@ -182,5 +182,10 @@ namespace ChildWatchEmployee.Controllers
 
             return Json(new { error = true, message = "No data for employee found." }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Report()
+        {
+            return View();
+        }
     }
 }
