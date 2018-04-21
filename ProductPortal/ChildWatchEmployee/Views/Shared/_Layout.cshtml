@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.2.3.js"></script>
     <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
     @Html.Partial("ExternalHeader")
@@ -33,9 +34,9 @@
         }
     }
     <nav class="navbar navbar-expand-sm bg-light navbar-light">
-        <a class="navbar-brand" href="#">
+        @*<a class="navbar-brand" href="#">
             <img src="~/Images/logo.png" alt="YMCA Logo" style="width:80px; height:80px;">
-        </a>
+        </a>*@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" href="~/Admin/Index">Admin</a>
@@ -56,7 +57,7 @@
                 <a class="nav-link" href="~/Reports.aspx" target="_blank">Reports</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="">Help</a>
+                <a class="nav-link" href="~/Help/HelpFile">Help</a>
             </li>
             @if (isAdmin)
             {
