@@ -155,6 +155,27 @@
     </None>
     <Content Include="Images\allegacylogo.PNG" />
     <Content Include="Images\ftcc-logo.png" />
+    <Content Include="Images\helpImages\AddChildComplete.PNG" />
+    <Content Include="Images\helpImages\AddChildError.PNG" />
+    <Content Include="Images\helpImages\adminPortal.PNG" />
+    <Content Include="Images\helpImages\BandNumScreen.PNG" />
+    <Content Include="Images\helpImages\ChildCheckIn.PNG" />
+    <Content Include="Images\helpImages\ChildRegSuccess.PNG" />
+    <Content Include="Images\helpImages\homescreenBlank.PNG" />
+    <Content Include="Images\helpImages\HomeScreenWChild.PNG" />
+    <Content Include="Images\helpImages\initialLogin.PNG" />
+    <Content Include="Images\helpImages\MemberRegistered.PNG" />
+    <Content Include="Images\helpImages\regEmployee.PNG" />
+    <Content Include="Images\helpImages\RegisterChildGuardianID.PNG" />
+    <Content Include="Images\helpImages\registerMemberBlank.PNG" />
+    <Content Include="Images\helpImages\RegisterWithErrors.PNG" />
+    <Content Include="Images\helpImages\RegisterWithInfo.PNG" />
+    <Content Include="Images\helpImages\SignInScreen.PNG" />
+    <Content Include="Images\helpImages\SignOut.PNG" />
+    <Content Include="Images\helpImages\SignOutFailed.PNG" />
+    <Content Include="Images\helpImages\SignOutSuccess.PNG" />
+    <Content Include="Images\helpImages\unlockUser.PNG" />
+    <Content Include="Images\helpImages\updateEmpInfo.PNG" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\Ymca.ico" />
     <Content Include="Reports.aspx" />
@@ -224,6 +245,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="ChildWatchHub.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\SignInController.cs" />
@@ -284,6 +306,8 @@
     <Content Include="Views\Admin\EmployeeBasicInfo.cshtml" />
     <Content Include="Views\Shared\ExternalHeader.cshtml" />
     <Content Include="Views\Shared\ExternalFooter.cshtml" />
+    <Content Include="Views\Help\HelpFile.cshtml" />
+    <Content Include="Views\Registration\AddChild.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
