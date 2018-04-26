@@ -60,7 +60,7 @@
                         </div>                            
                         <div class="input-group">
                             <span class="input-group-addon">Date: </span>
-                            <asp:TextBox ID="txtDate" runat="server" cssclass="form-control"></asp:TextBox>
+                            <asp:TextBox ID="txtDate" runat="server" cssclass="form-control" BackColor="White"></asp:TextBox>
                         </div>                                
                         <div class="input-group">
                             <span class="input-group-addon">Location: </span>
@@ -109,11 +109,11 @@
             <div id="centerDiv3" class="centerDiv">
                 <div class="input-group">
                     <span class="input-group-addon">Start Date: </span>
-                     <asp:TextBox ID="txtDateFrom" runat="server"  cssclass="form-control"></asp:TextBox>
+                     <asp:TextBox ID="txtDateFrom" runat="server"  cssclass="form-control" BackColor="White"></asp:TextBox>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">End Date: </span>
-                    <asp:TextBox ID="txtDateTo" runat="server"  cssclass="form-control"></asp:TextBox>
+                    <asp:TextBox ID="txtDateTo" runat="server"  cssclass="form-control" BackColor="White"></asp:TextBox>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">Location: </span>
@@ -162,8 +162,12 @@
                     changeMonth: true,
                     changeYear: true,
                     yearRange: '2018:2100',
-                    constrainInput: true
+                    constrainInput: true,
+                    readonly: true
                 });
+            $('#<%=txtDate.ClientID %>').prop('readonly', true)
+            $('#<%=txtDateTo.ClientID %>').prop('readonly', true)
+            $('#<%=txtDateFrom.ClientID %>').prop('readonly', true)
             $('.accordion-section-title').click(function (e) {
                 // Grab current anchor value
                 var currentAttrValue = $(this).attr('href');
@@ -184,7 +188,6 @@
             $('.accordion .accordion-section-title').removeClass('active');
             $('.accordion .accordion-section-content').slideUp(300).removeClass('open');
         }
-
         //Update what report description and inputs are displayed based on new report list selection
          var h = document.getElementById('reportSelected');
          function showHide(e) {
