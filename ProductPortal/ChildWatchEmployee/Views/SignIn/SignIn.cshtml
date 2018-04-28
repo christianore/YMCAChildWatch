@@ -57,6 +57,12 @@
                 please talk to one of our member representatives.
             </p>
         </div>
+        <div id="ValidateError" class="alert alert-danger" role="alert" style="display:none;">
+            Failed to validate member, make sure login is correct and that member has associated children.
+        </div>
+        <div id="BandError" class="alert alert-danger" role="alert" style="display:none;">
+            Failed to obtain band number, please try again in a few moments.
+        </div>
     </div>
 <script>
 
@@ -160,12 +166,18 @@ function validateSuccess(data) {
             }
             $('#barcode').val("");
             $('#pin').val("");
+            $('#ValidateError').hide();
             $('#login').hide();
             $('#childList').show();
         }
         else {
             // They have no children so they don't need to be here.
+            $('#ValidateError').show();
         }
+    }
+    else
+    {
+        $('#ValidateError').show();
     }
 }
 function signinSuccess(data) {
@@ -188,6 +200,7 @@ function signinSuccess(data) {
                 $('#children').empty();
                 $('#band').text("Band#");
                 $('#divBand').hide();
+                $('#BandError').hide();
                 $('#login').show();
                 $('#warning').text("Time Remaining: 30 seconds");
             }
@@ -196,6 +209,7 @@ function signinSuccess(data) {
     }
     else {
         // Failed to get a band
+        $('#BandError').show();
     }
 }
 
