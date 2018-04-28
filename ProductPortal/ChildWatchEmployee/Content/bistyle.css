@@ -89,3 +89,12 @@ display:none;
     width: 97%;
     margin: auto;
 }
+td a{
+    background-color: #F47920;
+    color: #FFF;
+    border-radius:.4em;
+    border: 1px solid #969696;
+    padding: 0 .25em;
+    box-shadow: -3px 3px 3px -3px #009784;
+
+}

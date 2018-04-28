@@ -30,14 +30,15 @@
                         <a class="accordion-section-title" href="#accordion-1"><strong>Selected: Interval Report</strong></a>
                         <div id="accordion-1" class="accordion-section-content">
                             <p>
-                                    Displays headcount for each location broken down by time interval.
+                                    Displays headcount for each location broken down by time interval. Start Time must be before End
+                                Time for the report to run.
                             </p>   
                             <ul id="intervalList" class="list">
                                 <li>Time Interval: Determines the reports grouping for the headcount <em>-Default 30min</em></li>                
                                 <li>Start Time: When to begin counting <em>-Default 5 am</em></li>
                                 <li>End Time: When to stop counting <em>-Default 10 pm</em></li>
-                                <li>Date: Select the date for which the report should return information <em>-Default Today</em></li>
-                                <li>Location: Area to view information for</li>
+                                <li>Date: Day for which the report will return information (mm/dd/yyyy) <em>-Default Today</em></li>
+                                <li>Location: Area to view information for <em>-Default All Locations</em></li>
                             </ul>                                
                          </div><!--end .accordion-section-content-->
                     </div><!--end .accordion-section-->
@@ -59,7 +60,7 @@
                         </div>                            
                         <div class="input-group">
                             <span class="input-group-addon">Date: </span>
-                            <asp:TextBox ID="txtDate" runat="server" cssclass="form-control"></asp:TextBox>
+                            <asp:TextBox ID="txtDate" runat="server" cssclass="form-control" BackColor="White"></asp:TextBox>
                         </div>                                
                         <div class="input-group">
                             <span class="input-group-addon">Location: </span>
@@ -95,23 +96,24 @@
                         <a class="accordion-section-title" href="#accordion-3"><strong>Selected: Daily Report</strong></a>
                             <div id="accordion-3" class="accordion-section-content">
                                 <p>
-                                    Displays totals for each day over a specified time frame for a location.
+                                    Displays totals for each day over a specified time frame for a location. Start Date must be before
+                                    End Date for the report to run.
                                 </p>
                                 <ul>
-                                    <li>Start Date: Enter the day to begin search (mm/dd/yyyy) <em>-Default 1 week ago</em></li>
+                                    <li>Start Date: Day to begin search (mm/dd/yyyy) <em>-Default 1 week ago</em></li>
                                     <li>End Date: Day to stop search (mm/dd/yyyy) <em>-Default Today</em></li>
-                                    <li>Location:  Area to view information for</li>
+                                    <li>Location:  Area to view information for <em>-Default All Locations</em></li>
                                 </ul>
                             </div><!--end .accordion-section-content-->
                         </div><!--end .accordion-section-->             
             <div id="centerDiv3" class="centerDiv">
                 <div class="input-group">
                     <span class="input-group-addon">Start Date: </span>
-                     <asp:TextBox ID="txtDateFrom" runat="server"  cssclass="form-control"></asp:TextBox>
+                     <asp:TextBox ID="txtDateFrom" runat="server"  cssclass="form-control" BackColor="White"></asp:TextBox>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">End Date: </span>
-                    <asp:TextBox ID="txtDateTo" runat="server"  cssclass="form-control"></asp:TextBox>
+                    <asp:TextBox ID="txtDateTo" runat="server"  cssclass="form-control" BackColor="White"></asp:TextBox>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">Location: </span>
@@ -131,7 +133,7 @@
         <asp:DataGrid ID="ReportGrid" runat="server" CssClass="table-striped" BorderStyle="None" GridLines="None" AllowPaging="True" OnPageIndexChanged="ReportGrid_PageIndexChanged" PageSize="40">
             <AlternatingItemStyle BackColor="#E4E4E4" />
             <HeaderStyle BackColor="#EF9E0A" BorderColor="#F47A21" BorderStyle="Solid" BorderWidth="1px" Font-Bold="True" ForeColor="White" HorizontalAlign="Left" VerticalAlign="Middle" />
-            <PagerStyle HorizontalAlign="Left" BackColor="White" BorderStyle="None" Font-Bold="True" PageButtonCount="100" Position="TopAndBottom" />
+            <PagerStyle HorizontalAlign="Left" BackColor="White" BorderStyle="None" Font-Bold="True" Position="TopAndBottom" Mode="NumericPages" Wrap="True" />
         </asp:DataGrid>
     </div>
     </form>
@@ -160,8 +162,12 @@
                     changeMonth: true,
                     changeYear: true,
                     yearRange: '2018:2100',
-                    constrainInput: true
+                    constrainInput: true,
+                    readonly: true
                 });
+            $('#<%=txtDate.ClientID %>').prop('readonly', true)
+            $('#<%=txtDateTo.ClientID %>').prop('readonly', true)
+            $('#<%=txtDateFrom.ClientID %>').prop('readonly', true)
             $('.accordion-section-title').click(function (e) {
                 // Grab current anchor value
                 var currentAttrValue = $(this).attr('href');
@@ -182,7 +188,6 @@
             $('.accordion .accordion-section-title').removeClass('active');
             $('.accordion .accordion-section-content').slideUp(300).removeClass('open');
         }
-
         //Update what report description and inputs are displayed based on new report list selection
          var h = document.getElementById('reportSelected');
          function showHide(e) {
@@ -205,6 +210,7 @@
          }
         //limit options in selectStop list based on the selected start time for the interval report
          function updateTimes() {
+             var origStop = selectStop.value;
              // Empty stop list
              $('#selectStop').empty();
              // Get new selected time.
@@ -225,28 +231,9 @@
 
                 $("#selectStop").append($('<option />', { text: text, value: x}));
             }
-             /*
-             //reload based on start selected value
-             var time = sel + 5;
-             for (x = time + 1; x <= 22; x++) {
-                 var text = "";
-                 var val = x;
-                 if (x > 12) {
-                     val = x - 12;
-                     text = val + " PM";
-                 } else {
-                     if (x == 12) {
-                         text = val + " AM";
-                     } else {
-                         text = val + " AM";
-                     }
-                 }
-                 selectStop.options[selectStop.options.length] = new Option(text, x, false, false);
-             }
-             if (origStop > time) {
-                 $("#selectStop").val(origStop).change();
-             }
-             */
+            if (origStop > start) {
+                $("#selectStop").val(origStop).change();
+            }
          }
 
          function getSelectedTime() {
