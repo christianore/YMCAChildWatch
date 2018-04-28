@@ -19,11 +19,13 @@ namespace ChildWatchEmployee.Models
 
         [Required]
         [Display(Name = "Birthday")]
+        [RegularExpression("",
+            ErrorMessage ="Please enter a valid date")]
         public DateTime Birthday { get; set; }
 
         [Required]
         [MaxLength(11, ErrorMessage = "Member ID cannot be longer than 11 Digits")]
-        [RegularExpression("\\d{11}")]
+        [RegularExpression("\\d{11}", ErrorMessage ="Member ID must be an 11 digit number, cannot contain any letters, spaces, or special characters")]
         [Display(Name = "Guardian ID")]
         public string Guardian { get; set; }
 
