@@ -9,6 +9,8 @@ namespace ChildWatchEmployee.Models
     public class ChangePassword :UpdateEmployee 
     {
         [Required]
+        [MinLength(8)]
+        [MaxLength(50)]
         public string AdminPassword { get; set; }
 
         public ChangePassword() : base()
