@@ -63,9 +63,13 @@
             <th>Remove Access</th>
         </tr>
         <tr>
+
             <td>@Html.CheckBoxFor(m => Model.Employee.Administrator, new { id = "admin" })</td>
+
             <td>@Html.CheckBoxFor(m => Model.Employee.NeedsReset, new { id = "reset" })</td>
+
             <td>@Html.CheckBoxFor(m => Model.Employee.Blocked, new { id = "blocked" })</td>
+           
         </tr>
     </table>
 
@@ -81,6 +85,14 @@
 
             }
             changeEmployee();
+
+            // CLO 4/28/2018 Send the checked information via ViewBag
+            @if(ViewBag.isAdmin)
+            {
+                <text>$('#admin').attr('checked', 'checked');</text>
+            }
+      
+
         });
     function changeEmployee() {
         var eList = document.getElementById('list');
@@ -100,9 +112,26 @@
                             document.getElementById("firstname").value = employee.FirstName;
                             document.getElementById("lastname").value = employee.LastName;
                             document.getElementById("username").value = employee.UserName;
-                            document.getElementById("admin").checked = employee.Administrator;
-                            document.getElementById("reset").checked = employee.NeedsReset;
-                            document.getElementById("blocked").checked = employee.Blocked;
+
+                            // These if statements allow the values returned to check information in the check boxes about the user.
+                            // CLO start 4/28/2018
+                            alert(employee.Administrator);
+
+                            if (employee.Administrator)
+                                document.getElementById("admin").checked = true;
+                            else
+                                document.getElementById("admin").checked = false;
+
+                            if (employee.NeedsReset)
+                                $("#reset").attr("checked", "checked");
+                            else
+                                $("#reset").removeAttr("checked");
+
+                            if (employee.Blocked)
+                                $("#blocked").attr("checked", "checked");
+                            else
+                                $("#blocked").removeAttr("checked");
+                            // CLO end 4/28/2018
                         }
                         else {
                             alert("An unexpected error occured retrieving employee data.");

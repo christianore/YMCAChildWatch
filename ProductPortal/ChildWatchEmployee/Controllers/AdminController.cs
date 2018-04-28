@@ -133,8 +133,11 @@ namespace ChildWatchEmployee.Controllers
         }
         public ActionResult Update()
         {
-
-            return View(new UpdateEmployee());
+            var model = new UpdateEmployee();
+            ViewBag.isAdmin = model.Employee.Administrator;
+            ViewBag.isReset = model.Employee.NeedsReset;
+            ViewBag.isBlocked = model.Employee.Blocked;
+            return View(model);
         }
         [HttpPost]
         public ActionResult Update(UpdateEmployee model)
@@ -161,6 +164,10 @@ namespace ChildWatchEmployee.Controllers
                 }
                 
             }
+            ViewBag.isAdmin = model.Employee.Administrator;
+            ViewBag.isReset = model.Employee.NeedsReset;
+            ViewBag.isBlocked = model.Employee.Blocked;
+
             return View(model);
 
         }

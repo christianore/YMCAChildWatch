@@ -6,12 +6,14 @@ using System.Web;
 
 namespace ChildWatchEmployee.Models
 {
-    public class ChangePassword :UpdateEmployee 
+    public class ChangePassword : UpdateEmployee 
     {
         [Required]
         [MinLength(8)]
         [MaxLength(50)]
         public string AdminPassword { get; set; }
+
+        public new RegisterEmployee Employee { get; set; }
 
         public ChangePassword() : base()
         {

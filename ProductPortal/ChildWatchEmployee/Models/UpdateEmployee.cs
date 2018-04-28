@@ -11,18 +11,19 @@ namespace ChildWatchEmployee.Models
 {
     public class UpdateEmployee
     {
-        public RegisterEmployee Employee { get; set; }
+        public AppEmployee Employee { get; set; }
 
         public UpdateEmployee()
         {
-            Employee = new RegisterEmployee();
+            Employee = new AppEmployee();
         }
 
         public SelectList CurrentEmployees()
         {
             List<SelectListItem> items = new List<SelectListItem>();
 
-            OrganizationManager manager = new OrganizationManager(ConfigurationManager.ConnectionStrings["database"].ToString());
+            OrganizationManager manager = 
+                new OrganizationManager(ConfigurationManager.ConnectionStrings["database"].ToString());
 
             List<Employee> employees = manager.GetEmployees();
 

@@ -73,7 +73,10 @@ namespace ChildWatchApi.Data
                     FirstName = (string)row["emp_firstname"],
                     LastName = (string)row["emp_lastname"],
                     ID = (int)row["emp_id"],
-                    UserName = (string)row["emp_username"]
+                    UserName = (string)row["emp_username"],
+                    Administrator = (bool)row["emp_admin_flag"],
+                    Blocked = (bool)row["emp_blocked"],
+                    NeedsReset = (bool)row["emp_reset_flag"]
                 };
 
                 list.Add(e);
