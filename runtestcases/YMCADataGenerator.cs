@@ -45,10 +45,10 @@ namespace ChildWatch
             DataRow selected = report.Rows[random.Next(report.Rows.Count)];
             return new Member()
             {
-                MemberId = (string)selected["member_id"],
-                FirstName = (string)selected["member_fName"],
-                LastName = (string)selected["member_lName"],
-                PhoneNumber = (string)selected["phone"]
+                MemberId = (string)selected[0],
+                FirstName = (string)selected[1],
+                LastName = (string)selected[2],
+                PhoneNumber = (string)selected[4]
             };
         }
         public Family RandomFamily()

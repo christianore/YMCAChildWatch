@@ -19,10 +19,6 @@ namespace ChildWatch
 
         public static void Main(string[] args)
         {
-            MainWindow window = new MainWindow();
-            window.ShowDialog();
-
-            /*
             Console.Title = "YMCA Child Watch Manager";
             DateTime now = DateTime.Now;
             DateTime start = new DateTime(now.Year, now.Month, now.Day, 9, 0, 0);
@@ -222,7 +218,7 @@ namespace ChildWatch
 
                                     Family fam = gen.RandomFamily(reports);
 
-                                    Location[] list = organization.GetLocations(1);
+                                    Location[] list = organization.GetLocations();
                                     int count = 0;
                                     try
                                     {
@@ -311,7 +307,7 @@ namespace ChildWatch
                     Console.WriteLine("\n" + ex.StackTrace);
                 }
             }
-            */
+     
         }
     }
 }
