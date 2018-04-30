@@ -171,7 +171,7 @@ namespace ChildWatchEmployee
                                 if (loca == 4000)
                                 {
                                     DataTable allInterval = manager.GetIntervalReport(inter, start, end, 0);
-                                    allInterval.Columns.Remove("amount");
+                                    allInterval.Columns.RemoveAt(1);
                                     foreach (ListItem li in ddlLocInterval.Items)
                                     {
                                         if (li.Value != "4000")
@@ -272,7 +272,7 @@ namespace ChildWatchEmployee
                                     if (loc2 == 4000)
                                     {
                                         DataTable allDaily = manager.GetDailyReport(dateFrom, dateTo, 0);
-                                        allDaily.Columns.Remove("count");
+                                        allDaily.Columns.RemoveAt(1);
                                         foreach (ListItem li in ddlLocation.Items)
                                         {
                                             if (li.Value != "4000")

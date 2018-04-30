@@ -13,7 +13,7 @@
 </head>
 <body id="bootstrap-overrides">
     <form id="form1" runat="server">
-        <div class="topdiv">
+        <div class="topdiv" id="userInput">
         <div id="reportAside" class="aside" runat="server">
             <h2><strong>Reports</strong></h2>
              <div id="repList" class="list-group">
@@ -127,9 +127,11 @@
     </div>
     </div>
     </div>
+    <div class="hideLinkDiv" style="float: right; margin:.5em; background-color:#F47920; padding: 0 .25em;border-radius:.4em;border: 1px solid #969696; box-shadow: -3px 3px 3px -3px #009784">
+        <a id="hideLink" href="#" class="hideLink" onclick="return togInput();" style="color:#FFF">Hide Section</a>
+    </div>
     <hr />
     <div id="reportDisplay" class="reportDisplay">
-        
         <asp:DataGrid ID="ReportGrid" runat="server" CssClass="table-striped" BorderStyle="None" GridLines="None" AllowPaging="True" OnPageIndexChanged="ReportGrid_PageIndexChanged" PageSize="40">
             <AlternatingItemStyle BackColor="#E4E4E4" />
             <HeaderStyle BackColor="#EF9E0A" BorderColor="#F47A21" BorderStyle="Solid" BorderWidth="1px" Font-Bold="True" ForeColor="White" HorizontalAlign="Left" VerticalAlign="Middle" />
@@ -137,7 +139,12 @@
         </asp:DataGrid>
     </div>
     </form>
-    <script  type="text/javascript"  lang="javascript">  
+    <script  type="text/javascript"  lang="javascript"> 
+        //Toggle visibility of the report selection to allow more space for viewing the report output
+        function togInput() {
+            $("#userInput").toggle();
+            $("#hideLink").text($("#hideLink").text() == 'Hide Section' ? 'Show Report Selection' : 'Hide Section');
+        }
         //Apply Datepicker functionality to inputs
         $(function () {
              $('#<%=txtDateFrom.ClientID %>').datepicker(
