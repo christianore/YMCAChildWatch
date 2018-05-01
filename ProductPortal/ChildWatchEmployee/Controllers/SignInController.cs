@@ -57,17 +57,23 @@ namespace ChildWatchEmployee.Controllers
 
 
         public JsonResult  ValidateMember(ValidationToken data)
-        {           
-            string connection = ConfigurationManager.ConnectionStrings["database"].ToString();
-            SqlConnection sql = new SqlConnection(connection);
-            SignInManager manager = new SignInManager(sql);
+        {
+            try
+            {
+                string connection = ConfigurationManager.ConnectionStrings["database"].ToString();
+                SqlConnection sql = new SqlConnection(connection);
+                SignInManager manager = new SignInManager(sql);
 
-            Family f = manager.Validate(data.Barcode, data.Pin);
-            OrganizationManager organization = new OrganizationManager(sql);
-            Location[] locationList = organization.GetLocations();
-            Object o = new ValidationResponse(f != null, f, locationList);
+                Family f = manager.Validate(data.Barcode, data.Pin);
+                OrganizationManager organization = new OrganizationManager(sql);
+                Location[] locationList = organization.GetLocations();
+                Object o = new ValidationResponse(f != null, f, locationList);
 
-            return Json(o, JsonRequestBehavior.AllowGet);
+                return Json(o, JsonRequestBehavior.AllowGet);
+            } catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public JsonResult SigninMembers(SigninToken data)
