@@ -20,7 +20,7 @@ namespace ChildWatchEmployee.Controllers
 
         public ActionResult Update(string name)
         {
-            var member = new Models.Member();
+            //var member = new Models.UpdateMember();
             return View();
         }
 
@@ -51,7 +51,7 @@ namespace ChildWatchEmployee.Controllers
         }
 
         [HttpPost]
-        public ActionResult Update(Models.Member member)
+        public ActionResult Update(Models.UpdateMember member)
         {
             if (ModelState.ContainsKey("{ServerError}"))
             {

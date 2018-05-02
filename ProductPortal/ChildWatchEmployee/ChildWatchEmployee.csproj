@@ -264,6 +264,7 @@
     <Compile Include="Models\SignIn.cs" />
     <Compile Include="Models\SignOut.cs" />
     <Compile Include="Models\UpdateEmployee.cs" />
+    <Compile Include="Models\UpdateMember.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="MultiButtonAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
