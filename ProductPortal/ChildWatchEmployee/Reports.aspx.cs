@@ -15,9 +15,20 @@ namespace ChildWatchEmployee
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
             if (IsPostBack){
-                
+                //keep top div visibility setting the same through postback
+                if (topDivHidden.Value.Equals("true"))
+                {
+                    userInput.Style.Remove("display");
+                    userInput.Style.Add("display", "none");
+                    hideLink.InnerText = "Show Report Selection";
+                }else
+                {
+                    userInput.Style.Remove("display");
+                    userInput.Style.Add("display", "block");
+                    
+                }
             }
             if (!IsPostBack)
             {
@@ -92,6 +103,9 @@ namespace ChildWatchEmployee
         {
             ReportGrid.CurrentPageIndex = 0;
             getReport();
+            //show the report section if it was hidden
+            reportDisplay.Style.Remove("display");
+            reportDisplay.Style.Add("display", "block");
         }
         /* Display alert to user if a date is found to be invalid
          * Return focus to the input field that caused the exception

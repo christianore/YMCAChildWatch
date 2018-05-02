@@ -22,6 +22,15 @@ namespace ChildWatchEmployee {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+        /// userInput control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl userInput;
+        
+        /// <summary>
         /// reportAside control.
         /// </summary>
         /// <remarks>
@@ -157,6 +166,24 @@ namespace ChildWatchEmployee {
         protected global::System.Web.UI.WebControls.Button btnRunReport;
         
         /// <summary>
+        /// hideLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor hideLink;
+        
+        /// <summary>
+        /// reportDisplay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl reportDisplay;
+        
+        /// <summary>
         /// ReportGrid control.
         /// </summary>
         /// <remarks>
@@ -164,5 +191,14 @@ namespace ChildWatchEmployee {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DataGrid ReportGrid;
+        
+        /// <summary>
+        /// topDivHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField topDivHidden;
     }
 }
