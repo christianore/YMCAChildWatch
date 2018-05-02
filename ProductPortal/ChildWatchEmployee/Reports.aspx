@@ -13,13 +13,13 @@
 </head>
 <body id="bootstrap-overrides">
     <form id="form1" runat="server">
-        <div class="topdiv" id="userInput">
+        <div class="topdiv" id="userInput" runat="server">
         <div id="reportAside" class="aside" runat="server">
             <h2><strong>Reports</strong></h2>
              <div id="repList" class="list-group">
-                  <a id="rep1" href="#" class="list-group-item" onclick="return showHide('rep1');">Interval Headcount</a>
-                  <a id="rep2" href="#" class="list-group-item" onclick="return showHide('rep2');">Member Information</a>
-                  <a id="rep3" href="#" class="list-group-item" onclick="return showHide('rep3');">Daily Totals</a>
+                  <a id="rep1" href="#" class="list-group-item" onclick="return showHide('1');">Interval Headcount</a>
+                  <a id="rep2" href="#" class="list-group-item" onclick="return showHide('2');">Member Information</a>
+                  <a id="rep3" href="#" class="list-group-item" onclick="return showHide('3');">Daily Totals</a>
                  <asp:HiddenField runat="server" ID="reportSelected"/>
             </div> 
         </div>
@@ -128,22 +128,24 @@
     </div>
     </div>
     <div class="hideLinkDiv" style="float: right; margin:.5em; background-color:#F47920; padding: 0 .25em;border-radius:.4em;border: 1px solid #969696; box-shadow: -3px 3px 3px -3px #009784">
-        <a id="hideLink" href="#" class="hideLink" onclick="return togInput();" style="color:#FFF">Hide Section</a>
+        <a runat="server" id="hideLink" href="#" class="hideLink" onclick="return togInput();" style="color:#FFF">Hide Section</a>
     </div>
     <hr />
-    <div id="reportDisplay" class="reportDisplay">
+    <div id="reportDisplay" class="reportDisplay" runat="server">
         <asp:DataGrid ID="ReportGrid" runat="server" CssClass="table-striped" BorderStyle="None" GridLines="None" AllowPaging="True" OnPageIndexChanged="ReportGrid_PageIndexChanged" PageSize="40">
             <AlternatingItemStyle BackColor="#E4E4E4" />
             <HeaderStyle BackColor="#EF9E0A" BorderColor="#F47A21" BorderStyle="Solid" BorderWidth="1px" Font-Bold="True" ForeColor="White" HorizontalAlign="Left" VerticalAlign="Middle" />
             <PagerStyle HorizontalAlign="Left" BackColor="White" BorderStyle="None" Font-Bold="True" Position="TopAndBottom" Mode="NumericPages" Wrap="True" />
         </asp:DataGrid>
+        <asp:HiddenField ID="topDivHidden" runat="server" value="false"/>
     </div>
     </form>
     <script  type="text/javascript"  lang="javascript"> 
         //Toggle visibility of the report selection to allow more space for viewing the report output
         function togInput() {
             $("#userInput").toggle();
-            $("#hideLink").text($("#hideLink").text() == 'Hide Section' ? 'Show Report Selection' : 'Hide Section');
+            $("#hideLink").text($("#hideLink").text() == 'Hide Section' ? 'Show Report Selection' : 'Hide Section');      
+            $("#topDivHidden").val($("#topDivHidden").val() == 'false' ? 'true' : 'false');
         }
         //Apply Datepicker functionality to inputs
         $(function () {
@@ -196,19 +198,26 @@
             $('.accordion .accordion-section-content').slideUp(300).removeClass('open');
         }
         //Update what report description and inputs are displayed based on new report list selection
-         var h = document.getElementById('reportSelected');
-         function showHide(e) {
-             if ('rep1' === e) {                 
+        var h = document.getElementById('reportSelected').value;
+        function showHide(e) {
+            //hide the current report only when viewing to a different report selection
+            if(h !== e){
+                $("#reportDisplay").hide();
+            } else {
+                $("#reportDisplay").show();
+            }
+            //display appropriate report selection options
+             if ('1' === e) {                 
                  $("#interval").show();
                  $("#member").hide();
                  $("#dayTotals").hide();
                  document.getElementById("reportSelected").value = "1";
-             } else if ('rep2' === e) {
+             } else if ('2' === e) {
                  $("#member").show();
                  $("#interval").hide();
                  $("#dayTotals").hide();
                  document.getElementById("reportSelected").value = "2";
-             } else if ('rep3' === e) {
+             } else if ('3' === e) {
                  $("#dayTotals").show();
                  $("#member").hide();
                  $("#interval").hide();
