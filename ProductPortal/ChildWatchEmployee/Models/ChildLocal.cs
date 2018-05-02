@@ -19,8 +19,6 @@ namespace ChildWatchEmployee.Models
 
         [Required]
         [Display(Name = "Birthday")]
-        [RegularExpression("",
-            ErrorMessage ="Please enter a valid date")]
         public DateTime Birthday { get; set; }
 
         [Required]
