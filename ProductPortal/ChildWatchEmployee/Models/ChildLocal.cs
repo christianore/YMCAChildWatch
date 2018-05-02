@@ -18,11 +18,8 @@ namespace ChildWatchEmployee.Models
         public string LastName { get; set; }
 
         [Required]
-<<<<<<< HEAD
+
         [Display(Name = "Birthday")]
-=======
-        [Display(Name = "Birthday")]      
->>>>>>> fe9bcda252997e9078dfd9b69b7381d237ba9a24
         public DateTime Birthday { get; set; }
 
         [Required]

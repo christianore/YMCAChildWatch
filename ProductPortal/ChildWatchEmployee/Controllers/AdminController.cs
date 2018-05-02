@@ -89,17 +89,21 @@ namespace ChildWatchEmployee.Controllers
                             try
                             {
                                 connection.Open();
-                                using (SqlCommand command = new SqlCommand("p_employee-update_login", connection))
+                                using (SqlCommand command = new SqlCommand("p_employee_update_login", connection))
                                 {
                                     command.CommandType = System.Data.CommandType.StoredProcedure;
                                     command.Parameters.AddRange(new SqlParameter[]
                                     {
-                                    new SqlParameter("passowrd", model.Employee.Password),
-                                    new SqlParameter("id", model.Employee.ID)
+                                    new SqlParameter("password", model.Password),
+                                    new SqlParameter("id", model.EmployeeID)
                                     });
 
                                     success = command.ExecuteNonQuery() > 0;
                                 }
+                            }
+                            catch
+                            {
+                                success = false;
                             }
                             finally
                             {
@@ -117,6 +121,7 @@ namespace ChildWatchEmployee.Controllers
                         Error = false,
                         Message = "Password successfully changed."
                     };
+                    return View(new ChangePassword());
                 }
                 else
                 {
@@ -125,7 +130,7 @@ namespace ChildWatchEmployee.Controllers
                         Error = true,
                         Message = "Unable to change password."
                     };
-
+                    return View(model);
                 }
             }
 

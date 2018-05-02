@@ -1,4 +1,12 @@
-﻿
+﻿h1{
+    font-size: 120%;
+}
+h2{
+    font-size: 110%;
+}
+h3{
+    font-size: 100%;
+}
 .validation-summary-valid {
     display: none;
 }
@@ -130,7 +138,4 @@ input[type=text]:focus {
         width: 90%;
         margin: auto;
     }
-}
-* {
-    font-size: 100% !important;
 }
