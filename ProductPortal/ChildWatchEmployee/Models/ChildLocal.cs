@@ -18,7 +18,10 @@ namespace ChildWatchEmployee.Models
         public string LastName { get; set; }
 
         [Required]
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
         [Display(Name = "Birthday")]
         public DateTime Birthday { get; set; }
 

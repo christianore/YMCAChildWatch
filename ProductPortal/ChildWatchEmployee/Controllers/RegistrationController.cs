@@ -97,6 +97,7 @@ namespace ChildWatchEmployee.Controllers
                 {
                     TempData["member"] = guardianID;
                     TempData["Success"] = "Child registered";
+                    ModelState.Clear();
                     return View();
                 }
                 else
@@ -104,7 +105,7 @@ namespace ChildWatchEmployee.Controllers
                     TempData["Failure"] = "Failed to register";
                 }
             }
-            return View(child);
+            return View();
         }
         [HttpPost]
         [MultiButton(MatchFormKey = "AddChild", MatchFormValue = "Finish Registration")]
@@ -128,7 +129,7 @@ namespace ChildWatchEmployee.Controllers
                     TempData["Failure"] = "Failed to register";
                 }
             }
-            return View(child);
+            return View(new ChildLocal());
         }
     }
 }
