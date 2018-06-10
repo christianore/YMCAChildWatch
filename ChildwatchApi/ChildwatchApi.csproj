@@ -54,34 +54,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Report\DailyReport.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Data\Report\MemberReport.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Data\Report\SigninReport.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Entity\Child.cs" />
-    <Compile Include="Data\DatabaseLog.cs" />
     <Compile Include="Data\OrganizationManager.cs" />
-    <Compile Include="Data\Report\ReportManager.cs" />
+    <Compile Include="Data\ReportManager.cs" />
+    <Compile Include="Entity\Employee.cs" />
     <Compile Include="Entity\Family.cs" />
     <Compile Include="Data\IDatabaseManager.cs" />
-    <Compile Include="Data\Report\IntervalReport.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Entity\Location.cs" />
     <Compile Include="Entity\Member.cs" />
     <Compile Include="Data\MembershipManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Data\Report\Report.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Data\Report\SignInDetail.cs" />
     <Compile Include="Data\SignInManager.cs" />
-    <Compile Include="Data\Report\SignInRecord.cs" />
+    <Compile Include="Utility\Logger.cs" />
     <Compile Include="Web\SigninToken.cs" />
     <Compile Include="Web\ValidationResponse.cs" />
   </ItemGroup>

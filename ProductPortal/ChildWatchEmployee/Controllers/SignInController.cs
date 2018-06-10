@@ -13,11 +13,13 @@ using Newtonsoft.Json;
 
 namespace ChildWatchEmployee.Controllers
 {
+    [AllowAnonymous]
     [WebService]
     public class SignInController : Controller
     {
 
         SignInManager signin = new SignInManager(new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["database"].ToString()));
+        [Authorize]
         // GET: SignOut
         public ActionResult SignOut()
         {
@@ -26,7 +28,7 @@ namespace ChildWatchEmployee.Controllers
             return View(new SignOut());
 
         }
-
+        [Authorize]
         [HttpPost]
         public ActionResult SignOut(SignOut signOut)
         {
@@ -35,9 +37,14 @@ namespace ChildWatchEmployee.Controllers
                 if (signin.SignOut(int.Parse(signOut.BandNum)))
                 {
                     signOut.State = SignOutState.SignedOut;
+                    TempData["Success"] = "Sign out Successful";
+                    return View(new SignOut());
                 }
                 else
-                    signOut.State = SignOutState.Failed;                
+                {
+                    signOut.State = SignOutState.Failed;
+                    TempData["Failure"] = "Sign Out Failed";
+                }
             }
 
             return View(signOut);
@@ -50,16 +57,23 @@ namespace ChildWatchEmployee.Controllers
 
 
         public JsonResult  ValidateMember(ValidationToken data)
-        {           
-            string connection = ConfigurationManager.ConnectionStrings["database"].ToString();
-            SqlConnection sql = new SqlConnection(connection);
-            SignInManager manager = new SignInManager(sql);
+        {
+            try
+            {
+                string connection = ConfigurationManager.ConnectionStrings["database"].ToString();
+                SqlConnection sql = new SqlConnection(connection);
+                SignInManager manager = new SignInManager(sql);
 
-            Family f = manager.Validate(data.Barcode, data.Pin);
-            OrganizationManager organization = new OrganizationManager(sql);
-            Object o = new ValidationResponse(f != null, f, organization.GetLocations(1));
+                Family f = manager.Validate(data.Barcode, data.Pin);
+                OrganizationManager organization = new OrganizationManager(sql);
+                Location[] locationList = organization.GetLocations();
+                Object o = new ValidationResponse(f != null, f, locationList);
 
-            return Json(o, JsonRequestBehavior.AllowGet);
+                return Json(o, JsonRequestBehavior.AllowGet);
+            } catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public JsonResult SigninMembers(SigninToken data)

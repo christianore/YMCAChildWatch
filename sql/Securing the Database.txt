@@ -1,0 +1,10 @@
+Author: Christian Ore
+Date: 4/17/2018
+
+Topic: Making the data secure.
+
+The latest release of ChildWatchDB incorporates SQL Server encryptiong by password using an RSA 2048 algorithm.  In order to use this database, create an asymmetric key with this algorithm by password and give it a secret password.  Update the sql server stored procedures in the database where there is a "?" with your secret password.  Run the build ymca database script and the connections should now be encrypted.  
+
+WARNING!
+
+Do not save any copy of a build.sql script to the source control overwriting the "?" wildcard for databases passwords.  This is intentionally left this way to allow the consumer to create unique passwords.

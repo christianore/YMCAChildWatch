@@ -1,0 +1,76 @@
+﻿@model ChildWatchEmployee.Models.UserLogin
+@using ChildWatchEmployee.Models;
+
+<html>
+<head>
+    <title>Employee Login</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="~/Content/Site.css" />
+    <link rel="shortcut icon" href="~/Images/Ymca.ico" type="image/x-icon" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.3.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <link href="~/Content/Site.css" rel="stylesheet"/>
+    <style>
+        .w3-card {
+            max-width: 750px;
+            margin: 3em auto;
+            background-color: white;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .input {
+            padding: 3em;
+        }
+
+        .w3-button {
+            margin: 2em;
+        }
+    </style>
+</head>
+<body class="body">
+    @Html.Partial("ExternalHeader")
+
+    @using (Html.BeginForm())
+    {
+        
+        <div class="w3-container w3-card w3-light-gray">
+            <div class="w3-container">
+                <h1 class="w3-center">Login</h1>
+            </div>
+            <div>
+                <div class="input">
+                    <label class="label w3-block">Username: </label>
+                    @Html.TextBoxFor(m => Model.Username, new { @class = "w3-input w3-border" })
+                </div>
+                <div class="input">
+                    <label class="w3-block label">Password: </label>
+
+                    @Html.TextBoxFor(m => Model.Password, new { @class = "w3-input w3-border", type="password" })
+                </div>
+            </div>
+            @{ 
+                object message = TempData["Message"];
+                if(message != null)
+                {
+                    <label>Warning:</label>
+                    <div class="w3-panel w3-red w3-center">
+                        <p>@(((ResponseMessage)message).Message)</p>
+                    </div>
+                }
+            }
+            <div class="w3-container" style="padding: 2em;">
+                <input type="submit" value="Submit" class="w3-btn w3-center w3-green w3-block"  />
+            </div>
+        </div>
+
+    }
+        
+
+    @Html.Partial("ExternalFooter")
+</body>
+
+</html>

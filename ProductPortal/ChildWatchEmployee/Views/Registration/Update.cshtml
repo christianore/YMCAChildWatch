@@ -1,0 +1,87 @@
+﻿@model ChildWatchEmployee.Models.UpdateMember
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <div>
+        @using (Html.BeginForm())
+        {
+            <div id="messageBox">
+
+            </div>
+            <fieldset>
+                <legend>Update Member</legend>
+                <div class="row form-group">
+                    @Html.LabelFor(m => m.MemberID, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.MemberID, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row form-group">
+                    @Html.LabelFor(m => m.FirstName, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row form-group">
+                    @Html.LabelFor(m => m.LastName, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row form-group">
+                    @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row form-group">
+                    @Html.LabelFor(m => m.BarCode, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.BarCode, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row form-group">
+                    @Html.LabelFor(m => m.Pin, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Pin, new { id = "password", @class = "form-control", type = "password" })
+                    </div>
+                </div>
+                <div class="row form-group">
+                    @Html.Label("Confirm Pin", new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        <input type="password" class="form-control" id="confirm" />
+                    </div>
+                </div>
+                <div>
+                    <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <button type="button" class="btn btn-primary btn-block" onclick="check()">Update</button>
+                </div>
+            </fieldset>
+        }
+        @Html.ValidationSummary("The following errors were found:",
+                 new { @class = "Alert alert-danger" })
+
+    </div>
+    <script>
+    function check() {
+        if ($('#password').val() == $('#confirm').val()) {
+            $('#messageBox').hide();
+            $('#messageBox').removeClass("alert alert-danger");
+            document.getElementsByTagName("form")[0].submit();
+          
+        }
+        else {
+            $('#messageBox').show();
+            $('#messageBox').text("Unable to submit form.  Passwords do not match.");
+            $('#messageBox').addClass("alert alert-danger");
+        }
+    }
+    </script>
+</body>
+</html>

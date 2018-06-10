@@ -1,5 +1,4 @@
 ﻿using ChildWatchApi.Data;
-using ChildWatchApi.Data.Report;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -17,19 +16,50 @@ namespace ChildWatchEmployee
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if (IsPostBack)
-            {
-
-                // argumentDisplay();
+            if (IsPostBack){
+                //keep top div visibility setting the same through postback
+                if (topDivHidden.Value.Equals("true"))
+                {
+                    userInput.Style.Remove("display");
+                    userInput.Style.Add("display", "none");
+                    hideLink.InnerText = "Show Report Selection";
+                }else
+                {
+                    userInput.Style.Remove("display");
+                    userInput.Style.Add("display", "block");
+                    
+                }
             }
             if (!IsPostBack)
             {
-                for(int x = 5; x <= 22; x++)
+                string conn = ConfigurationManager.ConnectionStrings["database"].ToString();
+                ReportManager reports = new ReportManager(new SqlConnection(conn));
+                // Set up location selections
+                OrganizationManager organization = new OrganizationManager(new SqlConnection(conn));
+                Location[] locations = organization.GetLocations();
+                ddlLocation.Items.Add(new ListItem("All", "4000"));
+                ddlLocInterval.Items.Add(new ListItem("All", "4000"));
+                foreach (Location loc in locations)
+                {
+                    int id = loc.Id;
+                    String locaName = loc.Name;
+                    ddlLocation.Items.Add(new ListItem(locaName, id.ToString()));
+                    ddlLocInterval.Items.Add(new ListItem(locaName, id.ToString()));
+                }
+                ddlLocation.SelectedValue = "4000";
+                ddlLocInterval.SelectedValue = "4000";
+                //Start with the default session variables
+                reportSelected.Value = "1";
+                // datepicker default values
+                txtDate.Text = System.DateTime.Today.ToString("MM/dd/yy");
+                txtDateTo.Text = System.DateTime.Today.ToString("MM/dd/yy");
+                txtDateFrom.Text = System.DateTime.Now.AddDays(-7).ToString("MM/dd/yy");
+                //initial load of time drop downs - interval report 5am to 10pm
+                for (int x = 5; x <= 22; x++)
                 {
                     string text = "";
                     int val = x;
-
-                    if(x > 12)
+                    if (x > 12)
                     {
                         val = x - 12;
                         text = val.ToString() + " PM";
@@ -37,288 +67,280 @@ namespace ChildWatchEmployee
                     else
                     {
                         if (x == 12)
-                            text = val.ToString() + " AM";
+                            text = val.ToString() + " PM";
                         else
                             text = val.ToString() + " AM";
                     }
-                    
-                    ddlStartTime.Items.Add(new ListItem(text, x.ToString()));
-                    ddlStopTime.Items.Add(new ListItem(text, x.ToString()));
+                    selectStart.Items.Add(new ListItem(text, x.ToString()));
                 }
-                string conn = ConfigurationManager.ConnectionStrings["database"].ToString();
-                ReportManager reports = new ReportManager(new SqlConnection(conn));
-                OrganizationManager organization = new OrganizationManager(new SqlConnection(conn));
-                //Location[] locations = organization.GetLocations(1);
+                for (int x = 5 + 1; x <= 22; x++)
+                {
+                    string text = "";
+                    int val = x;
 
-
-                //ddlLocation.DataSource = locations;
-                //ddlLocation.DataBind();
-
-                //Start with the default session variables
-                var app = ConfigurationManager.AppSettings;
-                Session["interval"] = 30;   //Interval report, 30 minute bucket
-                Session["intervalStartTime"] = "05:00"; //Default start time 5am
-                Session["intervalEndTime"] = "22:00"; //Default end time 10pm
-                Session["intervalDate"] = DateTime.Now.Date; //Default of current day
-                Session["memberActiveStatus"] = "True"; // Member report active only
-                Session["daysStartFrom"] = DateTime.Now.Date.AddDays(-7); //Default a week ago
-                Session["daysNumber"] = "7"; //default a week
-            }
-
-        }
-
-
-        //Display appropriate Divs for report arguments ONLY NEEDED FOR LIST BOX
-        protected void argumentDisplay()
-        {
-            switch (lbxReports.SelectedIndex)
-            {
-                case 0:
-                    interval.Attributes.Remove("hidden");
-                    member.Attributes["hidden"] = "hidden";
-                    dayTotals.Attributes["hidden"] = "hidden";
-                    break;
-                case 1:
-                    member.Attributes.Remove("hidden");
-                    interval.Attributes["hidden"] = "hidden";
-                    dayTotals.Attributes["hidden"] = "hidden";
-                    break;
-
-                case 2:
-                    dayTotals.Attributes.Remove("hidden");
-                    member.Attributes["hidden"] = "hidden";
-                    interval.Attributes["hidden"] = "hidden";
-                    break;
-
-                default:
-                    //should never hit
-
-                    break;
+                    if (x > 12)
+                    {
+                        val = x - 12;
+                        text = val.ToString() + " PM";
+                    }
+                    else
+                    {
+                        if (x == 12)
+                            text = val.ToString() + " PM";
+                        else
+                            text = val.ToString() + " AM";
+                    }
+                    selectStop.Items.Add(new ListItem(text, x.ToString()));
+                }
+                ListItem li = selectStop.Items.FindByValue("22");
+                li.Selected = true;
             }
         }
-
-        //take the selected arguments and request for selected report
+        /* Triggered by the Run Report button. Method for passing validated user input
+         * into a report request and displaying the output starting at PageIndex of 0
+         */
         protected void btnRunReport_Click(object sender, EventArgs e)
         {
-            string conn = ConfigurationManager.ConnectionStrings["database"].ToString();
-            ReportManager reports = new ReportManager(new SqlConnection(conn));
-            SqlConnection c = new SqlConnection(conn);
-
+            ReportGrid.CurrentPageIndex = 0;
+            getReport();
+            //show the report section if it was hidden
+            reportDisplay.Style.Remove("display");
+            reportDisplay.Style.Add("display", "block");
+        }
+        /* Display alert to user if a date is found to be invalid
+         * Return focus to the input field that caused the exception
+         */
+        public void invalidDateMessage(int dateElement)
+        {
+            string message = "Entered Date is invalid.";
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            sb.Append("<script type = 'text/javascript'>");
+            sb.Append("window.onload=function(){");
+            sb.Append("alert('");
+            sb.Append(message);
+            sb.Append("')};");
+            sb.Append("</script>");
+            ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", sb.ToString());
+            switch (dateElement)
+            {
+                case 1:
+                    txtDate.Focus();
+                    break;
+                case 2:
+                    txtDateFrom.Focus();
+                    break;
+                case 3:
+                    txtDateTo.Focus();
+                    break;
+            }
+        }
+        /* Display alert to user if an error occurs calling the report with valid arguments
+         * Denotees issue in database connection
+         */
+        public void reportError()
+        {
+            string message = "Error Running Report on Database";
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            sb.Append("<script type = 'text/javascript'>");
+            sb.Append("window.onload=function(){");
+            sb.Append("alert('");
+            sb.Append(message);
+            sb.Append("')};");
+            sb.Append("</script>");
+            ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", sb.ToString());
+        }
+        /* For report sets that have multiple pages update data displayed based on 
+         * the page selection*/
+        protected void ReportGrid_PageIndexChanged(object source, DataGridPageChangedEventArgs e)
+        {
+            ReportGrid.CurrentPageIndex = e.NewPageIndex;
+            Session["pagedIndex"] = ReportGrid.CurrentPageIndex;
+            ReportGrid.DataBind();
+            getReport();
+        }
+        /*Call the ReportManager and get data back from database based on user input.
+         * Handles based on current report selection and calling from paged gridview*/
+        protected void getReport()
+        {
+            ReportManager manager = new ReportManager(new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["database"].ToString()));
             int report = int.Parse(reportSelected.Value);
             Session["SelectedReport"] = report;
             switch (report)
             {
                 case 1:
+                    //run the interval report
                     int inter = int.Parse(ddlInterval.SelectedValue);
+                    int loca = int.Parse(ddlLocInterval.SelectedValue);
 
-                    DateTime.TryParse(txtDate.Text, out DateTime userDate);
-
-                    DateTime start = new DateTime(userDate.Year, userDate.Month, userDate.Day, int.Parse(ddlStartTime.SelectedValue), 0, 0); //DateTime.Parse(ddlStartTime.SelectedValue + txtDate.Text);
-                    DateTime end = new DateTime(userDate.Year, userDate.Month, userDate.Day, int.Parse(ddlStopTime.SelectedValue), 0, 0);
-                    // Dates are valid
-                    if(start < end)
+                        DateTime userDate;
+                    if (DateTime.TryParse(txtDate.Text, out userDate))
                     {
-                        try
+                        DateTime start = new DateTime(userDate.Year, userDate.Month, userDate.Day, int.Parse(selectStart.Value), 0, 0);
+                        DateTime end = new DateTime(userDate.Year, userDate.Month, userDate.Day, int.Parse(selectStop.Value), 0, 0);
+                        if (start < end)
                         {
-                            using(SqlCommand runReport = new SqlCommand("r_interval",c ))
+                            try
                             {
-                                runReport.CommandType = CommandType.StoredProcedure;
-                                runReport.Parameters.AddRange(new SqlParameter[]
+                                // section to handle returning all locations
+                                if (loca == 4000)
                                 {
-                                    new SqlParameter("start", start),
-                                    new SqlParameter("end", end),
-                                    new SqlParameter("interval", inter),
-                                    new SqlParameter("location", 1)
-                                });
-
-                                c.Open();
-                                DataTable table = new DataTable();
-                                table.Load(runReport.ExecuteReader());
-
-                                ReportGrid.DataSource = table;
-                                ReportGrid.DataBind();
+                                    DataTable allInterval = manager.GetIntervalReport(inter, start, end, 0);
+                                    allInterval.Columns.RemoveAt(1);
+                                    foreach (ListItem li in ddlLocInterval.Items)
+                                    {
+                                        if (li.Value != "4000")
+                                        {
+                                            int loc;
+                                            int.TryParse(li.Value, out loc);
+                                            DataTable appendee = manager.GetIntervalReport(inter, start, end, loc);
+                                            //get the count column from the table
+                                            DataColumn appendCol = new DataColumn(li.Text, typeof(int));
+                                            allInterval.Columns.Add(appendCol);
+                                            int indexNewColumn = allInterval.Columns.IndexOf(li.Text);
+                                            appendee.Columns.RemoveAt(0);
+                                            int row = 0; // track row number
+                                            foreach (DataRow sourcerow in appendee.Rows)
+                                            {
+                                                allInterval.Rows[row][indexNewColumn] = sourcerow[0];
+                                                row = row + 1;
+                                            }
+                                        }
+                                    }
+                                    ReportGrid.DataSource = allInterval;
+                                    ReportGrid.DataBind();
+                                }
+                                else
+                                {
+                                    ReportGrid.DataSource = manager.GetIntervalReport(inter, start, end, loca);
+                                    ReportGrid.DataBind();
+                                }
+                            }
+                            catch
+                            {
+                                reportError();
                             }
                         }
-                        catch(Exception ex)
+                        else
                         {
-
-                        }
-                        finally
-                        {
-                            if (c.State == System.Data.ConnectionState.Open)
-                                c.Close();
-                            c.Dispose();
+                            string message = "Stop Time must be after Start Time";
+                            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                            sb.Append("<script type = 'text/javascript'>");
+                            sb.Append("window.onload=function(){");
+                            sb.Append("alert('");
+                            sb.Append(message);
+                            sb.Append("')};");
+                            sb.Append("</script>");
+                            ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", sb.ToString());
                         }
                     }
-                    
-                    interval.Attributes["display"] = "block";
-                    member.Attributes["display"] = "none";
-                    dayTotals.Attributes["display"] = "none";
+                    else
+                    {
+                        invalidDateMessage(1);
+                    }
 
+                        interval.Style.Add("display", "block");
+                        member.Style.Add("display", "none");
+                        dayTotals.Style.Add("display", "none");
                     break;
                 case 2:
-                // Run a member report
+                    // Run a member report
                     string select = ddlMemStatus.SelectedValue;
-                    
                     try
                     {
-                       using (SqlCommand command = new SqlCommand("r_members", c))
-                       {
-                            SqlParameter parameter = null;
-
-                            if (!string.IsNullOrEmpty(select))
-                            {
-                                bool.TryParse(select, out bool selection);
-                                parameter = new SqlParameter("active", selection);
-                            }
-                        
-                            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-                            if (parameter != null)
-                                command.Parameters.Add(parameter);
-
-                            c.Open();
-                            DataTable t = new DataTable();
-                            t.Load(command.ExecuteReader());
-
-                            if(t.Rows.Count > 0)
-                            {
-                                ReportGrid.DataSource = t;
-                                ReportGrid.DataBind();
-                            }
-                       }
-                       
+                        if (!string.IsNullOrEmpty(select))
+                        {
+                            bool selection;
+                            bool.TryParse(select, out selection);
+                            ReportGrid.DataSource = manager.GetMemberReport(selection);
+                            ReportGrid.DataBind();
+                        }
+                        else
+                        {
+                            ReportGrid.DataSource = manager.GetMemberReport(null);
+                            ReportGrid.DataBind();
+                        }
                     }
-                    catch(Exception ex)
+                    catch
                     {
-                        
+                        reportError();
                     }
                     finally
                     {
-                        if (c.State == System.Data.ConnectionState.Open)
-                            c.Close();
-                        c.Dispose();
+                        interval.Style.Add("display", "none");
+                        member.Style.Add("display", "block");
+                        dayTotals.Style.Add("display", "none");
                     }
-
                     break;
                 case 3:
-
-
-
-                    break;
-            }
-
-
-
-            /* Reworking for html list this is old listbox code
-             * 
-            switch (lbxReports.SelectedIndex)
-            {
-                case 0:
-
-                    //GetIntervalReport();
-                    paramsPassed.Text = Session["report"] + ", " + Session["interval"] + ", " + Session["intervalStartTime"] + ", " + Session["intervalEndTime"] + ", " + Session["intervalDate"];
-                    break;
-                case 1:
-                    bool memStat;
-                    if (ddlMemStatus.SelectedValue.Equals("true"))
-                        {
-                        memStat = true;
-                            var report = reports.GetMemberReport(memStat);
-                            GridView1.DataSource = reports.GetMemberReport(memStat);
-                            GridView1.DataBind();
-                        }
-                        else if (ddlMemStatus.SelectedValue.Equals("false"))
-                        {
-                            memStat = false;                        
+                    int loc2 = int.Parse(ddlLocation.SelectedValue);
+                    DateTime dateFrom;
+                    if (DateTime.TryParse(txtDateFrom.Text, out dateFrom))
+                    {
+                        DateTime dateTo;
+                        if(DateTime.TryParse(txtDateTo.Text, out dateTo)) {
+                            if (dateFrom < dateTo)
+                            {
                                 try
-                                {
-                                    var report = reports.GetMemberReport(memStat);
-                                    GridView1.DataSource = report;
-                                    GridView1.DataBind();
-                                }
-                                catch {
+                                {                           
+                                    // section to handle returning all locations
+                                    if (loc2 == 4000)
+                                    {
+                                        DataTable allDaily = manager.GetDailyReport(dateFrom, dateTo, 0);
+                                        allDaily.Columns.RemoveAt(1);
+                                        foreach (ListItem li in ddlLocation.Items)
+                                        {
+                                            if (li.Value != "4000")
+                                            {
+                                                int loc;
+                                                int.TryParse(li.Value, out loc);
+                                                DataTable appendee = manager.GetDailyReport(dateFrom, dateTo, loc);
+                                                //get the count column from the table
+                                                DataColumn appendCol = new DataColumn(li.Text, typeof(int));
+                                                allDaily.Columns.Add(appendCol);
+                                                int indexNewColumn = allDaily.Columns.IndexOf(li.Text);
+                                                //works to here
+                                                appendee.Columns.RemoveAt(0);
+                                                int row = 0; // track row number
+                                                foreach (DataRow sourcerow in appendee.Rows)
+                                                {
+                                                    allDaily.Rows[row][indexNewColumn] = sourcerow[0];
+                                                    row = row + 1;
+                                                }
+                                            }
+                                        }
+                                        ReportGrid.DataSource = allDaily;
+                                        ReportGrid.DataBind();
                                     }
-                        }
+                                    else
+                                    {
+                                        ReportGrid.DataSource = manager.GetDailyReport(dateFrom, dateTo, loc2);
+                                        ReportGrid.DataBind();
+                                    }
+
+                                }catch
+                                {
+                                    reportError();
+                                }
+                            }
                             else
-                        {
-                            GridView1.DataSource = reports.GetMemberReport();
-                            GridView1.DataBind();
+                            {
+                                invalidDateMessage(3);
+                            }
                         }
-                    //GridView1.DataSource = reports.GetMemberReport(Session["memberActiveStatus"]);
-                    //GetMemberReport();
-                    paramsPassed.Text = Session["report"] + ", " + Session["memberActiveStatus"] + ddlMemStatus.SelectedValue;
+                        else
+                        {
+                            invalidDateMessage(3);
+                        }
+                    }
+                    else
+                    {
+                        invalidDateMessage(2);
+                    }
+                        interval.Style.Add("display", "none");
+                        member.Style.Add("display", "none");
+                        dayTotals.Style.Add("display", "block");
                     break;
-                case 2:
-                //GridView1.DataSource = reports.GetDailyReport();
-                    //GetDailyReport();
-                    paramsPassed.Text = Session["daysStartFrom"] + ", " + Session["daysNumber"];
-                    break;
-                default:
-                    break;
-            }   */
-        }
-
-
-
-        // Updating session variables when report arguments are changed
-        protected void ddlInterval_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (ddlInterval.SelectedIndex)
-            {
-                case 0:
-                    Session["interval"] = 30;
-                    break;
-                case 1:
-                    Session["interval"] = 60;
-                    break;
+            }            
             }
-        }
-
-        protected void lbxReports_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            argumentDisplay();
-            Session["report"] = lbxReports.SelectedIndex;
-        }
-        protected void ddlStartTime_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Session["intervalStartTime"] = ddlStartTime.SelectedValue;
-        }
-
-        protected void ddlStopTime_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Session["intervalEndTime"] = ddlStopTime.SelectedValue;
-        }
-
-        protected void txtDate_TextChanged(object sender, EventArgs e)
-        {
-            Session["intervalDate"] = txtDate.Text;
-        }
-
-        protected void ddlMemStatus_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (ddlMemStatus.SelectedIndex)
-            {
-                case 0:
-                    Session["memberActiveStatus"] = true;
-                    break;
-                case 1:
-                    Session["memberActiveStatus"] = false;
-                    break;
-                default:
-                    Session["memberActiveStatus"] = null;
-                    break;
-            }
-        }
-
-        protected void txtDateFrom_TextChanged(object sender, EventArgs e)
-        {
-            Session["daysStartFrom"] = txtDateFrom.Text;
-        }
-
-        protected void txtDays_TextChanged(object sender, EventArgs e)
-        {
-            Session["daysNumber"] = txtDays.Text;
         }
     }
-}

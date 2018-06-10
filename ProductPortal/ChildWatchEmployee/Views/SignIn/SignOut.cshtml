@@ -20,8 +20,7 @@
             </script>
             <div>
                 <h1>Family was successfully signed out</h1>
-            </div>
-            
+            </div>           
         }
         else
         {
@@ -43,13 +42,7 @@
             }
             @Html.ValidationSummary("The following errors were found:",
                                     new { @class = "alert alert-danger" })
-
-            if(Model.State == ChildWatchEmployee.Models.SignOutState.Failed)
-            {
-                <div class="alert alert-danger">
-                    <p>Unable to signout member.  Please try again later.</p>
-                </div>
-            }
+   
         }
     </div>
 </body>

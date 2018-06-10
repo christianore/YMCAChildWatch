@@ -46,7 +46,7 @@ namespace ChildWatchApi.Data
 
         public bool SignOut(int code)
         {
-            return Run("p_signin_out", new SqlParameter[] { new SqlParameter("band", code) });
+            return RunCommand("p_signin_out", new SqlParameter[] { new SqlParameter("band", code) });
         }
 
         public Signin SignIn(string member_id, Assignment[] arr)
@@ -77,7 +77,7 @@ namespace ChildWatchApi.Data
 
             try
             {
-                bool val = Run("p_signin_in", parms);
+                bool val = RunCommand("p_signin_in", parms);
 
                 signin.Band = (int)band_num.Value;
                 signin.Id = (int)signin_id.Value;
@@ -92,7 +92,7 @@ namespace ChildWatchApi.Data
                         new SqlParameter("signin_id", signin.Id)
                     };
 
-                    if (!Run("p_signin_detail_add", assignments)) throw new Exception();
+                    if (!RunCommand("p_signin_detail_add", assignments)) throw new Exception();
                 }
 
             }

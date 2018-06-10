@@ -2,16 +2,20 @@
 using System.Data.SqlClient;
 using System.Configuration;
 using ChildWatchApi.Data;
-using ChildWatchApi.Data.Report;
 using System.Collections.Generic;
 using ChildWatchApi.Web;
 using System.IO;
+using ChildWatchApi.Utility.Logging;
+using System.Data;
+using static System.Net.Mime.MediaTypeNames;
+using RunTestCases;
 
 namespace ChildWatch
 {
     public class Program
     {
         private static string connection_string = ConfigurationManager.ConnectionStrings["database"].ToString();
+        private static Logger log = new Logger(@"C:\ProgramData\YMCA\", @"CommandLine");
 
         public static void Main(string[] args)
         {
@@ -36,6 +40,22 @@ namespace ChildWatch
                 {
                     switch (options[0].ToUpper())
                     {
+                        case "LOG":
+                            switch(options[1])
+                            {
+                                case "/m":
+                                    try
+                                    {
+                                        throw new Exception("Test Exception");
+                                    }
+                                    catch(Exception ex)
+                                    {
+                                        log.Write(ex, "YMCAHelpUtility");
+                                    }
+                                    
+                                    break;
+                            }
+                        break;
                         // Options on members
                         case "MEMBER":
                             switch(options[1]){
@@ -174,9 +194,10 @@ namespace ChildWatch
                                 case "/i":
                                     var interval_report = reports.GetIntervalReport(60, start, stop, 1);
                                     if (interval_report.Rows.Count > 0) Console.WriteLine("REPORT DATA\n=================================================");
-                                    foreach (Interval i in interval_report.Rows)
+                                    foreach (DataRow i in interval_report.Rows)
                                     {
-                                        Console.WriteLine(i.Time.ToShortTimeString() + "   " + i.Time.AddMinutes(interval_report.Interval).ToShortTimeString() + "    " +i.ChildCount.ToString());
+                                        DateTime time = (DateTime)i["time"];
+                                        Console.WriteLine((time.ToShortTimeString() + "   " + time.AddMinutes((int)i["interval"]).ToShortTimeString() + "    " + ((int)i["count"]).ToString()));
                                     }
                                     if (interval_report.Rows.Count > 0) Console.WriteLine("============================================================\nEND DATA");
                                     break;
@@ -197,7 +218,7 @@ namespace ChildWatch
 
                                     Family fam = gen.RandomFamily(reports);
 
-                                    Location[] list = organization.GetLocations(1);
+                                    Location[] list = organization.GetLocations();
                                     int count = 0;
                                     try
                                     {
@@ -286,6 +307,7 @@ namespace ChildWatch
                     Console.WriteLine("\n" + ex.StackTrace);
                 }
             }
+     
         }
     }
 }

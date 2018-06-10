@@ -1,0 +1,84 @@
+ChildWatch Quality Assurance
+
+Date:           4/21/2018
+Reviewed By:    Christian Ore
+
+#Reports
+
+1) Paging needs more "clickable" interface buttons.  They are not intuitive for the user.
+
+Interval Report
+
+1) Adjust JavaScript to not move end time if it is larger than the start time.
+2) Create an option for All, loop through each report and build one larger datatable for the information.
+3) Need to create a daily totals stored procedure.
+4) Need to adjust column headers
+5) Need to format data.
+6) Remove the id field, this is not needed for the user.
+
+Member Report
+1) Need to apply proper casioong to member names
+2) Remove pin from data returned.
+3) Apply formatting to phone number.
+4) Adjust column headers to be more user friendly names.
+
+Daily totals
+1) Need to implement the daily total report.  Should be called r_daily in SQL.
+2) Require a start date, end date, and a location.
+
+#Validation
+1) Need to adjust validation to be user friendly message. 
+    Example: "The field Band# must match the regular expression '\d{4}'.  
+        Users may not fully understand what this means.
+
+#Administration
+
+Register Employee
+1) Password & Confirm Password need to be hidden with asterisks.
+2) Submitting empty form breaks, need to validate user input to be there and correct format.
+    "Procedure or function 'p_employee_insert' expects parameter '@firstname', which was not supplied."
+
+
+Change Password
+1) Need to hide password and confirm password fields
+2) Change unlock to reset password title
+
+Update Employee Information
+1) Updates names to only be the first letter of each name.
+2) Doesn't change their admin rights or status
+
+#Member Signin
+1) Need validation for no person found.
+2) Need validation for failure.
+3) Need to check for existing signin and return that message.
+4) Title of header is off center and should be adjusted.
+5) Remove copy right logo.
+
+#Member Registration
+Register
+1) Add a jumbotron for the name of the page
+2) Change the fieldset to information
+AddChild
+1) Add a jumbotron for the name of the page
+2) Change the fieldset to information
+
+#Help Guide
+1) Guide should have more step by step instructions with readable images.
+2) If required, images should be annoted with arrows directing users to the focus on the screen.
+3) Images need captions describing what they are with figure numbers. 
+4) A glossary needs to be in the end with the figure and caption for each for easy reference.
+5) There should be a trouble shooting section before then end for anything we can't fully fix but have a work around for.
+6) The help guide should also have an installation guide for setting up.
+    1) SQL Express
+    2) Building the Database
+    3) Setting Permissions
+    4) Loading the web application
+    5) Installing IIS 
+    6) Configuring the share folder 
+
+#Considerations
+
+We may need to contemplate adding a member/child look up that shows the children attached to the member.
+This feature would allow them some way of seeing who is attached to who.
+
+Logo should reroute the the home page as a link.

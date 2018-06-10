@@ -7,5 +7,20 @@
 *.ide-wal
 db.lock
 \.vs/
+/ChildwatchApi/obj/Release
+/runtestcases/obj/Release
+ProductPortal/ChildWatchEmployee/bin/
+webservice/
+Childwatch\.sln
+ChildwatchApi/bin/
+ChildwatchApi/obj/
+Help_Guide/Help_Guide\.sln
+\.sln/
+ChildwatchApi/bin/
+ProductPortal/ChildWatchEmployee/obj/
+/ChildwatchApi/obj/Release
+/runtestcases/obj/Release
+\PublishProfiles/
+/runtestcases/obj/Debug
 
-
+runtestcases/bin/

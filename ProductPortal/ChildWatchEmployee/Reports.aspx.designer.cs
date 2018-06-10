@@ -22,6 +22,15 @@ namespace ChildWatchEmployee {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+        /// userInput control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl userInput;
+        
+        /// <summary>
         /// reportAside control.
         /// </summary>
         /// <remarks>
@@ -29,15 +38,6 @@ namespace ChildWatchEmployee {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl reportAside;
-        
-        /// <summary>
-        /// lbxReports control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lbxReports;
         
         /// <summary>
         /// reportSelected control.
@@ -67,49 +67,22 @@ namespace ChildWatchEmployee {
         protected global::System.Web.UI.WebControls.DropDownList ddlInterval;
         
         /// <summary>
-        /// Label3 control.
+        /// selectStart control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect selectStart;
         
         /// <summary>
-        /// ddlStartTime control.
+        /// selectStop control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlStartTime;
-        
-        /// <summary>
-        /// Label4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
-        
-        /// <summary>
-        /// ddlStopTime control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlStopTime;
-        
-        /// <summary>
-        /// Label2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect selectStop;
         
         /// <summary>
         /// txtDate control.
@@ -121,6 +94,15 @@ namespace ChildWatchEmployee {
         protected global::System.Web.UI.WebControls.TextBox txtDate;
         
         /// <summary>
+        /// ddlLocInterval control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlLocInterval;
+        
+        /// <summary>
         /// member control.
         /// </summary>
         /// <remarks>
@@ -128,15 +110,6 @@ namespace ChildWatchEmployee {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl member;
-        
-        /// <summary>
-        /// Label6 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
         
         /// <summary>
         /// ddlMemStatus control.
@@ -157,15 +130,6 @@ namespace ChildWatchEmployee {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl dayTotals;
         
         /// <summary>
-        /// Label7 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label7;
-        
-        /// <summary>
         /// txtDateFrom control.
         /// </summary>
         /// <remarks>
@@ -175,31 +139,13 @@ namespace ChildWatchEmployee {
         protected global::System.Web.UI.WebControls.TextBox txtDateFrom;
         
         /// <summary>
-        /// Label5 control.
+        /// txtDateTo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label5;
-        
-        /// <summary>
-        /// txtDays control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDays;
-        
-        /// <summary>
-        /// Label8 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label8;
+        protected global::System.Web.UI.WebControls.TextBox txtDateTo;
         
         /// <summary>
         /// ddlLocation control.
@@ -220,22 +166,22 @@ namespace ChildWatchEmployee {
         protected global::System.Web.UI.WebControls.Button btnRunReport;
         
         /// <summary>
-        /// rs control.
+        /// hideLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label rs;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor hideLink;
         
         /// <summary>
-        /// paramsPassed control.
+        /// reportDisplay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label paramsPassed;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl reportDisplay;
         
         /// <summary>
         /// ReportGrid control.
@@ -245,5 +191,14 @@ namespace ChildWatchEmployee {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DataGrid ReportGrid;
+        
+        /// <summary>
+        /// topDivHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField topDivHidden;
     }
 }

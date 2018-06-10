@@ -13,6 +13,7 @@ namespace ChildWatchApi.Data
         /// Reference to the SqlConnection of this manager.
         /// </summary>
         public  String ConnectionString { get; set; }
+
         public SqlConnection CurrentConnection { get; internal set; }
         
         /// <summary>
@@ -31,6 +32,7 @@ namespace ChildWatchApi.Data
             ConnectionString = connector.ConnectionString;
             CurrentConnection = connector;
         }
+
         public IDatabaseManager(string s)
         {
             command = new SqlCommand
@@ -57,7 +59,7 @@ namespace ChildWatchApi.Data
         /// Clears and adds the new SqlParameters to the SqlCommand
         /// </summary>
         /// <param name="prams">Array of SqlParameters to add</param>
-        protected void AddParameters(SqlParameter[] prams)
+        public void AddParameters(SqlParameter[] prams)
         {
             command.Parameters.Clear();
             command.Parameters.AddRange(prams);
@@ -66,7 +68,7 @@ namespace ChildWatchApi.Data
         /// Clears the parameters of the SQLCommand and adds a new one.
         /// </summary>
         /// <param name="parameter">Sql Parameter to add</param>
-        protected void AddParameters(SqlParameter parameter)
+        public void AddParameters(SqlParameter parameter)
         {
             AddParameters(new SqlParameter[]
             {
@@ -77,7 +79,7 @@ namespace ChildWatchApi.Data
         /// Ensures that the connection to the database is open and switches the stored procedure name.
         /// </summary>
         /// <param name="s">Name of the procedure to execute.</param>
-        protected void OpenConnection(string s = "")
+        public void OpenConnection(string s = "")
         {
             CurrentConnection = new SqlConnection(ConnectionString);
             command.Connection = CurrentConnection;
@@ -87,20 +89,27 @@ namespace ChildWatchApi.Data
 
             CurrentConnection.Open();
         }
-        protected void CloseConnection()
+        public void CloseConnection()
         {
             if (CurrentConnection != null)
                 CurrentConnection.Dispose();
         }
-        protected SqlDataReader RunData(string s, SqlParameter[] list)
+        public SqlDataReader GetSqlDataReader(string s, SqlParameter[] list)
         {
             OpenConnection(s);
             AddParameters(list);
-            SqlDataReader reader = command.ExecuteReader();
-            
+            SqlDataReader reader = command.ExecuteReader();          
             return reader;
         }
-        protected object RunValue(string s, SqlParameter[] list)
+        public DataTable GetDataTable(string s, SqlParameter[] sql)
+        {
+            DataTable table = new DataTable();
+            table.Load(GetSqlDataReader(s, sql));
+            CloseConnection();
+            return table;
+        }
+
+        public object RunValue(string s, SqlParameter[] list)
         {
             OpenConnection(s);
             AddParameters(list);
@@ -108,7 +117,7 @@ namespace ChildWatchApi.Data
             CloseConnection();
             return done;
         }
-        protected bool Run(string s, SqlParameter[] list)
+        public bool RunCommand(string s, SqlParameter[] list)
         {
             OpenConnection(s);
             AddParameters(list);
@@ -116,11 +125,10 @@ namespace ChildWatchApi.Data
             CloseConnection();
             return done;
         }
-        protected void CloseReader(SqlDataReader reader)
+        public void CloseReader(SqlDataReader reader)
         {
             if (!reader.IsClosed)
                 reader.Close();
         }
-
     }
 }

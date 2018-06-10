@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .card{
+        margin: 2em;
+        padding: 1em;
+    }
+    .card .btn{
+        margin: 25px;
+    }
+</style>
+
+<h2 class="jumbotron">Administrator Portal</h2>
+
+
+<div class="card">
+    <a class="btn btn-primary" href="~/Admin/Register">
+        <h3>Register Employee</h3>
+    </a>
+    <p>Create a new employee to use the ChildWatch application.</p>
+    <p>You will need the following information to complete this: </p>
+    <ul>
+        <li>Unique username</li>
+        <li>Temporary password</li>
+        <li>Employee information</li>
+    </ul>
+</div>
+<div class="card">
+    <a class="btn btn-primary" href="~/Admin/Unlock">
+        <h3>Unlock Employee</h3>
+    </a>
+        <p>When ever an employee needs a password reset, go here to create a new temporary one for them to change.</p>
+</div>
+
+
+<div class="card">
+    <a class="btn btn-primary" href="~/Admin/Update">
+        <h3>Update Information</h3>
+    </a>
+        <p>Use this section to update any information already in the database for an employee.</p>
+</div>
+
+

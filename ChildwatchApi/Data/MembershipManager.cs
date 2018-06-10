@@ -9,6 +9,7 @@ namespace ChildWatchApi.Data
     {
         public MembershipManager(SqlConnection connector) : base(connector) { }
         public MembershipManager(String s) : base(s) { }
+
         public Member GetMember(string id)
         {                 
             SqlParameter[] arr = new SqlParameter[]
@@ -16,7 +17,8 @@ namespace ChildWatchApi.Data
                 new SqlParameter("member_id", id)
             };
 
-            SqlDataReader data = RunData("p_member_get", arr);
+            SqlDataReader data = GetSqlDataReader("p_member_get", arr);
+
             Member member = null;
             try
             {
@@ -48,7 +50,7 @@ namespace ChildWatchApi.Data
                 new SqlParameter("pin", pin)
             };
 
-            SqlDataReader data = RunData("p_member_get", arr);
+            SqlDataReader data = GetSqlDataReader("p_member_get", arr);
             Member m = null;
             try
             {
@@ -87,7 +89,7 @@ namespace ChildWatchApi.Data
                 new SqlParameter("active", m.IsActive)
             };
 
-            return Run("p_member_save", arr);
+            return RunCommand("p_member_save", arr);
         }
         public bool RegisterFamily(Family family)
         {
@@ -114,7 +116,7 @@ namespace ChildWatchApi.Data
                 new SqlParameter("child_id", id)
             };
             
-            SqlDataReader reader = RunData("p_child_get", arr);
+            SqlDataReader reader = GetSqlDataReader("p_child_get", arr);
             try
             {
                 c = ExtractChild(reader);
@@ -132,7 +134,7 @@ namespace ChildWatchApi.Data
         {
             OpenConnection("p_child_update");
 
-            return Run("p_child_update", new SqlParameter[]
+            return RunCommand("p_child_update", new SqlParameter[]
             {
                 new SqlParameter("child_id", c.Id),
                 new SqlParameter("first_name", c.FirstName),
@@ -158,7 +160,7 @@ namespace ChildWatchApi.Data
         {
             List<Child> children = new List<Child>();
             bool read = true;
-            SqlDataReader reader = RunData("p_member_child_get", new SqlParameter[]
+            SqlDataReader reader = GetSqlDataReader("p_member_child_get", new SqlParameter[]
             {
                 new SqlParameter("member_id", m.MemberId)
             });
@@ -184,7 +186,7 @@ namespace ChildWatchApi.Data
         }
         public bool AttachChild(string memberId, int childId)
         {
-            return Run("p_member_child_attach", new SqlParameter[]{
+            return RunCommand("p_member_child_attach", new SqlParameter[]{
                 new SqlParameter("member_id", memberId),
                 new SqlParameter("child_id", childId)
             });
@@ -195,7 +197,7 @@ namespace ChildWatchApi.Data
         }
         public bool DetachChild(string memberId, int childId)
         {
-            return Run("p_member_child_detach", new SqlParameter[]{
+            return RunCommand("p_member_child_detach", new SqlParameter[]{
                 new SqlParameter("member_id", memberId),
                 new SqlParameter("child_id", childId)
             });
